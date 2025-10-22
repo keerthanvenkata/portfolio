@@ -1,0 +1,1345 @@
+import React, { useState, useEffect } from 'react';
+import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, BookOpen, Music, Coffee, ChevronRight, Play, Lightbulb, Heart, ArrowLeft, Home } from 'lucide-react';
+
+// ========================
+// DATA SECTION
+// ========================
+
+const PROJECTS_DATA = [
+  {
+    id: 'qfi-capital',
+    title: 'QFI Research Capital',
+    role: 'Co-Founder & Part-Time CTO',
+    description: 'Algorithm-driven trade execution system with real-time analytics, risk management, and AI-powered signal generation.',
+    contribution: `As co-founder and CTO, I architected and built the entire trading platform from scratch:
+
+• Designed microservices architecture handling real-time market data and trade execution
+• Built core backend using PostgreSQL for transactional data and InfluxDB for time-series market data
+• Implemented Kafka-based event streaming for real-time data aggregation across services
+• Developed risk management engine with custom position sizing and exposure controls
+• Integrated with Kite Connect API for live trading and market data feeds
+• Set up Docker-based deployment with Redis for caching and session management
+
+The platform processes thousands of market events per second and executes trades with sub-second latency. Laid foundation for future AI-driven signal generation and portfolio optimization.`,
+    tech: ['Python', 'PostgreSQL', 'InfluxDB', 'Docker', 'Kafka', 'Redis', 'Kite Connect'],
+    link: 'https://qficapital.in',
+    embedSite: 'https://qficapital.in',
+    status: 'Live',
+    images: ['Add your architecture diagram URL here', 'Add system design screenshot here', 'Add dashboard screenshot here'],
+    video: 'Add demo video URL here (MP4)',
+    videoPoster: 'Add video thumbnail URL here',
+    highlights: [
+      'Real-time trade execution with sub-second latency',
+      'Microservices architecture with Kafka event streaming',
+      'Integrated risk engines and portfolio management',
+      'Time-series market data processing with InfluxDB',
+      'AI-driven trading signal foundation'
+    ]
+  },
+  {
+    id: 'property-appraisal',
+    title: 'Automated Property Appraisal Extraction',
+    role: 'SDE Applied AI at Adaequare',
+    description: 'OCR + NLP/LLM pipeline extracting structured data from 10,000+ property appraisal PDFs per year, saving 300 manual hours monthly.',
+    contribution: `Built end-to-end extraction pipeline from scratch:
+
+• Designed FastAPI backend with async processing for handling large document volumes
+• Integrated Tesseract OCR for text extraction and Detectron2 for layout analysis
+• Developed multi-stage NLP pipeline using NLTK for entity extraction and pattern matching
+• Implemented LLM-based extraction using Gemini and LangChain for complex fields
+• Built Streamlit frontend for demos and production monitoring
+• Created validation layer to ensure 95%+ accuracy before customer delivery
+
+The system went from POC to production in 3 months, now processing thousands of PDFs with minimal manual intervention. Customers see faster turnaround times and analysts focus on high-value review tasks instead of data entry.`,
+    tech: ['FastAPI', 'Tesseract', 'Detectron2', 'NLTK', 'Gemini', 'LangChain', 'Streamlit', 'PostgreSQL'],
+    status: 'Production',
+    images: ['Add pipeline architecture here', 'Add UI screenshots here', 'Add extraction results example here'],
+    video: 'Add system walkthrough video URL here',
+    highlights: [
+      'Processes 10,000+ PDFs annually with 95%+ accuracy',
+      'Saves 300 manual hours per month',
+      'Multi-stage pipeline: OCR → Layout Analysis → NLP → LLM',
+      'Production-ready with monitoring dashboard',
+      'Reduced turnaround time by 70%'
+    ]
+  },
+  {
+    id: 'etl-pipeline',
+    title: 'Automated ETL Pipeline',
+    role: 'SDE Applied AI at Adaequare',
+    description: 'Standardizes 50+ county tax roll datasets per year (20,000+ records each), reducing analyst time by 85% with self-learning capabilities.',
+    contribution: `Designed intelligent ETL system that learns from each dataset:
+
+• Built Python-based ETL engine with modular transformation stages
+• Implemented fuzzy matching algorithms for handling inconsistent column names and data formats
+• Developed semantic pattern recognition to identify data types across different schemas
+• Created heuristic-based validation rules that adapt based on historical patterns
+• Built feedback loop where analyst corrections improve future processing
+• Designed for horizontal scaling to eventually support 3,000+ US counties
+
+Started with analysts spending 8+ hours per dataset. Now the pipeline handles most transformations automatically, with analysts only reviewing edge cases. The system gets smarter with each dataset processed.`,
+    tech: ['Python', 'Pandas', 'Fuzzy Matching', 'Semantic Patterns', 'PostgreSQL', 'Redis'],
+    status: 'Production',
+    images: ['Add ETL flow diagram here', 'Add before/after comparison here', 'Add learning metrics dashboard here'],
+    video: 'Add pipeline demo video URL here',
+    highlights: [
+      'Handles 50+ datasets with 20,000+ records each annually',
+      '85% reduction in analyst time (8 hours → 1 hour)',
+      'Self-learning: improves with each dataset processed',
+      'Scalable architecture for 3,000+ US counties',
+      'Adaptive fuzzy matching and semantic understanding'
+    ]
+  }
+];
+
+const EXPERIMENTAL_DATA = [
+  {
+    id: 'trading-bot',
+    title: 'Weekend Trading Bot',
+    description: 'A scrappy trading bot built over a weekend to test algorithmic strategies. Works sometimes, breaks often.',
+    tech: ['Python', 'Pandas'],
+    details: 'Built this in a weekend to experiment with basic algorithmic trading strategies. Uses technical indicators and simple rules. Sometimes it works, sometimes it doesn\'t - but learned a ton about market data handling and backtesting.',
+    highlights: [
+      'Real-time data processing with Pandas',
+      'Basic technical indicator implementation',
+      'Backtesting framework',
+      'Learning project for algorithmic trading'
+    ]
+  },
+  {
+    id: 'cli-tool',
+    title: 'CLI Tool for Data Cleaning',
+    description: 'Personal utility for quick CSV transformations. Not polished, but gets the job done for my workflows.',
+    tech: ['Python', 'Click'],
+    details: 'A command-line tool I built for myself to handle repetitive CSV cleaning tasks. Saves me time when dealing with messy data exports. No fancy UI, just gets the work done.',
+    highlights: [
+      'Quick CSV transformations',
+      'Custom data validation rules',
+      'Batch processing support',
+      'Personal productivity tool'
+    ]
+  },
+  {
+    id: 'llm-playground',
+    title: 'LLM Prompt Playground',
+    description: 'Experimenting with different prompting techniques and testing model responses. Learning lab for AI work.',
+    tech: ['Python', 'OpenAI', 'Streamlit'],
+    details: 'A sandbox for testing different LLM prompting strategies. Built this to experiment with prompt engineering before applying techniques to production systems.',
+    highlights: [
+      'Interactive prompt testing',
+      'Multiple model comparison',
+      'Response quality tracking',
+      'Experimentation platform'
+    ]
+  },
+  {
+    id: 'discord-bot',
+    title: 'Discord Bot for Server Management',
+    description: 'Built for fun to automate some server tasks. Casual project with friends.',
+    tech: ['JavaScript', 'Discord.js'],
+    details: 'A fun project with friends to automate server moderation and add some custom commands. Nothing fancy, just a way to learn Discord bot development and make our server more interactive.',
+    highlights: [
+      'Automated moderation features',
+      'Custom server commands',
+      'Event-driven architecture',
+      'Learning project for Discord API'
+    ]
+  }
+];
+
+const FEATURED_BLOG_POSTS = [
+  {
+    id: 'etl-pipelines',
+    category: 'Tech',
+    title: 'Building Scalable ETL Pipelines',
+    excerpt: 'Lessons learned from processing millions of records and designing self-learning data transformation systems...',
+    date: '2025-01-15',
+    featured: true,
+    content: `Building ETL pipelines that scale isn't just about moving data from point A to point B. It's about creating systems that are resilient, maintainable, and can adapt to changing requirements.
+
+## The Challenge
+
+At Adaequare, I faced the challenge of processing 50+ county tax roll datasets per year, each with over 20,000 records. The problem? Every dataset had different schemas, inconsistent column names, and varying data quality.
+
+## Key Learnings
+
+### 1. Design for Adaptability
+Rather than hardcoding transformations, I built a system that learns from each dataset. Using fuzzy matching and semantic pattern recognition, the pipeline identifies similar fields across different schemas.
+
+### 2. Feedback Loops Matter
+We implemented a feedback mechanism where analyst corrections improve future processing. This reduced manual intervention by 85% over time.
+
+### 3. Modular Architecture
+Breaking the pipeline into distinct stages (extraction, transformation, validation, loading) made it easier to debug and optimize individual components.
+
+## Results
+
+The system now handles datasets automatically that previously took analysts 8+ hours to process. It's scalable to 3,000+ US counties and gets smarter with each dataset.
+
+Building systems that learn and adapt is the future of ETL.`
+  },
+  {
+    id: 'startup-journey',
+    category: 'Entrepreneurship',
+    title: 'Building a Startup While Working',
+    excerpt: 'Reflections on co-founding QFI Capital, balancing full-time work, and the reality of entrepreneurship...',
+    date: '2024-12-10',
+    featured: true,
+    content: `Co-founding QFI Research Capital while working full-time at Adaequare taught me more about entrepreneurship than any book or course ever could.
+
+## The Reality Check
+
+Building a startup isn't glamorous. It's late nights after your day job, weekends spent debugging, and constant context switching between two demanding roles.
+
+## What I Learned
+
+### Time Management is Critical
+I had to be ruthless with my time. Mornings before work were for QFI's architecture and system design. Evenings were for implementation. Weekends were for features that required deep focus.
+
+### Choose Your Co-founders Wisely
+Having the right team made all the difference. We divided responsibilities clearly and trusted each other to execute.
+
+### Technical Debt vs Speed
+As a CTO, I constantly balanced "doing it right" vs "getting it done." For a startup, done is better than perfect, but you need to know when to invest in quality.
+
+## The Platform
+
+I built the entire trading platform from scratch:
+- Microservices handling real-time market data
+- PostgreSQL + InfluxDB for different data patterns
+- Kafka for event streaming
+- Risk management engines
+
+## Key Takeaway
+
+Entrepreneurship while employed is possible, but it requires sacrifice, discipline, and a burning desire to build something meaningful. Would I do it again? Absolutely.`
+  },
+  {
+    id: 'llm-patterns',
+    category: 'Tech',
+    title: 'LLM Integration Patterns',
+    excerpt: 'Practical approaches to building production LLM systems, handling failures, and managing costs...',
+    date: '2024-12-20',
+    featured: true,
+    content: `Integrating LLMs into production systems is very different from experimenting in a notebook. Here are patterns I've learned building real systems.
+
+## Production-Ready Patterns
+
+### 1. Fallback Chains
+Never rely on a single LLM call. Build chains with fallbacks:
+- Primary LLM for complex extraction
+- Rule-based systems for known patterns
+- Human review for edge cases
+
+### 2. Cost Management
+LLM costs can spiral quickly. Strategies that work:
+- Cache common queries
+- Use smaller models for simple tasks
+- Batch processing where possible
+- Rate limiting and quotas
+
+### 3. Prompt Engineering as Code
+Treat prompts like code:
+- Version control them
+- Test them systematically
+- Monitor performance over time
+
+## Real Example: Property Appraisal Extraction
+
+At Adaequare, we built a multi-stage pipeline:
+1. OCR for text extraction
+2. Layout analysis with Detectron2
+3. NLP for entity extraction
+4. LLM (Gemini) for complex fields only
+5. Validation layer for quality control
+
+This hybrid approach achieved 95%+ accuracy while keeping costs manageable.
+
+## Error Handling
+
+LLMs fail in unexpected ways:
+- Hallucinations
+- Inconsistent outputs
+- Rate limits
+- Timeout errors
+
+Build robust error handling and monitoring from day one.
+
+## Conclusion
+
+LLMs are powerful, but production systems require traditional engineering discipline: testing, monitoring, error handling, and cost management.`
+  }
+];
+
+const ALL_BLOG_POSTS = [
+  ...FEATURED_BLOG_POSTS,
+  {
+    id: 'aerospace-to-ai',
+    category: 'Career',
+    title: 'From Aerospace to Applied AI',
+    excerpt: 'How an aerospace engineering background shaped my approach to software development and problem-solving...',
+    date: '2025-01-08',
+    content: `People often ask how I went from Aerospace Engineering at IIT Madras to building AI systems. The truth? The skills transfer more than you'd think.
+
+## The Aerospace Mindset
+
+Aerospace engineering teaches you to think in systems. Everything is interconnected:
+- A change in wing design affects weight distribution
+- Weight affects fuel efficiency
+- Fuel efficiency affects range
+
+This systems thinking translates directly to software architecture.
+
+## What Transferred
+
+### 1. Precision and Testing
+In aerospace, failures are catastrophic. You learn to:
+- Test exhaustively
+- Plan for edge cases
+- Build redundancy
+
+These habits make you a better software engineer.
+
+### 2. Mathematical Rigor
+Control theory, optimization, signal processing - these mathematical foundations are incredibly valuable in AI/ML work.
+
+### 3. Problem Decomposition
+Breaking complex systems into manageable subsystems is the same skill whether you're designing aircraft or building microservices.
+
+## Making the Transition
+
+I didn't abandon aerospace - I applied it. My work on UAV path planning and computer vision during my degree gave me exposure to algorithms and optimization that I use daily.
+
+## Advice for Engineers Switching Domains
+
+Your engineering background is an asset, not a limitation. The fundamentals of problem-solving, systems thinking, and mathematical reasoning apply everywhere.
+
+Learn the specific tools and frameworks of your new domain, but trust that your engineering foundation will help you understand them deeply.`
+  },
+  {
+    id: 'microservices-trading',
+    category: 'Tech',
+    title: 'Microservices Architecture for Trading Systems',
+    excerpt: 'Design decisions, trade-offs, and lessons from building real-time trading infrastructure...',
+    date: '2024-11-25',
+    content: `Building QFI Capital's trading platform required making critical architecture decisions. Here's what I learned about microservices in high-frequency environments.
+
+## Why Microservices?
+
+For a trading system handling thousands of events per second, we needed:
+- Independent scaling of components
+- Fault isolation
+- Ability to update without downtime
+
+## Our Architecture
+
+### Core Services
+1. **Market Data Service** - Processes live feeds, stores in InfluxDB
+2. **Trade Execution Service** - Handles order placement and management
+3. **Risk Management Service** - Real-time position and exposure tracking
+4. **Signal Generation Service** - Algorithmic strategy execution
+
+### Communication Layer
+- Kafka for event streaming
+- Redis for caching and session management
+- REST APIs for synchronous operations
+
+## Key Design Decisions
+
+### 1. Event-Driven Architecture
+We used Kafka to decouple services. When a trade executes, multiple services react:
+- Risk service updates positions
+- Analytics service logs performance
+- Notification service alerts users
+
+### 2. Data Store Selection
+- PostgreSQL for transactional data (orders, accounts)
+- InfluxDB for time-series market data
+- Redis for real-time state
+
+Each database optimized for its use case.
+
+### 3. Latency Optimization
+In trading, milliseconds matter:
+- Services communicate via Kafka when possible
+- Critical paths bypass unnecessary hops
+- Aggressive caching strategies
+
+## Challenges
+
+### 1. Distributed Transactions
+Coordinating state across services is hard. We used event sourcing patterns and eventual consistency where appropriate.
+
+### 2. Testing
+Testing distributed systems requires different tools:
+- Contract testing between services
+- Chaos engineering for resilience
+- Load testing for performance
+
+### 3. Monitoring
+We built comprehensive observability:
+- Service-level metrics
+- Distributed tracing
+- Real-time alerting
+
+## Would I Do It Again?
+
+Absolutely. Microservices added complexity, but the benefits of independent scaling, deployment, and fault isolation were worth it for a trading system.
+
+For smaller projects? Probably not. Choose the right architecture for your scale.`
+  },
+  {
+    id: 'fastapi-practices',
+    category: 'Tutorial',
+    title: 'FastAPI Best Practices',
+    excerpt: 'Tips and patterns for building production-ready APIs with FastAPI, from project structure to deployment...',
+    date: '2024-11-15',
+    content: `FastAPI is my go-to framework for building APIs. Here are the practices I've developed building production systems at Adaequare.
+
+## Project Structure
+
+\`\`\`
+project/
+├── app/
+│   ├── api/
+│   │   ├── v1/
+│   │   │   ├── endpoints/
+│   │   │   └── router.py
+│   ├── core/
+│   │   ├── config.py
+│   │   └── security.py
+│   ├── models/
+│   ├── schemas/
+│   ├── services/
+│   └── main.py
+├── tests/
+└── requirements.txt
+\`\`\`
+
+Keep it organized from day one.
+
+## Key Patterns
+
+### 1. Dependency Injection
+FastAPI's dependency system is powerful:
+
+\`\`\`python
+async def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.get("/items")
+async def read_items(db: Session = Depends(get_db)):
+    return db.query(Item).all()
+\`\`\`
+
+### 2. Pydantic Models
+Use Pydantic for validation:
+
+\`\`\`python
+class ItemCreate(BaseModel):
+    name: str
+    price: float = Field(gt=0)
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "name": "Widget",
+                "price": 9.99
+            }
+        }
+\`\`\`
+
+### 3. Background Tasks
+For operations that don't need immediate response:
+
+\`\`\`python
+@app.post("/process")
+async def process(background_tasks: BackgroundTasks):
+    background_tasks.add_task(heavy_processing)
+    return {"status": "processing"}
+\`\`\`
+
+## Error Handling
+
+Custom exception handlers make debugging easier:
+
+\`\`\`python
+@app.exception_handler(ValidationError)
+async def validation_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=422,
+        content={"detail": exc.errors()}
+    )
+\`\`\`
+
+## Testing
+
+Write tests from the start:
+
+\`\`\`python
+from fastapi.testclient import TestClient
+
+def test_read_item():
+    response = client.get("/items/1")
+    assert response.status_code == 200
+    assert response.json()["name"] == "Widget"
+\`\`\`
+
+## Performance Tips
+
+1. Use async for I/O operations
+2. Enable response compression
+3. Implement proper caching
+4. Monitor with middleware
+
+## Deployment
+
+For production:
+- Use Gunicorn with Uvicorn workers
+- Set up proper logging
+- Implement health checks
+- Use environment-based config
+
+FastAPI makes building APIs fast, but these practices make them production-ready.`
+  }
+];
+
+const SKILLS_DATA = {
+  'Languages': ['Python (Expert)', 'C++', 'SQL', 'JavaScript', 'Bash'],
+  'Backend & APIs': ['FastAPI', 'Django', 'REST APIs', 'Microservices'],
+  'AI/ML': ['LLM Integration', 'OCR Pipelines', 'NLP', 'RAG', 'AI Agents'],
+  'Databases': ['PostgreSQL', 'MongoDB', 'InfluxDB', 'Redis'],
+  'DevOps & Tools': ['Docker', 'Kafka', 'Git', 'CI/CD'],
+  'System Design': ['Distributed Systems', 'ETL Pipelines', 'Scalable Architecture']
+};
+
+// ========================
+// COMPONENTS
+// ========================
+
+const Sidebar = ({ currentPage, setCurrentPage, className = '' }) => {
+  const navigation = [
+    { name: 'Home', id: 'home', icon: Home },
+    { name: 'About', id: 'about', icon: Briefcase },
+    { name: 'Projects', id: 'projects', icon: Code },
+    { name: 'Experimental', id: 'experimental', icon: Lightbulb },
+    { name: 'Blog', id: 'blog', icon: BookOpen },
+    { name: 'Outside Code', id: 'outside', icon: Heart },
+    { name: 'Contact', id: 'contact', icon: Mail },
+  ];
+
+  return (
+    <div className={`bg-gray-900 border-r border-gray-800 flex flex-col ${className}`}>
+      <div className="p-6 border-b border-gray-800">
+        <div 
+          className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent cursor-pointer"
+          onClick={() => setCurrentPage('home')}
+        >
+          Keerthan.dev
+        </div>
+      </div>
+      
+      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+        {navigation.map((item) => {
+          const Icon = item.icon;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setCurrentPage(item.id)}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                currentPage === item.id
+                  ? 'bg-cyan-600 text-white'
+                  : 'text-gray-300 hover:bg-gray-800'
+              }`}
+            >
+              <Icon size={20} />
+              <span>{item.name}</span>
+            </button>
+          );
+        })}
+      </nav>
+      
+      <div className="p-4 border-t border-gray-800">
+        <div className="flex justify-center gap-3">
+          <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" 
+             className="text-gray-400 hover:text-white transition-colors">
+            <Github size={20} />
+          </a>
+          <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer"
+             className="text-gray-400 hover:text-white transition-colors">
+            <Linkedin size={20} />
+          </a>
+          <a href="mailto:keerthanvenkata@gmail.com"
+             className="text-gray-400 hover:text-white transition-colors">
+            <Mail size={20} />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Header = ({ title, subtitle, onBack }) => {
+  return (
+    <div className="bg-gray-900/80 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-30 px-6 py-4">
+      <div className="flex items-center gap-4">
+        {onBack && (
+          <button 
+            onClick={onBack}
+            className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-lg"
+          >
+            <ArrowLeft size={24} />
+          </button>
+        )}
+        <div>
+          <h1 className="text-2xl font-bold text-white">{title}</h1>
+          {subtitle && <p className="text-gray-400 text-sm mt-1">{subtitle}</p>}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Modal = ({ isOpen, onClose, children, size = 'large' }) => {
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', handleEscape);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  const sizeClasses = {
+    large: 'max-w-4xl',
+    medium: 'max-w-3xl',
+    small: 'max-w-2xl'
+  };
+
+  return (
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 overflow-y-auto"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className={`bg-gray-900 rounded-xl ${sizeClasses[size]} w-full max-h-[90vh] overflow-y-auto my-8`}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+const ProjectDetailModal = ({ project, onClose }) => {
+  return (
+    <Modal isOpen={true} onClose={onClose} size="large">
+      <div className="sticky top-0 bg-gray-900 border-b border-gray-800 p-6 flex justify-between items-start z-10">
+        <div className="flex-1 pr-4">
+          <h3 className="text-2xl font-bold text-white">{project.title}</h3>
+          <p className="text-cyan-400 mt-1">{project.role}</p>
+        </div>
+        <button 
+          onClick={onClose} 
+          className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-lg flex-shrink-0"
+          title="Close (ESC)"
+        >
+          <X size={24} />
+        </button>
+      </div>
+      
+      <div className="p-6 space-y-6">
+        <p className="text-gray-300 text-lg">{project.description}</p>
+        
+        {project.contribution && (
+          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <h4 className="text-white font-semibold text-lg mb-3">My Contribution</h4>
+            <p className="text-gray-300 whitespace-pre-line">{project.contribution}</p>
+          </div>
+        )}
+        
+        {project.embedSite && (
+          <div className="bg-gray-800 rounded-lg p-4">
+            <h4 className="text-white font-semibold mb-3">Live Site Preview</h4>
+            <div className="relative bg-white rounded overflow-hidden" style={{ height: '500px' }}>
+              <iframe 
+                src={project.embedSite} 
+                className="w-full h-full border-0"
+                title={`${project.title} preview`}
+              />
+            </div>
+          </div>
+        )}
+        
+        {project.video && (
+          <div className="bg-gray-800 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Play size={20} className="text-cyan-400" />
+              <h4 className="text-white font-semibold">Demo & Setup Video</h4>
+            </div>
+            <div className="relative bg-gray-700 rounded overflow-hidden" style={{ paddingBottom: '56.25%' }}>
+              <video 
+                controls 
+                className="absolute top-0 left-0 w-full h-full"
+                poster={project.videoPoster}
+              >
+                <source src={project.video} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        )}
+        
+        {project.images && project.images.length > 0 && (
+          <div className="space-y-4">
+            <h4 className="text-white font-semibold text-lg">Architecture & Screenshots</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {project.images.map((img, idx) => (
+                <div key={idx} className="bg-gray-800 rounded-lg overflow-hidden">
+                  <img 
+                    src={img} 
+                    alt={`${project.title} screenshot ${idx + 1}`}
+                    className="w-full h-auto"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                  <div className="hidden h-48 items-center justify-center text-gray-400 p-4">
+                    Add image URL: {img}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        <div>
+          <h4 className="text-white font-semibold text-lg mb-3">Key Highlights</h4>
+          <ul className="space-y-2">
+            {project.highlights.map((highlight, idx) => (
+              <li key={idx} className="flex items-start gap-2 text-gray-300">
+                <ChevronRight size={20} className="text-cyan-400 flex-shrink-0 mt-0.5" />
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        
+        <div>
+          <h4 className="text-white font-semibold text-lg mb-3">Tech Stack</h4>
+          <div className="flex flex-wrap gap-2">
+            {project.tech.map((tech, idx) => (
+              <span key={idx} className="bg-gray-800 text-cyan-400 px-3 py-1 rounded-full text-sm">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+        
+        {project.link && (
+          <a 
+            href={project.link} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-3 rounded-lg transition-colors"
+          >
+            Visit Project <ExternalLink size={18} />
+          </a>
+        )}
+      </div>
+    </Modal>
+  );
+};
+
+const ExperimentalModal = ({ project, onClose }) => {
+  return (
+    <Modal isOpen={true} onClose={onClose} size="medium">
+      <div className="sticky top-0 bg-gray-900 border-b border-gray-800 p-6 flex justify-between items-start z-10">
+        <div className="flex-1 pr-4">
+          <h3 className="text-2xl font-bold text-white">{project.title}</h3>
+        </div>
+        <button 
+          onClick={onClose} 
+          className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-gray-800 rounded-lg flex-shrink-0"
+          title="Close (ESC)"
+        >
+          <X size={24} />
+        </button>
+      </div>
+      
+      <div className="p-6 space-y-6">
+        <p className="text-gray-300 text-lg">{project.description}</p>
+        
+        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+          <p className="text-gray-300">{project.details}</p>
+        </div>
+        
+        <div>
+          <h4 className="text-white font-semibold text-lg mb-3">What I Learned</h4>
+          <ul className="space-y-2">
+            {project.highlights.map((highlight, idx) => (
+              <li key={idx} className="flex items-start gap-2 text-gray-300">
+                <ChevronRight size={20} className="text-yellow-400 flex-shrink-0 mt-0.5" />
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        
+        <div>
+          <h4 className="text-white font-semibold text-lg mb-3">Tech Used</h4>
+          <div className="flex flex-wrap gap-2">
+            {project.tech.map((tech, idx) => (
+              <span key={idx} className="bg-gray-800 text-gray-300 px-3 py-1 rounded-full text-sm">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+// ========================
+// PAGE COMPONENTS
+// ========================
+
+const HomePage = () => (
+  <div className="min-h-screen">
+    <div className="max-w-6xl mx-auto px-6 py-20">
+      <div className="text-center space-y-6 mb-20">
+        <h1 className="text-6xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          Venkata Keerthan Nimmala
+        </h1>
+        <p className="text-2xl text-gray-300">SDE Applied AI & Entrepreneur</p>
+        <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          Building scalable systems, AI solutions, and entrepreneurial ventures. Ready for new challenges and impactful projects.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-6">
+        <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-cyan-500 transition-all">
+          <Code size={32} className="text-cyan-400 mb-4" />
+          <h3 className="text-xl font-bold text-white mb-2">Full Stack Development</h3>
+          <p className="text-gray-400">Expert in building scalable backend systems, microservices, and modern web applications</p>
+        </div>
+        
+        <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-cyan-500 transition-all">
+          <Briefcase size={32} className="text-cyan-400 mb-4" />
+          <h3 className="text-xl font-bold text-white mb-2">Applied AI</h3>
+          <p className="text-gray-400">Specialized in LLM integration, OCR pipelines, NLP, and production AI systems</p>
+        </div>
+        
+        <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-cyan-500 transition-all">
+          <ExternalLink size={32} className="text-cyan-400 mb-4" />
+          <h3 className="text-xl font-bold text-white mb-2">Entrepreneurship</h3>
+          <p className="text-gray-400">Co-founder of QFI Research Capital, passionate about building impactful ventures</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const AboutPage = () => (
+  <div className="max-w-4xl mx-auto px-6 py-12">
+    <div className="space-y-6 text-gray-300 text-lg">
+      <p>
+        I'm a Software Development Engineer with a passion for building scalable systems and entrepreneurial ventures. 
+        With a B.Tech in Aerospace Engineering from IIT Madras, I bring a unique problem-solving approach to software development.
+      </p>
+      
+      <p>
+        Currently at Adaequare, I'm building production AI systems that process thousands of documents and datasets, 
+        saving hundreds of hours of manual work. My expertise spans full-stack development, system design, and applied AI.
+      </p>
+      
+      <div className="bg-gradient-to-r from-cyan-900/30 to-blue-900/30 p-6 rounded-xl border border-cyan-500/30 my-8">
+        <h3 className="text-2xl font-bold text-cyan-400 mb-3">Entrepreneurial Vision</h3>
+        <p>
+          I co-founded <a href="https://qficapital.in" target="_blank" rel="noopener noreferrer" 
+             className="text-cyan-400 hover:text-cyan-300 underline">QFI Research Capital</a>, 
+          where I built an algorithm-driven trading platform from the ground up. This experience taught me the 
+          importance of scalable architecture, real-time systems, and the intersection of AI with finance.
+        </p>
+        <p className="mt-3">
+          I'm driven by the desire to build impactful ventures that solve real problems. Whether it's automating 
+          tedious workflows, building AI-powered systems, or creating new products, I'm always looking for 
+          opportunities to make a difference.
+        </p>
+      </div>
+      
+      <div>
+        <h3 className="text-2xl font-bold text-white mb-4">Core Competencies</h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          {Object.entries(SKILLS_DATA).map(([category, items]) => (
+            <div key={category} className="bg-gray-800 p-4 rounded-lg">
+              <h4 className="text-cyan-400 font-semibold mb-2">{category}</h4>
+              <div className="flex flex-wrap gap-2">
+                {items.map((skill, idx) => (
+                  <span key={idx} className="text-sm text-gray-300">{skill}{idx < items.length - 1 ? ',' : ''}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div className="bg-cyan-900/20 border border-cyan-500/30 p-6 rounded-xl mt-8">
+        <h3 className="text-xl font-bold text-white mb-3">🚀 Open to New Opportunities</h3>
+        <p>
+          I'm actively exploring new projects and opportunities where I can leverage my expertise in full-stack 
+          development and applied AI. Whether it's joining a dynamic startup, taking on challenging contract work, 
+          or collaborating on innovative ventures, I'm ready to make an impact.
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
+const ProjectsPage = ({ onProjectSelect }) => (
+  <div className="max-w-6xl mx-auto px-6 py-12">
+    <div className="space-y-6">
+      {PROJECTS_DATA.map((project) => (
+        <div 
+          key={project.id} 
+          className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-cyan-500 transition-all cursor-pointer"
+          onClick={() => onProjectSelect(project)}
+        >
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h3 className="text-2xl font-bold text-white">{project.title}</h3>
+              <p className="text-cyan-400 mt-1">{project.role}</p>
+            </div>
+            <span className="bg-green-900/30 text-green-400 px-3 py-1 rounded-full text-sm border border-green-500/30">
+              {project.status}
+            </span>
+          </div>
+          
+          <p className="text-gray-300 mb-4">{project.description}</p>
+          
+          <div className="flex flex-wrap gap-2 mb-4">
+            {project.tech.slice(0, 5).map((tech, idx) => (
+              <span key={idx} className="bg-gray-700 text-cyan-400 px-3 py-1 rounded-full text-sm">
+                {tech}
+              </span>
+            ))}
+            {project.tech.length > 5 && (
+              <span className="text-gray-400 px-3 py-1 text-sm">+{project.tech.length - 5} more</span>
+            )}
+          </div>
+          
+          <div className="flex gap-3 items-center text-cyan-400">
+            <span className="text-sm">Click to view details</span>
+            <ChevronRight size={18} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const ExperimentalPage = ({ onExperimentSelect }) => (
+  <div className="max-w-5xl mx-auto px-6 py-12">
+    <p className="text-gray-400 text-lg mb-8">
+      Half-baked ideas, weekend hacks, and casual experiments. Not everything here works perfectly, and that's the point.
+    </p>
+    
+    <div className="grid md:grid-cols-2 gap-6">
+      {EXPERIMENTAL_DATA.map((project) => (
+        <div 
+          key={project.id} 
+          onClick={() => onExperimentSelect(project)}
+          className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-yellow-500/50 transition-all cursor-pointer"
+        >
+          <h3 className="text-xl font-bold text-white mb-3">{project.title}</h3>
+          
+          <p className="text-gray-400 mb-4">{project.description}</p>
+          
+          <div className="flex flex-wrap gap-2 mb-4">
+            {project.tech.map((tech, tidx) => (
+              <span key={tidx} className="bg-gray-700 text-gray-300 px-2 py-1 rounded text-sm">
+                {tech}
+              </span>
+            ))}
+          </div>
+          
+          <button className="text-yellow-400 hover:text-yellow-300 inline-flex items-center gap-1 text-sm">
+            Learn More <ChevronRight size={16} />
+          </button>
+        </div>
+      ))}
+    </div>
+    
+    <div className="mt-12 bg-gradient-to-r from-yellow-900/20 to-orange-900/20 border border-yellow-500/30 p-8 rounded-xl">
+      <h3 className="text-2xl font-bold text-white mb-4">Why This Section Exists</h3>
+      <p className="text-gray-300 text-lg mb-3">
+        Not every project needs to be production-ready or polished. Some of my best learning has come from 
+        weekend experiments, half-finished tools, and "just for fun" builds.
+      </p>
+      <p className="text-gray-400">
+        This section celebrates the messy middle of software development — the place where ideas are tested, 
+        mistakes are made, and real learning happens.
+      </p>
+    </div>
+  </div>
+);
+
+const BlogPage = ({ selectedBlogCategory, setSelectedBlogCategory }) => {
+  const categories = ['all', 'Tech', 'Career', 'Entrepreneurship', 'Tutorial'];
+  const filteredPosts = selectedBlogCategory === 'all' 
+    ? ALL_BLOG_POSTS 
+    : ALL_BLOG_POSTS.filter(post => post.category === selectedBlogCategory);
+
+  return (
+    <div className="max-w-4xl mx-auto px-6 py-12">
+      <p className="text-gray-400 text-lg mb-8">
+        Thoughts on software development, AI, system design, and the journey of building things.
+      </p>
+      
+      <div className="mb-12">
+        <h3 className="text-2xl font-bold text-white mb-6">Featured Posts</h3>
+        <div className="space-y-6">
+          {FEATURED_BLOG_POSTS.map((post, idx) => (
+            <div key={idx} className="bg-gradient-to-r from-cyan-900/20 to-blue-900/20 border border-cyan-500/30 p-6 rounded-xl hover:border-cyan-500 transition-all cursor-pointer">
+              <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
+                <span className={`px-3 py-1 rounded-full text-sm ${
+                  post.category === 'Tech' ? 'bg-blue-900/30 text-blue-400 border border-blue-500/30' :
+                  post.category === 'Career' ? 'bg-purple-900/30 text-purple-400 border border-purple-500/30' :
+                  post.category === 'Entrepreneurship' ? 'bg-green-900/30 text-green-400 border border-green-500/30' :
+                  'bg-orange-900/30 text-orange-400 border border-orange-500/30'
+                }`}>
+                  {post.category}
+                </span>
+                <span className="text-gray-500 text-sm">{post.date}</span>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">{post.title}</h3>
+              <p className="text-gray-400">{post.excerpt}</p>
+              <button className="text-cyan-400 hover:text-cyan-300 mt-3 inline-flex items-center gap-1">
+                Read More <ChevronRight size={16} />
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div className="mb-8">
+        <h3 className="text-2xl font-bold text-white mb-6">All Posts</h3>
+        <div className="flex flex-wrap gap-3 mb-6">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedBlogCategory(cat)}
+              className={`px-4 py-2 rounded-lg transition-colors ${
+                selectedBlogCategory === cat
+                  ? 'bg-cyan-600 text-white'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      <div className="space-y-6">
+        {filteredPosts.map((post, idx) => (
+          <div key={idx} className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-cyan-500 transition-all cursor-pointer">
+            <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
+              <span className={`px-3 py-1 rounded-full text-sm ${
+                post.category === 'Tech' ? 'bg-blue-900/30 text-blue-400 border border-blue-500/30' :
+                post.category === 'Career' ? 'bg-purple-900/30 text-purple-400 border border-purple-500/30' :
+                post.category === 'Entrepreneurship' ? 'bg-green-900/30 text-green-400 border border-green-500/30' :
+                'bg-orange-900/30 text-orange-400 border border-orange-500/30'
+              }`}>
+                {post.category}
+              </span>
+              <span className="text-gray-500 text-sm">{post.date}</span>
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2">{post.title}</h3>
+            <p className="text-gray-400">{post.excerpt}</p>
+            <button className="text-cyan-400 hover:text-cyan-300 mt-3 inline-flex items-center gap-1">
+              Read More <ChevronRight size={16} />
+            </button>
+          </div>
+        ))}
+      </div>
+      
+      {filteredPosts.length === 0 && (
+        <div className="text-center py-12 text-gray-500">
+          No posts found in this category.
+        </div>
+      )}
+      
+      <div className="mt-12 bg-gray-800 border border-gray-700 p-6 rounded-xl">
+        <p className="text-gray-400 text-center">
+          💡 To add a new blog post, simply add it to the <code className="bg-gray-700 px-2 py-1 rounded text-cyan-400">ALL_BLOG_POSTS</code> array. It will automatically appear here!
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const OutsidePage = () => (
+  <div className="max-w-4xl mx-auto px-6 py-12">
+    <p className="text-gray-400 text-lg mb-10">
+      Life beyond the terminal. Things I enjoy when I'm not building software.
+    </p>
+    
+    <div className="space-y-8">
+      <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-8 rounded-xl border border-purple-500/30">
+        <div className="flex items-center gap-3 mb-4">
+          <Music size={28} className="text-purple-400" />
+          <h3 className="text-2xl font-bold text-white">Music</h3>
+        </div>
+        <p className="text-gray-300 text-lg mb-4">
+          From the raw energy of rock to the smooth grooves of R&B and the catchy hooks of pop, 
+          music is where I find inspiration and recharge.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          {['Rock', 'R&B', 'Pop', 'Indie', 'Alternative'].map((genre) => (
+            <span key={genre} className="bg-purple-900/40 text-purple-300 px-3 py-1 rounded-full text-sm border border-purple-500/20">
+              {genre}
+            </span>
+          ))}
+        </div>
+      </div>
+      
+      <div className="bg-gradient-to-br from-orange-900/30 to-red-900/30 p-8 rounded-xl border border-orange-500/30">
+        <div className="flex items-center gap-3 mb-4">
+          <Coffee size={28} className="text-orange-400" />
+          <h3 className="text-2xl font-bold text-white">Food</h3>
+        </div>
+        <p className="text-gray-300 text-lg mb-4">
+          Exploring the culinary scene one bite at a time. From street food gems to fine dining, 
+          I appreciate the craft and stories behind good food.
+        </p>
+        <p className="text-gray-400">
+          Hyderabad's biryani scene enthusiast. Always hunting for the next great meal.
+        </p>
+      </div>
+      
+      <div className="bg-gradient-to-br from-green-900/30 to-teal-900/30 p-8 rounded-xl border border-green-500/30">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="text-3xl">⚽</div>
+          <h3 className="text-2xl font-bold text-white">Football</h3>
+        </div>
+        <p className="text-gray-300 text-lg">
+          Whether it's watching matches, following the Premier League, or casual kickabouts, 
+          football is a passion that never gets old.
+        </p>
+      </div>
+      
+      <div className="bg-gray-800 p-8 rounded-xl border border-gray-700">
+        <h3 className="text-2xl font-bold text-white mb-4">Other Interests</h3>
+        <div className="grid md:grid-cols-2 gap-4 text-gray-300">
+          <div>
+            <div className="text-cyan-400 font-semibold mb-1">📚 Reading</div>
+            <p className="text-sm text-gray-400">Tech books, sci-fi, and business biographies</p>
+          </div>
+          <div>
+            <div className="text-cyan-400 font-semibold mb-1">🎮 Gaming</div>
+            <p className="text-sm text-gray-400">Strategy games and the occasional FPS</p>
+          </div>
+          <div>
+            <div className="text-cyan-400 font-semibold mb-1">✈️ Travel</div>
+            <p className="text-sm text-gray-400">Exploring new places and cultures</p>
+          </div>
+          <div>
+            <div className="text-cyan-400 font-semibold mb-1">☕ Coffee</div>
+            <p className="text-sm text-gray-400">Specialty coffee and cafe explorations</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const ContactPage = () => (
+  <div className="max-w-3xl mx-auto px-6 py-12">
+    <div className="bg-gray-800 p-8 rounded-xl border border-gray-700">
+      <p className="text-gray-300 text-lg mb-8">
+        I'm always interested in discussing new opportunities, collaborations, or just connecting with fellow developers and entrepreneurs.
+      </p>
+      
+      <div className="space-y-4">
+        <a href="mailto:keerthanvenkata@gmail.com" 
+           className="flex items-center gap-3 bg-gray-700 hover:bg-gray-600 p-4 rounded-lg transition-colors">
+          <Mail className="text-cyan-400" size={24} />
+          <div>
+            <div className="text-white font-semibold">Email</div>
+            <div className="text-gray-400">keerthanvenkata@gmail.com</div>
+          </div>
+        </a>
+        
+        <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer"
+           className="flex items-center gap-3 bg-gray-700 hover:bg-gray-600 p-4 rounded-lg transition-colors">
+          <Linkedin className="text-cyan-400" size={24} />
+          <div>
+            <div className="text-white font-semibold">LinkedIn</div>
+            <div className="text-gray-400">linkedin.com/in/venkata-keerthan</div>
+          </div>
+        </a>
+        
+        <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer"
+           className="flex items-center gap-3 bg-gray-700 hover:bg-gray-600 p-4 rounded-lg transition-colors">
+          <Github className="text-cyan-400" size={24} />
+          <div>
+            <div className="text-white font-semibold">GitHub</div>
+            <div className="text-gray-400">github.com/keerthanvenkata</div>
+          </div>
+        </a>
+        
+        <a href="https://qficapital.in" target="_blank" rel="noopener noreferrer"
+           className="flex items-center gap-3 bg-gradient-to-r from-cyan-900/30 to-blue-900/30 border border-cyan-500/30 hover:border-cyan-500 p-4 rounded-lg transition-colors">
+          <ExternalLink className="text-cyan-400" size={24} />
+          <div>
+            <div className="text-white font-semibold">QFI Research Capital</div>
+            <div className="text-gray-400">My startup venture</div>
+          </div>
+        </a>
+      </div>
+      
+      <div className="mt-8 pt-8 border-t border-gray-700">
+        <p className="text-gray-400 text-center">
+          Based in Hyderabad, India • Open to remote opportunities
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
+// ========================
+// MAIN APP
+// ========================
+
+export default function Portfolio() {
+  const [currentPage, setCurrentPage] = useState('home');
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedExperiment, setSelectedExperiment] = useState(null);
+  const [selectedBlogCategory, setSelectedBlogCategory] = useState('all');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const renderPage = () => {
+    const pageProps = {
+      onProjectSelect: setSelectedProject,
+      onExperimentSelect: setSelectedExperiment,
+      selectedBlogCategory,
+      setSelectedBlogCategory
+    };
+
+    switch(currentPage) {
+      case 'home': return <HomePage />;
+      case 'about': return <AboutPage />;
+      case 'projects': return <ProjectsPage onProjectSelect={pageProps.onProjectSelect} />;
+      case 'experimental': return <ExperimentalPage onExperimentSelect={pageProps.onExperimentSelect} />;
+      case 'blog': return <BlogPage selectedBlogCategory={pageProps.selectedBlogCategory} setSelectedBlogCategory={pageProps.setSelectedBlogCategory} />;
+      case 'outside': return <OutsidePage />;
+      case 'contact': return <ContactPage />;
+      default: return <HomePage />;
+    }
+  };
+
+  const getPageTitle = () => {
+    const titles = {
+      home: 'Home',
+      about: 'About Me',
+      projects: 'Featured Projects',
+      experimental: 'Experimental & Hobby Projects',
+      blog: 'Blog',
+      outside: 'Outside Code',
+      contact: 'Let\'s Connect'
+    };
+    return titles[currentPage] || 'Home';
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 text-white flex">
+      {/* Sidebar - Desktop */}
+      <Sidebar 
+        currentPage={currentPage} 
+        setCurrentPage={setCurrentPage}
+        className="hidden lg:flex w-64 flex-shrink-0"
+      />
+      
+      {/* Mobile Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-gray-900 border-b border-gray-800 px-4 py-3 flex justify-between items-center">
+        <div 
+          className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent cursor-pointer"
+          onClick={() => setCurrentPage('home')}
+        >
+          Keerthan.dev
+        </div>
+        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 bg-gray-900">
+          <div className="p-4 border-b border-gray-800 flex justify-between items-center">
+            <div className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              Keerthan.dev
+            </div>
+            <button onClick={() => setMobileMenuOpen(false)}>
+              <X size={24} />
+            </button>
+          </div>
+          <Sidebar 
+            currentPage={currentPage} 
+            setCurrentPage={(page) => {
+              setCurrentPage(page);
+              setMobileMenuOpen(false);
+            }}
+            className="flex flex-col h-[calc(100vh-73px)]"
+          />
+        </div>
+      )}
+      
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col min-h-screen lg:min-h-0">
+        <Header title={getPageTitle()} />
+        <main className="flex-1 overflow-y-auto pt-16 lg:pt-0">
+          {renderPage()}
+        </main>
+        
+        {/* Footer */}
+        <footer className="bg-gray-900 border-t border-gray-800 py-6 px-6">
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-gray-400 text-sm">
+              © 2025 Venkata Keerthan Nimmala. Built with React & Tailwind.
+            </p>
+            <p className="text-gray-500 text-xs mt-1">
+              Ready for new opportunities • Open to collaboration
+            </p>
+          </div>
+        </footer>
+      </div>
+
+      {/* Modals */}
+      {selectedProject && (
+        <ProjectDetailModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      )}
+
+      {selectedExperiment && (
+        <ExperimentalModal project={selectedExperiment} onClose={() => setSelectedExperiment(null)} />
+      )}
+    </div>
+  );
+}
