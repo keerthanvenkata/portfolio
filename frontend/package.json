@@ -4,11 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prebuild": "node ./scripts/generate-content.mjs",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview --port 4173"
   },
   "dependencies": {
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0",
     "axios": "^1.7.7",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.31",
