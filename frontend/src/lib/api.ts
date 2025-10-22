@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://127.0.0.1:8000'
+// In Vercel/static deploy, data is served as static files under /api
+const API_BASE = import.meta.env.VITE_API_BASE ?? ''
 
 export const api = axios.create({ baseURL: API_BASE })
 
@@ -33,27 +34,33 @@ export type Project = {
 }
 
 export async function fetchFeaturedPosts() {
-  const { data } = await api.get<BlogPost[]>('/api/blog/posts', { params: { featured: true } })
-  return data
+  const { data } = await api.get<BlogPost[]>('/api/posts.json')
+  return data.filter(p => p.featured)
 }
 
 export async function fetchPosts(category?: string) {
-  const { data } = await api.get<BlogPost[]>('/api/blog/posts', { params: { category } })
+  const { data } = await api.get<BlogPost[]>('/api/posts.json')
+  if (category && category.toLowerCase() !== 'all') {
+    return data.filter(p => p.category === category)
+  }
   return data
 }
 
 export async function fetchPost(id: string) {
-  const { data } = await api.get<BlogPost>(`/api/blog/posts/${id}`)
+  const { data } = await api.get<BlogPost>(`/api/posts/${id}.json`)
   return data
 }
 
 export async function fetchProjects(kind?: 'project' | 'experimental' | 'all', featured?: boolean) {
-  const { data } = await api.get<Project[]>('/api/projects', { params: { kind, featured } })
-  return data
+  const { data } = await api.get<Project[]>('/api/projects.json')
+  let out = data
+  if (kind && kind !== 'all') out = out.filter(p => p.kind === kind)
+  if (typeof featured === 'boolean') out = out.filter(p => Boolean(p.featured) === featured)
+  return out
 }
 
 export async function fetchProject(id: string) {
-  const { data } = await api.get<Project>(`/api/projects/${id}`)
+  const { data } = await api.get<Project>(`/api/projects/${id}.json`)
   return data
 }
 
