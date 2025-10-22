@@ -1,0 +1,57 @@
+[
+  {
+    "id": "qfi-capital",
+    "title": "QFI Research Capital",
+    "role": "Co-Founder & Part-Time CTO",
+    "description": "Algorithm-driven trade execution with real-time analytics, risk management, and AI-powered signal generation.",
+    "contribution": "As co-founder and CTO, I architected and built the entire trading platform from scratch...",
+    "tech": ["Python", "PostgreSQL", "InfluxDB", "Docker", "Kafka", "Redis", "Kite Connect"],
+    "link": "https://qficapital.in",
+    "embedSite": "https://qficapital.in",
+    "status": "Live",
+    "images": [],
+    "video": null,
+    "videoPoster": null,
+    "highlights": [
+      "Real-time trade execution with sub-second latency",
+      "Microservices architecture with Kafka event streaming",
+      "Integrated risk engines and portfolio management"
+    ],
+    "featured": true,
+    "kind": "project"
+  },
+  {
+    "id": "property-appraisal",
+    "title": "Automated Property Appraisal Extraction",
+    "role": "SDE Applied AI at Adaequare",
+    "description": "OCR + NLP/LLM pipeline extracting structured data from 10,000+ PDFs per year.",
+    "contribution": "Built end-to-end extraction pipeline from scratch...",
+    "tech": ["FastAPI", "Tesseract", "Detectron2", "NLTK", "Gemini", "LangChain", "Streamlit", "PostgreSQL"],
+    "status": "Production",
+    "images": [],
+    "highlights": [
+      "Processes 10,000+ PDFs annually with 95%+ accuracy",
+      "Saves 300 manual hours per month"
+    ],
+    "featured": true,
+    "kind": "project"
+  },
+  {
+    "id": "etl-pipeline",
+    "title": "Automated ETL Pipeline",
+    "role": "SDE Applied AI at Adaequare",
+    "description": "Standardizes 50+ county tax roll datasets per year, reducing analyst time by 85%.",
+    "contribution": "Designed intelligent ETL system that learns from each dataset...",
+    "tech": ["Python", "Pandas", "Fuzzy Matching", "Semantic Patterns", "PostgreSQL", "Redis"],
+    "status": "Production",
+    "images": [],
+    "highlights": [
+      "85% reduction in analyst time (8 hours → 1 hour)",
+      "Self-learning: improves with each dataset processed"
+    ],
+    "featured": false,
+    "kind": "project"
+  }
+]
+
+
