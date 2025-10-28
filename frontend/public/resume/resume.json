@@ -1,0 +1,16 @@
+{
+  "current_version": "v1",
+  "versions": [
+    {
+      "version": "v1",
+      "filename": "resume-v1.pdf",
+      "date": "2025-01-28",
+      "description": "Initial resume version",
+      "is_latest": true
+    }
+  ],
+  "metadata": {
+    "last_updated": "2025-01-28",
+    "total_versions": 1
+  }
+}
