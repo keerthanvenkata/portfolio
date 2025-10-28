@@ -11,6 +11,7 @@ import ProjectModal from './components/ProjectModal'
 import BlogModal from './components/BlogModal'
 import ExperimentalModal from './components/ExperimentalModal'
 import ContactPage from './components/ContactPage'
+import PDFViewer from './components/PDFViewer'
 
 function Sidebar({ current }: { current: string }) {
   const navigation = [
@@ -242,29 +243,51 @@ function ResumePage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
           <h2 className="text-3xl font-bold text-white">Resume</h2>
-          <a 
-            href="/resume/resume-latest.pdf" 
-            download 
-            className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
-          >
-            <ExternalLink size={16} />
-            Download PDF
-          </a>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <a 
+              href="/resume/resume-latest.pdf" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+            >
+              <ExternalLink size={16} />
+              View PDF
+            </a>
+            <a 
+              href="/resume/resume-latest.pdf" 
+              download 
+              className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
+            >
+              <ExternalLink size={16} />
+              Download PDF
+            </a>
+          </div>
         </div>
-        <div className="bg-white rounded-lg overflow-hidden">
-          <iframe 
-            src="/resume/resume-latest.pdf#toolbar=1&navpanes=1&scrollbar=1" 
-            width="100%" 
+        
+        {/* PDF Viewer Section */}
+        <div className="mb-4">
+          <PDFViewer 
+            src="/resume/resume-latest.pdf"
+            title="Resume Preview"
             height="800px"
-            className="border-0"
-            title="Resume PDF Viewer"
           />
         </div>
-        <div className="mt-4 text-sm text-gray-400">
+        
+        <div className="text-sm text-gray-400 space-y-2">
           <p>Last updated: January 28, 2025</p>
-          <p>Having trouble viewing? <a href="/resume/resume-latest.pdf" className="text-cyan-400 hover:text-cyan-300">Download the PDF directly</a></p>
+          <div className="flex flex-wrap gap-4">
+            <p>Having trouble viewing? 
+              <a href="/resume/resume-latest.pdf" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 ml-1 underline">
+                Open in new tab
+              </a>
+            </p>
+            <p>•</p>
+            <a href="/resume/resume-latest.pdf" download className="text-cyan-400 hover:text-cyan-300 underline">
+              Download directly
+            </a>
+          </div>
         </div>
       </div>
     </div>
