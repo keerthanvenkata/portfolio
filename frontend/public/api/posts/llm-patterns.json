@@ -1,0 +1,9 @@
+{
+  "id": "llm-patterns",
+  "title": "LLM Integration Patterns",
+  "excerpt": "Practical patterns for production LLM systems and cost control.",
+  "category": "Tech",
+  "date": "2024-12-20",
+  "featured": true,
+  "content_html": "<p>Integrating LLMs into production systems is very different from experimenting in a notebook. Here are patterns I've learned building real systems.</p>\n<h2>Production Patterns</h2>\n<ol>\n<li>Fallback chains</li>\n<li>Cost management via caching and batching</li>\n<li>Prompt engineering as code</li>\n</ol>\n<h2>Error Handling</h2>\n<p>Expect hallucinations, inconsistent output, rate limits, and timeouts. Build robust monitoring and retries.</p>\n"
+}
