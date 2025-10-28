@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // In Vercel/static deploy, data is served as static files under /api
-const API_BASE = import.meta.env.VITE_API_BASE ?? ''
+const API_BASE = (import.meta as any).env?.VITE_API_BASE ?? ''
 
 export const api = axios.create({ baseURL: API_BASE })
 
