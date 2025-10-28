@@ -1,0 +1,25 @@
+{
+  "id": "property-appraisal",
+  "title": "Automated Property Appraisal Extraction",
+  "role": "SDE Applied AI at Adaequare",
+  "description": "OCR + NLP/LLM pipeline extracting structured data from 10,000+ PDFs per year.",
+  "contribution": "Built end-to-end extraction pipeline from scratch...",
+  "tech": [
+    "FastAPI",
+    "Tesseract",
+    "Detectron2",
+    "NLTK",
+    "Gemini",
+    "LangChain",
+    "Streamlit",
+    "PostgreSQL"
+  ],
+  "status": "Production",
+  "images": [],
+  "highlights": [
+    "Processes 10,000+ PDFs annually with 95%+ accuracy",
+    "Saves 300 manual hours per month"
+  ],
+  "featured": true,
+  "kind": "project"
+}
