@@ -10,6 +10,7 @@ import ExperimentalDetail from './pages/ExperimentalDetail'
 import ProjectModal from './components/ProjectModal'
 import BlogModal from './components/BlogModal'
 import ExperimentalModal from './components/ExperimentalModal'
+import ContactPage from './components/ContactPage'
 
 function Sidebar({ current }: { current: string }) {
   const navigation = [
@@ -275,9 +276,32 @@ function OutsidePage() {
     <div className="max-w-4xl mx-auto px-6 py-12 space-y-8">
       <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-8 rounded-xl border border-purple-500/30">
         <div className="flex items-center gap-3 mb-4"><Music size={28} className="text-purple-400" /><h3 className="text-2xl font-bold text-white">Music</h3></div>
-        <p className="text-gray-300 mb-4">Playlists that fuel my focus.</p>
-        <div className="aspect-video bg-black rounded-lg overflow-hidden">
-          <iframe style={{ borderRadius: 12 }} src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M" width="100%" height="100%" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <p className="text-gray-300 mb-4">Playlists that fuel my focus and coding sessions.</p>
+        <div className="space-y-6">
+          <div className="aspect-video bg-black rounded-lg overflow-hidden">
+            <iframe 
+              style={{ borderRadius: 12 }} 
+              src="https://open.spotify.com/embed/playlist/7p4UDA3iRUHzOOVB29ySL1?utm_source=generator&theme=0" 
+              width="100%" 
+              height="100%" 
+              frameBorder="0" 
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+              loading="lazy"
+              title="Rock Gear Playlist"
+            ></iframe>
+          </div>
+          <div className="text-center">
+            <p className="text-sm text-gray-400 mb-2">Rock Gear - My Coding Playlist</p>
+            <a 
+              href="https://open.spotify.com/playlist/7p4UDA3iRUHzOOVB29ySL1?si=7fc6104f871c477b" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
+            >
+              <ExternalLink size={16} />
+              Open in Spotify
+            </a>
+          </div>
         </div>
       </div>
       <div className="bg-gradient-to-br from-orange-900/30 to-red-900/30 p-8 rounded-xl border border-orange-500/30">
@@ -356,7 +380,7 @@ export default function App() {
             <Route path="/blog/:id" element={<BlogDetail />} />
             <Route path="/resume" element={<ResumePage />} />
             <Route path="/about" element={<div className="max-w-4xl mx-auto px-6 py-12 text-gray-300">About content coming soon.</div>} />
-            <Route path="/contact" element={<div className="max-w-3xl mx-auto px-6 py-12 text-gray-300">Email: <a className="text-cyan-400" href="mailto:keerthanvenkata@gmail.com">keerthanvenkata@gmail.com</a></div>} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="/outside" element={<OutsidePage />} />
           </Routes>
         </main>
