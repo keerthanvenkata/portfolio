@@ -8,8 +8,15 @@ export default defineConfig({
     open: false
   },
   build: {
-    sourcemap: true
-  }
+    outDir: 'dist',
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
+  },
+  base: '/'
 })
 
 
