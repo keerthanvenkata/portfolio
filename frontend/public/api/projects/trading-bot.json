@@ -1,0 +1,16 @@
+{
+  "id": "trading-bot",
+  "title": "Weekend Trading Bot",
+  "description": "Scrappy bot built over a weekend to test strategies.",
+  "tech": [
+    "Python",
+    "Pandas"
+  ],
+  "details": "Uses technical indicators and simple rules.",
+  "highlights": [
+    "Real-time data processing",
+    "Backtesting framework"
+  ],
+  "featured": false,
+  "kind": "experimental"
+}
