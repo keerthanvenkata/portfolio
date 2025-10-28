@@ -13,7 +13,7 @@ const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const BlogDetail = lazy(() => import('./pages/BlogDetail'))
 const ExperimentalDetail = lazy(() => import('./pages/ExperimentalDetail'))
 const AboutPage = lazy(() => import('./pages/About'))
-import ContactPage from './components/ContactPage'
+const ContactPage = lazy(() => import('./components/ContactPage'))
 import PDFViewer from './components/PDFViewer'
 import VKLogo from './components/VKLogo'
 
@@ -446,7 +446,7 @@ export default function App() {
               <Route path="/blog/:id" element={<BlogDetail />} />
               <Route path="/resume" element={<ResumePage />} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/contact" element={<div className="max-w-3xl mx-auto px-6 py-12 text-gray-300">Email: <a className="text-cyan-400" href="mailto:keerthanvenkata@gmail.com">keerthanvenkata@gmail.com</a></div>} />
+              <Route path="/contact" element={<ContactPage />} />
               <Route path="/outside" element={<OutsidePage />} />
             </Routes>
           </Suspense>
