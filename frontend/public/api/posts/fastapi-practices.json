@@ -1,0 +1,9 @@
+{
+  "id": "fastapi-practices",
+  "title": "FastAPI Best Practices",
+  "excerpt": "Tips and patterns for production-ready FastAPI.",
+  "category": "Tutorial",
+  "date": "2024-11-15",
+  "featured": false,
+  "content_html": "<p>Use dependency injection, Pydantic models, background tasks, and custom exception handlers. Prioritize testing, async I/O, and proper deployment.</p>\n"
+}
