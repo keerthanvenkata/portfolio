@@ -1,0 +1,23 @@
+{
+  "id": "etl-pipeline",
+  "title": "Automated ETL Pipeline",
+  "role": "SDE Applied AI at Adaequare",
+  "description": "Standardizes 50+ county tax roll datasets per year, reducing analyst time by 85%.",
+  "contribution": "Designed intelligent ETL system that learns from each dataset...",
+  "tech": [
+    "Python",
+    "Pandas",
+    "Fuzzy Matching",
+    "Semantic Patterns",
+    "PostgreSQL",
+    "Redis"
+  ],
+  "status": "Production",
+  "images": [],
+  "highlights": [
+    "85% reduction in analyst time (8 hours → 1 hour)",
+    "Self-learning: improves with each dataset processed"
+  ],
+  "featured": false,
+  "kind": "project"
+}
