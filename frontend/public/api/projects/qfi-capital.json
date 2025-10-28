@@ -1,0 +1,29 @@
+{
+  "id": "qfi-capital",
+  "title": "QFI Research Capital",
+  "role": "Co-Founder & Part-Time CTO",
+  "description": "Algorithm-driven trade execution with real-time analytics, risk management, and AI-powered signal generation.",
+  "contribution": "As co-founder and CTO, I architected and built the entire trading platform from scratch...",
+  "tech": [
+    "Python",
+    "PostgreSQL",
+    "InfluxDB",
+    "Docker",
+    "Kafka",
+    "Redis",
+    "Kite Connect"
+  ],
+  "link": "https://qficapital.in",
+  "embedSite": "https://qficapital.in",
+  "status": "Live",
+  "images": [],
+  "video": null,
+  "videoPoster": null,
+  "highlights": [
+    "Real-time trade execution with sub-second latency",
+    "Microservices architecture with Kafka event streaming",
+    "Integrated risk engines and portfolio management"
+  ],
+  "featured": true,
+  "kind": "project"
+}
