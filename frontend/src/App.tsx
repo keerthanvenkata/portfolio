@@ -9,6 +9,7 @@ import BlogDetail from './pages/BlogDetail'
 import ExperimentalDetail from './pages/ExperimentalDetail'
 import ProjectModal from './components/ProjectModal'
 import BlogModal from './components/BlogModal'
+import ExperimentalModal from './components/ExperimentalModal'
 
 function Sidebar({ current }: { current: string }) {
   const navigation = [
@@ -149,12 +150,21 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
       
       {/* Project Modal */}
       {selectedProject && (
-        <ProjectModal
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-          projectId={selectedProject}
-          onViewDetails={handleViewDetails}
-        />
+        kind === 'experimental' ? (
+          <ExperimentalModal
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}
+            projectId={selectedProject}
+            onViewDetails={handleViewDetails}
+          />
+        ) : (
+          <ProjectModal
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}
+            projectId={selectedProject}
+            onViewDetails={handleViewDetails}
+          />
+        )
       )}
     </div>
   )
