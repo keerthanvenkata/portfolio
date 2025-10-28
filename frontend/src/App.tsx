@@ -12,6 +12,7 @@ import BlogModal from './components/BlogModal'
 import ExperimentalModal from './components/ExperimentalModal'
 import ContactPage from './components/ContactPage'
 import PDFViewer from './components/PDFViewer'
+import VKLogo from './components/VKLogo'
 
 function Sidebar({ current }: { current: string }) {
   const navigation = [
@@ -26,8 +27,8 @@ function Sidebar({ current }: { current: string }) {
   ]
   return (
     <div className="bg-gray-900 border-r border-gray-800 flex flex-col">
-      <div className="p-6 border-b border-gray-800">
-        <Link to="/" className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Keerthan.dev</Link>
+      <div className="p-6 border-b border-gray-800 flex justify-center">
+        <VKLogo size="lg" />
       </div>
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {navigation.map((item) => {
@@ -351,11 +352,11 @@ export default function App() {
   // Update current page based on route
   useEffect(() => {
     const path = location.pathname
-    if (path.startsWith('/projects/')) {
+    if (path === '/projects' || path.startsWith('/projects/')) {
       setCurrent('projects')
-    } else if (path.startsWith('/blog/')) {
+    } else if (path === '/blog' || path.startsWith('/blog/')) {
       setCurrent('blog')
-    } else if (path.startsWith('/experimental/')) {
+    } else if (path === '/experimental' || path.startsWith('/experimental/')) {
       setCurrent('experimental')
     } else if (path === '/resume') {
       setCurrent('resume')
@@ -378,13 +379,13 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 text-white flex">
       <div className="hidden lg:flex w-64 flex-shrink-0"><Sidebar current={current} /></div>
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-gray-900 border-b border-gray-800 px-4 py-3 flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Keerthan.dev</Link>
+        <VKLogo size="md" />
         <button onClick={() => setMobile(!mobile)}>{mobile ? <X size={24} /> : <Menu size={24} />}</button>
       </div>
       {mobile && (
         <div className="lg:hidden fixed inset-0 z-50 bg-gray-900">
           <div className="p-4 border-b border-gray-800 flex justify-between items-center">
-            <div className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Keerthan.dev</div>
+            <VKLogo size="md" />
             <button onClick={() => setMobile(false)}><X size={24} /></button>
           </div>
           <div className="flex flex-col h-[calc(100vh-73px)]"><Sidebar current={current} /></div>
