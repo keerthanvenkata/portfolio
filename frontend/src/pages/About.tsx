@@ -1,4 +1,5 @@
 import Timeline from '../components/Timeline'
+import GitHubContributions from '../components/GitHubContributions'
 
 export default function AboutPage() {
   return (
@@ -9,6 +10,10 @@ export default function AboutPage() {
       </div>
 
       <Timeline />
+
+      <div className="mt-10">
+        <GitHubContributions />
+      </div>
     </div>
   )
 }
