@@ -3,14 +3,16 @@ import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, BookOpe
 import { motion } from 'framer-motion'
 import { Link, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { fetchFeaturedPosts, fetchPosts, fetchProjects, type BlogPost, type Project } from './lib/api'
-import { useEffect } from 'react'
-import ProjectDetail from './pages/ProjectDetail'
-import BlogDetail from './pages/BlogDetail'
-import ExperimentalDetail from './pages/ExperimentalDetail'
+import { useEffect, Suspense, lazy } from 'react'
 import ProjectModal from './components/ProjectModal'
 import BlogModal from './components/BlogModal'
 import ExperimentalModal from './components/ExperimentalModal'
-import AboutPage from './pages/About'
+import LoadingSpinner from './components/LoadingSpinner'
+
+const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
+const BlogDetail = lazy(() => import('./pages/BlogDetail'))
+const ExperimentalDetail = lazy(() => import('./pages/ExperimentalDetail'))
+const AboutPage = lazy(() => import('./pages/About'))
 import ContactPage from './components/ContactPage'
 import PDFViewer from './components/PDFViewer'
 import VKLogo from './components/VKLogo'
@@ -94,9 +96,16 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
   const [items, setItems] = useState<Project[]>([])
   const [selectedProject, setSelectedProject] = useState<string | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   
-  useEffect(() => { fetchProjects(kind).then(setItems).catch(() => setItems([])) }, [kind])
+  useEffect(() => {
+    setLoading(true)
+    fetchProjects(kind)
+      .then(setItems)
+      .catch(() => setItems([]))
+      .finally(() => setLoading(false))
+  }, [kind])
 
   const handleProjectClick = (projectId: string) => {
     setSelectedProject(projectId)
@@ -111,45 +120,57 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       <div className="grid gap-6">
-        {items.map(pr => (
-          <div key={pr.id} className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-cyan-500 transition-all">
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h3 className="text-2xl font-bold text-white">{pr.title}</h3>
-                {pr.role && <p className="text-cyan-400 mt-1">{pr.role}</p>}
+        {loading ? (
+          Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+              <div className="animate-pulse space-y-4">
+                <div className="h-6 bg-gray-700 rounded w-1/3" />
+                <div className="h-4 bg-gray-700 rounded w-2/3" />
+                <div className="h-4 bg-gray-700 rounded w-1/2" />
               </div>
-              {pr.status && <span className="bg-green-900/30 text-green-400 px-3 py-1 rounded-full text-sm border border-green-500/30">{pr.status}</span>}
             </div>
-            <p className="text-gray-300 mb-4">{pr.description}</p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {pr.tech.slice(0, 6).map(t => <span key={t} className="bg-gray-700 text-cyan-400 px-3 py-1 rounded-full text-sm">{t}</span>)}
-            </div>
-            <div className="flex gap-3">
-              <button 
-                onClick={() => handleProjectClick(pr.id)}
-                className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
-              >
-                Quick Preview
-              </button>
-              <Link 
-                to={`/${kind}/${pr.id}`} 
-                className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 border border-cyan-400 hover:border-cyan-300 px-4 py-2 rounded-lg transition-colors"
-              >
-                View Details
-              </Link>
-              {pr.link && (
-                <a 
-                  href={pr.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-gray-400 hover:text-white border border-gray-600 hover:border-gray-500 px-4 py-2 rounded-lg transition-colors"
+          ))
+        ) : (
+          items.map(pr => (
+            <div key={pr.id} className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-cyan-500 transition-all">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-2xl font-bold text-white">{pr.title}</h3>
+                  {pr.role && <p className="text-cyan-400 mt-1">{pr.role}</p>}
+                </div>
+                {pr.status && <span className="bg-green-900/30 text-green-400 px-3 py-1 rounded-full text-sm border border-green-500/30">{pr.status}</span>}
+              </div>
+              <p className="text-gray-300 mb-4">{pr.description}</p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {pr.tech.slice(0, 6).map(t => <span key={t} className="bg-gray-700 text-cyan-400 px-3 py-1 rounded-full text-sm">{t}</span>)}
+              </div>
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => handleProjectClick(pr.id)}
+                  className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
                 >
-                  Visit <ExternalLink size={16} />
-                </a>
-              )}
+                  Quick Preview
+                </button>
+                <Link 
+                  to={`/${kind}/${pr.id}`} 
+                  className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 border border-cyan-400 hover:border-cyan-300 px-4 py-2 rounded-lg transition-colors"
+                >
+                  View Details
+                </Link>
+                {pr.link && (
+                  <a 
+                    href={pr.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-gray-400 hover:text-white border border-gray-600 hover:border-gray-500 px-4 py-2 rounded-lg transition-colors"
+                  >
+                    Visit <ExternalLink size={16} />
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
       
       {/* Project Modal */}
@@ -179,9 +200,16 @@ function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [selectedPost, setSelectedPost] = useState<string | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   
-  useEffect(() => { fetchPosts(category === 'all' ? undefined : category).then(setPosts).catch(() => setPosts([])) }, [category])
+  useEffect(() => {
+    setLoading(true)
+    fetchPosts(category === 'all' ? undefined : category)
+      .then(setPosts)
+      .catch(() => setPosts([]))
+      .finally(() => setLoading(false))
+  }, [category])
   const cats = ['all', 'Tech', 'Career', 'Entrepreneurship', 'Tutorial']
 
   const handlePostClick = (postId: string) => {
@@ -202,30 +230,42 @@ function BlogPage() {
         ))}
       </div>
       <div className="space-y-6">
-        {posts.map(p => (
-          <div key={p.id} className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-cyan-500 transition-all">
-            <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
-              <span className={`px-3 py-1 rounded-full text-sm bg-blue-900/30 text-blue-400 border border-blue-500/30`}>{p.category}</span>
-              <span className="text-gray-500 text-sm">{new Date(p.date).toLocaleDateString()}</span>
+        {loading ? (
+          Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+              <div className="animate-pulse space-y-3">
+                <div className="h-4 bg-gray-700 rounded w-24" />
+                <div className="h-5 bg-gray-700 rounded w-2/3" />
+                <div className="h-4 bg-gray-700 rounded w-full" />
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">{p.title}</h3>
-            <p className="text-gray-400 mb-4">{p.excerpt}</p>
-            <div className="flex gap-3">
-              <button 
-                onClick={() => handlePostClick(p.id)}
-                className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
-              >
-                Quick Preview
-              </button>
-              <Link 
-                to={`/blog/${p.id}`} 
-                className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 border border-cyan-400 hover:border-cyan-300 px-4 py-2 rounded-lg transition-colors"
-              >
-                Read Full Article
-              </Link>
+          ))
+        ) : (
+          posts.map(p => (
+            <div key={p.id} className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-cyan-500 transition-all">
+              <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
+                <span className={`px-3 py-1 rounded-full text-sm bg-blue-900/30 text-blue-400 border border-blue-500/30`}>{p.category}</span>
+                <span className="text-gray-500 text-sm">{new Date(p.date).toLocaleDateString()}</span>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">{p.title}</h3>
+              <p className="text-gray-400 mb-4">{p.excerpt}</p>
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => handlePostClick(p.id)}
+                  className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
+                >
+                  Quick Preview
+                </button>
+                <Link 
+                  to={`/blog/${p.id}`} 
+                  className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 border border-cyan-400 hover:border-cyan-300 px-4 py-2 rounded-lg transition-colors"
+                >
+                  Read Full Article
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
       
       {/* Blog Modal */}
@@ -395,19 +435,21 @@ export default function App() {
       <div className="flex-1 flex flex-col min-h-screen lg:min-h-0">
         <Header title={title} />
         <main className="flex-1 overflow-y-auto pt-16 lg:pt-0">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/projects" element={<ProjectsPage kind="project" />} />
-            <Route path="/projects/:id" element={<ProjectDetail />} />
-            <Route path="/experimental" element={<ProjectsPage kind="experimental" />} />
-            <Route path="/experimental/:id" element={<ExperimentalDetail />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:id" element={<BlogDetail />} />
-            <Route path="/resume" element={<ResumePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/outside" element={<OutsidePage />} />
-          </Routes>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/projects" element={<ProjectsPage kind="project" />} />
+              <Route path="/projects/:id" element={<ProjectDetail />} />
+              <Route path="/experimental" element={<ProjectsPage kind="experimental" />} />
+              <Route path="/experimental/:id" element={<ExperimentalDetail />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:id" element={<BlogDetail />} />
+              <Route path="/resume" element={<ResumePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<div className="max-w-3xl mx-auto px-6 py-12 text-gray-300">Email: <a className="text-cyan-400" href="mailto:keerthanvenkata@gmail.com">keerthanvenkata@gmail.com</a></div>} />
+              <Route path="/outside" element={<OutsidePage />} />
+            </Routes>
+          </Suspense>
         </main>
         <footer className="bg-gray-900 border-t border-gray-800 py-6 px-6">
           <div className="max-w-6xl mx-auto text-center">

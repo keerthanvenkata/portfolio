@@ -87,4 +87,17 @@ export async function fetchTimeline() {
   })
 }
 
+export type SocialConfig = {
+  github_username?: string
+  linkedin_url?: string
+  github_url?: string
+  email?: string
+  website?: string
+}
+
+export async function fetchSocial() {
+  const { data } = await api.get<SocialConfig>('/api/social.json')
+  return data
+}
+
 
