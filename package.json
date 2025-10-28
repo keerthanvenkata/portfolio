@@ -1,0 +1,14 @@
+{
+  "name": "keerthan-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio website for Venkata Keerthan Nimmala",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm run build",
+    "dev": "cd frontend && npm run dev",
+    "install": "cd frontend && npm install"
+  },
+  "workspaces": [
+    "frontend"
+  ]
+}
