@@ -64,4 +64,27 @@ export async function fetchProject(id: string) {
   return data
 }
 
+export type TimelineItem = {
+  id: string
+  type: 'education' | 'experience'
+  title: string
+  organization: string
+  location?: string
+  start: string
+  end?: string | null
+  highlights: string[]
+}
+
+export async function fetchTimeline() {
+  const { data } = await api.get<TimelineItem[]>('/api/timeline.json')
+  // Sort by start date desc, ongoing first
+  const toDate = (s?: string | null) => (s ? new Date(s).getTime() : 0)
+  return data.sort((a, b) => {
+    const aEnd = a.end ? toDate(a.end) : Infinity
+    const bEnd = b.end ? toDate(b.end) : Infinity
+    if (aEnd !== bEnd) return bEnd - aEnd
+    return toDate(b.start) - toDate(a.start)
+  })
+}
+
 
