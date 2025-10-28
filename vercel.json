@@ -35,21 +35,13 @@
           "value": "SAMEORIGIN"
         },
         {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
           "key": "Cache-Control",
           "value": "public, max-age=3600"
-        },
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
         }
       ]
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!resume/).*)",
       "headers": [
         {
           "key": "X-Content-Type-Options",

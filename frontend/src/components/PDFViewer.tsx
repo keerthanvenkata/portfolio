@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { ExternalLink, Download, AlertCircle } from 'lucide-react'
 
 interface PDFViewerProps {
@@ -21,13 +21,28 @@ export default function PDFViewer({ src, title, height = "800px" }: PDFViewerPro
     setHasError(true)
   }
 
+  // Detect Firefox and set error state immediately
+  React.useEffect(() => {
+    const isFirefox = navigator.userAgent.toLowerCase().includes('firefox')
+    if (isFirefox) {
+      // Give Firefox a moment to try loading, then show fallback
+      const timer = setTimeout(() => {
+        if (isLoading) {
+          setHasError(true)
+          setIsLoading(false)
+        }
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [isLoading])
+
   if (hasError) {
     return (
       <div className="bg-gray-50 rounded-lg p-8 text-center">
         <AlertCircle className="mx-auto text-gray-400 mb-4" size={48} />
         <h3 className="text-lg font-semibold text-gray-700 mb-2">PDF Preview Unavailable</h3>
         <p className="text-gray-500 mb-4">
-          Your browser doesn't support PDF preview or the file couldn't be loaded.
+          Your browser's security settings prevent PDF embedding. This is common in Firefox and other browsers.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a
@@ -48,6 +63,9 @@ export default function PDFViewer({ src, title, height = "800px" }: PDFViewerPro
             Download PDF
           </a>
         </div>
+        <p className="text-xs text-gray-400 mt-4">
+          💡 Tip: Click "Open in New Tab" for the best viewing experience
+        </p>
       </div>
     )
   }
