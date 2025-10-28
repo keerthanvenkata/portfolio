@@ -1,0 +1,47 @@
+[
+  {
+    "id": "etl-pipelines",
+    "title": "Building Scalable ETL Pipelines",
+    "excerpt": "Lessons learned from processing millions of records and designing self-learning systems.",
+    "category": "Tech",
+    "date": "2025-01-15",
+    "featured": true,
+    "content_html": "<p>Building ETL pipelines that scale isn't just about moving data from point A to point B. It's about creating systems that are resilient, maintainable, and can adapt to changing requirements.</p>\n<h2>The Challenge</h2>\n<p>At Adaequare, I faced the challenge of processing 50+ county tax roll datasets per year, each with over 20,000 records. The problem? Every dataset had different schemas, inconsistent column names, and varying data quality.</p>\n<h2>Key Learnings</h2>\n<h3>1. Design for Adaptability</h3>\n<p>Rather than hardcoding transformations, I built a system that learns from each dataset. Using fuzzy matching and semantic pattern recognition, the pipeline identifies similar fields across different schemas.</p>\n<h3>2. Feedback Loops Matter</h3>\n<p>We implemented a feedback mechanism where analyst corrections improve future processing. This reduced manual intervention by 85% over time.</p>\n<h3>3. Modular Architecture</h3>\n<p>Breaking the pipeline into distinct stages (extraction, transformation, validation, loading) made it easier to debug and optimize individual components.</p>\n<h2>Results</h2>\n<p>The system now handles datasets automatically that previously took analysts 8+ hours to process. It's scalable to 3,000+ US counties and gets smarter with each dataset.</p>\n<p>Building systems that learn and adapt is the future of ETL.</p>\n"
+  },
+  {
+    "id": "aerospace-to-ai",
+    "title": "From Aerospace to Applied AI",
+    "excerpt": "How aerospace engineering shaped my software approach.",
+    "category": "Career",
+    "date": "2025-01-08",
+    "featured": false,
+    "content_html": "<p>Systems thinking, mathematical rigor, and problem decomposition transfer directly from aerospace to software architecture and AI/ML.</p>\n"
+  },
+  {
+    "id": "llm-patterns",
+    "title": "LLM Integration Patterns",
+    "excerpt": "Practical patterns for production LLM systems and cost control.",
+    "category": "Tech",
+    "date": "2024-12-20",
+    "featured": true,
+    "content_html": "<p>Integrating LLMs into production systems is very different from experimenting in a notebook. Here are patterns I've learned building real systems.</p>\n<h2>Production Patterns</h2>\n<ol>\n<li>Fallback chains</li>\n<li>Cost management via caching and batching</li>\n<li>Prompt engineering as code</li>\n</ol>\n<h2>Error Handling</h2>\n<p>Expect hallucinations, inconsistent output, rate limits, and timeouts. Build robust monitoring and retries.</p>\n"
+  },
+  {
+    "id": "startup-journey",
+    "title": "Building a Startup While Working",
+    "excerpt": "Reflections on co-founding QFI Capital while working full-time.",
+    "category": "Entrepreneurship",
+    "date": "2024-12-10",
+    "featured": true,
+    "content_html": "<p>Co-founding QFI Research Capital while working full-time at Adaequare taught me more about entrepreneurship than any book or course ever could.</p>\n<h2>The Reality Check</h2>\n<p>It's late nights after your day job, weekends spent debugging, and constant context switching between two demanding roles.</p>\n<h2>What I Learned</h2>\n<h3>Time Management is Critical</h3>\n<p>Ruthless prioritization. Mornings for architecture and system design, evenings for implementation, weekends for deep work.</p>\n<h3>Choose Your Co-founders Wisely</h3>\n<p>Divide responsibilities clearly and trust each other to execute.</p>\n<h3>Technical Debt vs Speed</h3>\n<p>Done is better than perfect, but know when to invest in quality.</p>\n<h2>The Platform</h2>\n<p>Microservices with Kafka, PostgreSQL + InfluxDB, and real-time risk engines.</p>\n<h2>Key Takeaway</h2>\n<p>Entrepreneurship while employed is possible, but it requires sacrifice, discipline, and a burning desire to build something meaningful.</p>\n"
+  },
+  {
+    "id": "fastapi-practices",
+    "title": "FastAPI Best Practices",
+    "excerpt": "Tips and patterns for production-ready FastAPI.",
+    "category": "Tutorial",
+    "date": "2024-11-15",
+    "featured": false,
+    "content_html": "<p>Use dependency injection, Pydantic models, background tasks, and custom exception handlers. Prioritize testing, async I/O, and proper deployment.</p>\n"
+  }
+]
