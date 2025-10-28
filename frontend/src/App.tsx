@@ -10,6 +10,7 @@ import ExperimentalDetail from './pages/ExperimentalDetail'
 import ProjectModal from './components/ProjectModal'
 import BlogModal from './components/BlogModal'
 import ExperimentalModal from './components/ExperimentalModal'
+import AboutPage from './pages/About'
 import ContactPage from './components/ContactPage'
 import PDFViewer from './components/PDFViewer'
 import VKLogo from './components/VKLogo'
@@ -403,7 +404,7 @@ export default function App() {
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<BlogDetail />} />
             <Route path="/resume" element={<ResumePage />} />
-            <Route path="/about" element={<div className="max-w-4xl mx-auto px-6 py-12 text-gray-300">About content coming soon.</div>} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/outside" element={<OutsidePage />} />
           </Routes>
