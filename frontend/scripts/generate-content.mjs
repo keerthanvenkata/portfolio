@@ -148,6 +148,12 @@ async function generateResume(contentDir, outDir) {
   }
 }
 
+async function generateTimeline(contentDir, outDir) {
+  const timelineSrc = path.join(contentDir, 'timeline.json')
+  const timeline = await readJsonIfExists(timelineSrc)
+  await writeJson(path.join(outDir, 'timeline.json'), timeline)
+}
+
 async function generate() {
   const repoRoot = path.resolve(__dirname, '..')
   const contentDir = path.resolve(__dirname, '../../backend/app/content')
@@ -157,6 +163,7 @@ async function generate() {
   await generatePosts(contentDir, publicApiDir)
   await generateProjects(contentDir, publicApiDir)
   await generateResume(contentDir, publicApiDir)
+  await generateTimeline(contentDir, publicApiDir)
 
   // Copy media directory
   const mediaSrc = path.join(contentDir, 'media')
