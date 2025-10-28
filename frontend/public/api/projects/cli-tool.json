@@ -1,0 +1,16 @@
+{
+  "id": "cli-tool",
+  "title": "CLI Tool for Data Cleaning",
+  "description": "Utility for quick CSV transformations.",
+  "tech": [
+    "Python",
+    "Click"
+  ],
+  "details": "Handles repetitive CSV cleaning tasks.",
+  "highlights": [
+    "Quick transformations",
+    "Batch processing"
+  ],
+  "featured": false,
+  "kind": "experimental"
+}
