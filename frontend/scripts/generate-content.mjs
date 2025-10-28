@@ -104,6 +104,50 @@ async function generateProjects(contentDir, outDir) {
   }
 }
 
+async function generateResume(contentDir, outDir) {
+  const resumeDir = path.join(contentDir, 'resume')
+  const resumeJsonPath = path.join(resumeDir, 'resume.json')
+  const resumeDestDir = path.join(outDir, '..', 'resume')
+  
+  try {
+    // Read resume metadata
+    const resumeData = await readJsonIfExists(resumeJsonPath)
+    if (!resumeData || !resumeData.current_version) {
+      console.log('No resume metadata found, skipping resume generation')
+      return
+    }
+
+    // Ensure resume output directory exists
+    await ensureDir(resumeDestDir)
+
+    // Copy all PDF files from resume directory
+    const files = await fs.readdir(resumeDir)
+    for (const file of files) {
+      if (file.endsWith('.pdf')) {
+        const srcPath = path.join(resumeDir, file)
+        const destPath = path.join(resumeDestDir, file)
+        await fs.copyFile(srcPath, destPath)
+      }
+    }
+
+    // Copy resume metadata
+    await writeJson(path.join(resumeDestDir, 'resume.json'), resumeData)
+
+    // Create latest symlink/copy
+    const currentVersion = resumeData.current_version
+    const currentFile = resumeData.versions.find(v => v.version === currentVersion)?.filename
+    if (currentFile) {
+      const latestPath = path.join(resumeDestDir, 'resume-latest.pdf')
+      const currentPath = path.join(resumeDestDir, currentFile)
+      await fs.copyFile(currentPath, latestPath)
+    }
+
+    console.log('Resume files generated successfully')
+  } catch (error) {
+    console.log('Resume generation skipped:', error.message)
+  }
+}
+
 async function generate() {
   const repoRoot = path.resolve(__dirname, '..')
   const contentDir = path.resolve(__dirname, '../../backend/app/content')
@@ -112,6 +156,7 @@ async function generate() {
   await ensureDir(publicApiDir)
   await generatePosts(contentDir, publicApiDir)
   await generateProjects(contentDir, publicApiDir)
+  await generateResume(contentDir, publicApiDir)
 
   // Copy media directory
   const mediaSrc = path.join(contentDir, 'media')
