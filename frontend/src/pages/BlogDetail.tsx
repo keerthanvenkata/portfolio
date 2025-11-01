@@ -1,18 +1,31 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, Calendar, Clock } from 'lucide-react'
-import { fetchPost, type BlogPost } from '../lib/api'
+import { fetchPost, fetchPosts, type BlogPost } from '../lib/api'
 
 export default function BlogDetail() {
   const { id } = useParams<{ id: string }>()
   const [post, setPost] = useState<BlogPost | null>(null)
+  const [related, setRelated] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (id) {
+      setLoading(true)
       fetchPost(id)
-        .then(setPost)
-        .catch(() => setPost(null))
+        .then(async (p) => {
+          setPost(p)
+          const all = await fetchPosts()
+          const rel = all
+            .filter(x => x.id !== p.id)
+            .filter(x => x.category === p.category)
+            .slice(0, 3)
+          setRelated(rel)
+        })
+        .catch(() => {
+          setPost(null)
+          setRelated([])
+        })
         .finally(() => setLoading(false))
     }
   }, [id])
@@ -113,17 +126,20 @@ export default function BlogDetail() {
       </article>
 
       {/* Related Posts */}
-      <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mt-8">
-        <h2 className="text-2xl font-bold text-white mb-4">More Articles</h2>
-        <p className="text-gray-400 mb-4">Explore other articles in my blog.</p>
-        <Link 
-          to="/#/blog" 
-          className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
-        >
-          View All Posts
-          <ArrowLeft size={16} className="rotate-180" />
-        </Link>
-      </div>
+      {related.length > 0 && (
+        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mt-8">
+          <h2 className="text-2xl font-bold text-white mb-4">More in {post.category}</h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            {related.map(r => (
+              <Link key={r.id} to={`/#/blog/${r.id}`} className="block border border-gray-700 rounded-lg p-4 hover:border-cyan-500 transition-colors">
+                <div className="text-white font-semibold">{r.title}</div>
+                <div className="text-gray-400 text-sm mt-1 line-clamp-2">{r.excerpt}</div>
+                <div className="text-gray-500 text-xs mt-2">{new Date(r.date).toLocaleDateString()}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
