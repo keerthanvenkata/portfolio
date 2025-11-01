@@ -15,7 +15,6 @@ const ExperimentalDetail = lazy(() => import('./pages/ExperimentalDetail'))
 const AboutPage = lazy(() => import('./pages/About'))
 const ContactPage = lazy(() => import('./components/ContactPage'))
 import PDFViewer from './components/PDFViewer'
-import VKLogo from './components/VKLogo'
 
 // Route prefetchers
 const prefetchProjectDetail = () => import('./pages/ProjectDetail')
