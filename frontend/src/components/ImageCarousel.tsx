@@ -44,6 +44,8 @@ export default function ImageCarousel({ images, altPrefix = 'Image', className =
             alt={`${altPrefix} ${currentIndex + 1}`}
             className="w-full h-64 md:h-80 object-cover cursor-pointer"
             onClick={openFullscreen}
+            loading="lazy"
+            decoding="async"
           />
           
           {/* Navigation Arrows */}
@@ -97,6 +99,8 @@ export default function ImageCarousel({ images, altPrefix = 'Image', className =
                   src={`/media/${image}`}
                   alt={`${altPrefix} thumbnail ${index + 1}`}
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
               </button>
             ))}
@@ -120,6 +124,8 @@ export default function ImageCarousel({ images, altPrefix = 'Image', className =
                 alt={`${altPrefix} ${currentIndex + 1}`}
                 className="max-w-full max-h-full object-contain"
                 onClick={(e) => e.stopPropagation()}
+                loading="lazy"
+                decoding="async"
               />
               
               {/* Close Button */}
