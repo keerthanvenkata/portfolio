@@ -15,6 +15,7 @@ const ExperimentalDetail = lazy(() => import('./pages/ExperimentalDetail'))
 const AboutPage = lazy(() => import('./pages/About'))
 const ContactPage = lazy(() => import('./components/ContactPage'))
 import PDFViewer from './components/PDFViewer'
+import VKLogo from './components/VKLogo'
 
 // Route prefetchers
 const prefetchProjectDetail = () => import('./pages/ProjectDetail')
@@ -36,8 +37,8 @@ function Sidebar({ current, onNavigate }: { current: string, onNavigate?: () => 
   ]
   return (
     <div className="bg-gray-900 border-r border-gray-800 flex flex-col" role="navigation" aria-label="Main">
-      <div className="p-6 border-b border-gray-800">
-        <Link to="/" className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Keerthan.dev</Link>
+      <div className="p-6 border-b border-gray-800 flex justify-center">
+        <VKLogo size="lg" />
       </div>
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {navigation.map((item) => {
@@ -488,14 +489,14 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 text-white flex">
       <div className="hidden lg:flex w-64 flex-shrink-0"><Sidebar current={current} /></div>
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-gray-900 border-b border-gray-800 px-4 py-3 flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Keerthan.dev</Link>
-        <button onClick={() => setMobile(!mobile)} aria-label={mobile ? 'Close menu' : 'Open menu'}>{mobile ? <X size={24} /> : <Menu size={24} />}</button>
-      </div>
+        <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-gray-900 border-b border-gray-800 px-4 py-3 flex justify-between items-center">
+          <VKLogo size="md" />
+          <button onClick={() => setMobile(!mobile)} aria-label={mobile ? 'Close menu' : 'Open menu'}>{mobile ? <X size={24} /> : <Menu size={24} />}</button>
+        </div>
       {mobile && (
         <div className="lg:hidden fixed inset-0 z-50 bg-gray-900">
           <div className="p-4 border-b border-gray-800 flex justify-between items-center">
-            <div className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Keerthan.dev</div>
+            <VKLogo size="md" />
             <button onClick={() => setMobile(false)} aria-label="Close menu"><X size={24} /></button>
           </div>
           <div className="flex flex-col h-[calc(100vh-73px)]"><Sidebar current={current} onNavigate={() => setMobile(false)} /></div>
