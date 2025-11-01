@@ -24,7 +24,7 @@ const prefetchExperimentalDetail = () => import('./pages/ExperimentalDetail')
 const prefetchAbout = () => import('./pages/About')
 const prefetchContact = () => import('./components/ContactPage')
 
-function Sidebar({ current }: { current: string }) {
+function Sidebar({ current, onNavigate }: { current: string, onNavigate?: () => void }) {
   const navigation = [
     { name: 'Home', id: 'home', icon: Home },
     { name: 'About', id: 'about', icon: Briefcase },
@@ -36,7 +36,7 @@ function Sidebar({ current }: { current: string }) {
     { name: 'Contact', id: 'contact', icon: Mail },
   ]
   return (
-    <div className="bg-gray-900 border-r border-gray-800 flex flex-col">
+    <div className="bg-gray-900 border-r border-gray-800 flex flex-col" role="navigation" aria-label="Main">
       <div className="p-6 border-b border-gray-800">
         <Link to="/" className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Keerthan.dev</Link>
       </div>
@@ -53,6 +53,8 @@ function Sidebar({ current }: { current: string }) {
               key={item.id} 
               to={href}
               onMouseEnter={onEnter}
+              onClick={onNavigate}
+              aria-current={current === item.id ? 'page' : undefined}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${current === item.id ? 'bg-cyan-600 text-white' : 'text-gray-300 hover:bg-gray-800'}`}
             >
               <Icon size={20} />
@@ -62,10 +64,10 @@ function Sidebar({ current }: { current: string }) {
         })}
       </nav>
       <div className="p-4 border-t border-gray-800">
-        <div className="flex justify-center gap-3">
-          <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors"><Github size={20} /></a>
-          <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors"><Linkedin size={20} /></a>
-          <a href="mailto:keerthanvenkata@gmail.com" className="text-gray-400 hover:text-white transition-colors"><Mail size={20} /></a>
+        <div className="flex justify-center gap-3" aria-label="Social links">
+          <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="GitHub profile"><Github size={20} /></a>
+          <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn profile"><Linkedin size={20} /></a>
+          <a href="mailto:keerthanvenkata@gmail.com" className="text-gray-400 hover:text-white transition-colors" aria-label="Send email"><Mail size={20} /></a>
         </div>
       </div>
     </div>
@@ -494,15 +496,15 @@ export default function App() {
       {mobile && (
         <div className="lg:hidden fixed inset-0 z-50 bg-gray-900">
           <div className="p-4 border-b border-gray-800 flex justify-between items-center">
-            <VKLogo size="md" />
+            <div className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Keerthan.dev</div>
             <button onClick={() => setMobile(false)}><X size={24} /></button>
           </div>
-          <div className="flex flex-col h-[calc(100vh-73px)]"><Sidebar current={current} /></div>
+          <div className="flex flex-col h-[calc(100vh-73px)]"><Sidebar current={current} onNavigate={() => setMobile(false)} /></div>
         </div>
       )}
       <div className="flex-1 flex flex-col min-h-screen lg:min-h-0">
         <Header title={title} />
-        <main className="flex-1 overflow-y-auto pt-16 lg:pt-0">
+        <main id="main-content" className="flex-1 overflow-y-auto pt-16 lg:pt-0">
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<HomePage />} />
