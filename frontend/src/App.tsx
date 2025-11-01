@@ -466,6 +466,20 @@ export default function App() {
     }
   }, [location.pathname])
 
+  // Idle prefetch of likely-next routes (About, Contact, Detail routes)
+  useEffect(() => {
+    const ric = (cb: () => void) => (
+      (window as any).requestIdleCallback ? (window as any).requestIdleCallback(cb) : setTimeout(cb, 1200)
+    )
+    ric(() => {
+      prefetchAbout()
+      prefetchContact()
+      prefetchProjectDetail()
+      prefetchBlogDetail()
+      prefetchExperimentalDetail()
+    })
+  }, [])
+
   const title = {
     home: 'Home', about: 'About Me', projects: 'Featured Projects', experimental: 'Experimental & Hobby Projects', blog: 'Blog', resume: 'Resume', outside: 'Outside Code', contact: "Let's Connect"
   }[current] ?? 'Home'
