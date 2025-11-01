@@ -99,6 +99,7 @@ export default function VideoPlayer({
         onEnded={() => setIsPlaying(false)}
         autoPlay={autoPlay}
         muted={isMuted}
+        title={title}
       />
 
       {/* Custom Controls Overlay */}
@@ -109,6 +110,7 @@ export default function VideoPlayer({
             <button
               onClick={toggleFullscreen}
               className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
+              aria-label="Toggle fullscreen"
             >
               <Maximize2 size={16} />
             </button>
@@ -119,6 +121,7 @@ export default function VideoPlayer({
             <button
               onClick={togglePlay}
               className="bg-black/50 hover:bg-black/70 text-white p-4 rounded-full transition-colors"
+              aria-label={isPlaying ? 'Pause video' : 'Play video'}
             >
               {isPlaying ? <Pause size={32} /> : <Play size={32} />}
             </button>
@@ -135,6 +138,7 @@ export default function VideoPlayer({
                 value={currentTime}
                 onChange={handleSeek}
                 className="w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
+                aria-label="Seek video"
                 style={{
                   background: `linear-gradient(to right, #22d3ee 0%, #22d3ee ${(currentTime / duration) * 100}%, #4b5563 ${(currentTime / duration) * 100}%, #4b5563 100%)`
                 }}
@@ -147,6 +151,7 @@ export default function VideoPlayer({
                 <button
                   onClick={togglePlay}
                   className="text-white hover:text-cyan-400 transition-colors"
+                  aria-label={isPlaying ? 'Pause video' : 'Play video'}
                 >
                   {isPlaying ? <Pause size={20} /> : <Play size={20} />}
                 </button>
@@ -154,6 +159,7 @@ export default function VideoPlayer({
                 <button
                   onClick={toggleMute}
                   className="text-white hover:text-cyan-400 transition-colors"
+                  aria-label={isMuted ? 'Unmute video' : 'Mute video'}
                 >
                   {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
                 </button>
@@ -161,6 +167,7 @@ export default function VideoPlayer({
                 <button
                   onClick={restart}
                   className="text-white hover:text-cyan-400 transition-colors"
+                  aria-label="Restart video"
                 >
                   <RotateCcw size={20} />
                 </button>
