@@ -490,21 +490,21 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 text-white flex">
       <div className="hidden lg:flex w-64 flex-shrink-0"><Sidebar current={current} /></div>
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-gray-900 border-b border-gray-800 px-4 py-3 flex justify-between items-center">
-        <VKLogo size="md" />
-        <button onClick={() => setMobile(!mobile)}>{mobile ? <X size={24} /> : <Menu size={24} />}</button>
+        <Link to="/" className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Keerthan.dev</Link>
+        <button onClick={() => setMobile(!mobile)} aria-label={mobile ? 'Close menu' : 'Open menu'}>{mobile ? <X size={24} /> : <Menu size={24} />}</button>
       </div>
       {mobile && (
         <div className="lg:hidden fixed inset-0 z-50 bg-gray-900">
           <div className="p-4 border-b border-gray-800 flex justify-between items-center">
             <div className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Keerthan.dev</div>
-            <button onClick={() => setMobile(false)}><X size={24} /></button>
+            <button onClick={() => setMobile(false)} aria-label="Close menu"><X size={24} /></button>
           </div>
           <div className="flex flex-col h-[calc(100vh-73px)]"><Sidebar current={current} onNavigate={() => setMobile(false)} /></div>
         </div>
       )}
       <div className="flex-1 flex flex-col min-h-screen lg:min-h-0">
         <Header title={title} />
-        <main id="main-content" className="flex-1 overflow-y-auto pt-16 lg:pt-0">
+        <main id="main-content" role="main" className="flex-1 overflow-y-auto pt-16 lg:pt-0">
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<HomePage />} />
