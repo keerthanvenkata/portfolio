@@ -119,6 +119,26 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
   }
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="flex items-center gap-3 mb-6">
+        <input
+          type="text"
+          placeholder={`Search ${kind === 'experimental' ? 'experimental projects' : 'projects'}...`}
+          onChange={(e) => {
+            const q = e.target.value.toLowerCase()
+            setLoading(true)
+            fetchProjects(kind)
+              .then(list => list.filter(p => (
+                p.title.toLowerCase().includes(q) ||
+                p.description.toLowerCase().includes(q) ||
+                (p.tech || []).join(' ').toLowerCase().includes(q)
+              )))
+              .then(setItems)
+              .catch(() => setItems([]))
+              .finally(() => setLoading(false))
+          }}
+          className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-500"
+        />
+      </div>
       <div className="grid gap-6">
         {loading ? (
           Array.from({ length: 3 }).map((_, i) => (
@@ -224,7 +244,26 @@ function BlogPage() {
   }
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
-      <div className="flex flex-wrap gap-3 mb-6">
+      <div className="flex flex-wrap gap-3 mb-6 items-center">
+        <div className="flex-1 min-w-[200px]">
+          <input
+            type="text"
+            placeholder="Search posts..."
+            onChange={(e) => {
+              const q = e.target.value.toLowerCase()
+              setLoading(true)
+              fetchPosts(category === 'all' ? undefined : category)
+                .then(list => list.filter(p => (
+                  p.title.toLowerCase().includes(q) ||
+                  p.excerpt.toLowerCase().includes(q)
+                )))
+                .then(setPosts)
+                .catch(() => setPosts([]))
+                .finally(() => setLoading(false))
+            }}
+            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-500"
+          />
+        </div>
         {cats.map(cat => (
           <button key={cat} onClick={() => setCategory(cat)} className={`px-4 py-2 rounded-lg transition-colors ${category === cat ? 'bg-cyan-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}`}>{cat}</button>
         ))}
