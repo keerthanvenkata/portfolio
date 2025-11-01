@@ -1,22 +1,43 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, ExternalLink, Code, User, Star } from 'lucide-react'
-import { fetchProject, type Project } from '../lib/api'
+import { fetchProject, fetchProjects, type Project } from '../lib/api'
 import ImageCarousel from '../components/ImageCarousel'
 import VideoPlayer from '../components/VideoPlayer'
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
   const [project, setProject] = useState<Project | null>(null)
+  const [related, setRelated] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (id) {
-      fetchProject(id)
-        .then(setProject)
-        .catch(() => setProject(null))
-        .finally(() => setLoading(false))
-    }
+    if (!id) return
+    setLoading(true)
+    fetchProject(id)
+      .then((p) => {
+        setProject(p)
+        return p
+      })
+      .then(async (p) => {
+        if (!p) return
+        const all = await fetchProjects('all')
+        const scored = all
+          .filter(x => x.id !== p.id)
+          .map(x => ({
+            item: x,
+            score: (x.tech || []).reduce((acc, t) => acc + (p.tech.includes(t) ? 1 : 0), 0) + (x.kind === p.kind ? 0.5 : 0)
+          }))
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3)
+          .map(s => s.item)
+        setRelated(scored)
+      })
+      .catch(() => {
+        setProject(null)
+        setRelated([])
+      })
+      .finally(() => setLoading(false))
   }, [id])
 
   if (loading) {
@@ -186,17 +207,24 @@ export default function ProjectDetail() {
       )}
 
       {/* Related Projects */}
-      <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-        <h2 className="text-2xl font-bold text-white mb-4">More Projects</h2>
-        <p className="text-gray-400 mb-4">Explore other projects in my portfolio.</p>
-        <Link 
-          to="/#/projects" 
-          className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
-        >
-          View All Projects
-          <ExternalLink size={16} />
-        </Link>
-      </div>
+      {related.length > 0 && (
+        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+          <h2 className="text-2xl font-bold text-white mb-4">Related Projects</h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            {related.map(r => (
+              <Link key={r.id} to={`/#/${r.kind}/${r.id}`} className="block border border-gray-700 rounded-lg p-4 hover:border-cyan-500 transition-colors">
+                <div className="text-white font-semibold">{r.title}</div>
+                <div className="text-gray-400 text-sm mt-1 line-clamp-2">{r.description}</div>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {r.tech.slice(0, 4).map(t => (
+                    <span key={t} className="bg-gray-700 text-cyan-400 px-2 py-0.5 rounded text-xs">{t}</span>
+                  ))}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
