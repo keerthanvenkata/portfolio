@@ -12,21 +12,13 @@ export default function ContactPage() {
       script.onload = () => {
         if ((window as any).Calendly) {
           (window as any).Calendly.initPopupWidget({
-            url: 'https://calendly.com/keerthanvenkata/30min',
-            text: 'Schedule time with me',
-            color: '#7F00FF',
-            textColor: '#ffffff',
-            branding: false
+            url: 'https://calendly.com/keerthanvenkata/30min'
           })
         }
       }
     } else {
       (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/keerthanvenkata/30min',
-        text: 'Schedule time with me',
-        color: '#7F00FF',
-        textColor: '#ffffff',
-        branding: false
+        url: 'https://calendly.com/keerthanvenkata/30min'
       })
     }
   }
