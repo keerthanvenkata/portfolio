@@ -10,15 +10,23 @@ export default function ProjectDetail() {
   const [project, setProject] = useState<Project | null>(null)
   const [related, setRelated] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    console.log('ProjectDetail rendered, id from params:', id)
     if (!id) {
+      console.log('No id provided, setting loading to false')
       setLoading(false)
+      setError('No project ID provided')
       return
     }
     setLoading(true)
+    setError(null)
+    console.log('Fetching project with id:', id)
+    console.log('API URL will be:', `/api/projects/${id}.json`)
     fetchProject(id)
       .then((p) => {
+        console.log('Project fetched successfully:', p)
         setProject(p)
         return p
       })
@@ -36,7 +44,12 @@ export default function ProjectDetail() {
           .map(s => s.item)
         setRelated(scored)
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error('Error fetching project:', error)
+        console.error('Project ID:', id)
+        console.error('Error details:', error.response?.data || error.message)
+        console.error('Full error:', error)
+        setError(`Failed to load project: ${error.response?.status === 404 ? 'Project not found' : error.message}`)
         setProject(null)
         setRelated([])
       })
@@ -59,12 +72,16 @@ export default function ProjectDetail() {
     )
   }
 
-  if (!project) {
+  if (!project && !loading) {
     return (
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-white mb-4">Project Not Found</h1>
-          <p className="text-gray-400 mb-6">The project you're looking for doesn't exist.</p>
+          <p className="text-gray-400 mb-4">The project you're looking for doesn't exist.</p>
+          {error && (
+            <p className="text-red-400 mb-4 text-sm">Error: {error}</p>
+          )}
+          <p className="text-gray-500 mb-6 text-sm">Project ID: {id}</p>
           <Link 
             to="/projects" 
             className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
@@ -75,6 +92,10 @@ export default function ProjectDetail() {
         </div>
       </div>
     )
+  }
+
+  if (!project) {
+    return null
   }
 
   return (
