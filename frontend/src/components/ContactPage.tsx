@@ -1,43 +1,39 @@
 import { Github, Linkedin, Mail, ExternalLink, MapPin, Calendar, MessageCircle } from 'lucide-react'
-import { useEffect } from 'react'
+import { useState } from 'react'
+import Modal from './Modal'
 
 export default function ContactPage() {
-  useEffect(() => {
-    // Load Calendly widget script
-    const script = document.createElement('script')
-    script.src = 'https://assets.calendly.com/assets/external/widget.js'
-    script.async = true
-    document.body.appendChild(script)
+  const [showCalendly, setShowCalendly] = useState(false)
 
-    // Load Calendly CSS
-    const link = document.createElement('link')
-    link.href = 'https://assets.calendly.com/assets/external/widget.css'
-    link.rel = 'stylesheet'
-    document.head.appendChild(link)
-
-    // Initialize Calendly widget after script loads
-    script.onload = () => {
-      if ((window as any).Calendly && (window as any).Calendly.initInlineWidget) {
-        const calendlyDiv = document.querySelector('.calendly-inline-widget') as HTMLElement
-        if (calendlyDiv) {
-          (window as any).Calendly.initInlineWidget({
+  const openCalendly = () => {
+    // Load Calendly script if not already loaded
+    if (!(window as any).Calendly) {
+      const script = document.createElement('script')
+      script.src = 'https://assets.calendly.com/assets/external/widget.js'
+      script.async = true
+      document.body.appendChild(script)
+      
+      script.onload = () => {
+        if ((window as any).Calendly) {
+          (window as any).Calendly.initPopupWidget({
             url: 'https://calendly.com/keerthanvenkata/30min',
-            parentElement: calendlyDiv
+            text: 'Schedule time with me',
+            color: '#7F00FF',
+            textColor: '#ffffff',
+            branding: false
           })
         }
       }
+    } else {
+      (window as any).Calendly.initPopupWidget({
+        url: 'https://calendly.com/keerthanvenkata/30min',
+        text: 'Schedule time with me',
+        color: '#7F00FF',
+        textColor: '#ffffff',
+        branding: false
+      })
     }
-
-    return () => {
-      // Cleanup
-      if (document.body.contains(script)) {
-        document.body.removeChild(script)
-      }
-      if (document.head.contains(link)) {
-        document.head.removeChild(link)
-      }
-    }
-  }, [])
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
@@ -124,18 +120,18 @@ export default function ContactPage() {
       </div>
 
       {/* Calendly Integration */}
-      <div className="glass rounded-xl p-6 neon-border mb-12">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl font-heading font-bold gradient-text-purple mb-4">Schedule a Meeting</h2>
-          <p className="text-gray-300 max-w-2xl mx-auto">
-            Book a time slot that works for you. Let's discuss opportunities, collaborations, or just have a chat!
-          </p>
-        </div>
-        <div 
-          className="calendly-inline-widget" 
-          data-url="https://calendly.com/keerthanvenkata/30min"
-          style={{ minWidth: '320px', height: '700px' }}
-        />
+      <div className="glass rounded-xl p-8 neon-border mb-12 text-center">
+        <h2 className="text-3xl font-heading font-bold gradient-text-purple mb-4">Schedule a Meeting</h2>
+        <p className="text-gray-300 max-w-2xl mx-auto mb-6">
+          Book a time slot that works for you. Let's discuss opportunities, collaborations, or just have a chat!
+        </p>
+        <button
+          onClick={openCalendly}
+          className="inline-flex items-center gap-3 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-8 py-4 rounded-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(127,0,255,0.5)] transform hover:scale-105 font-heading font-semibold text-lg"
+        >
+          <Calendar size={24} />
+          Book a Meeting
+        </button>
       </div>
 
       {/* Call to Action */}
