@@ -143,13 +143,13 @@ function HomePage() {
               className="flex flex-wrap justify-center gap-4 mt-8"
             >
               <Link
-                to="#/projects"
+                to="/projects"
                 className="px-8 py-4 bg-gradient-to-r from-violet to-magenta rounded-lg font-heading font-semibold text-white hover:shadow-[0_0_30px_rgba(127,0,255,0.5)] transition-all duration-300 transform hover:scale-105"
               >
                 View Projects
               </Link>
               <Link
-                to="#/contact"
+                to="/contact"
                 className="px-8 py-4 border-2 border-electric-pink rounded-lg font-heading font-semibold text-electric-pink hover:bg-electric-pink hover:text-black transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(255,0,128,0.5)]"
               >
                 Get In Touch
@@ -195,15 +195,15 @@ function HomePage() {
             >
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-2xl font-heading font-bold text-violet">Featured Projects</h3>
-                <Link to="#/projects" className="text-electric-pink hover:text-magenta transition-colors font-medium">
-                  See all →
-                </Link>
-              </div>
-              <div className="space-y-4">
-                {projects.slice(0, 2).map(pr => (
-                  <Link
-                    key={pr.id}
-                    to={`#/projects/${pr.id}`}
+                 <Link to="/projects" className="text-electric-pink hover:text-magenta transition-colors font-medium">
+                   See all →
+                 </Link>
+               </div>
+               <div className="space-y-4">
+                 {projects.slice(0, 2).map(pr => (
+                   <Link
+                     key={pr.id}
+                     to={`/projects/${pr.id}`}
                     className="block p-4 rounded-lg bg-black/30 border border-violet/30 hover:border-electric-pink transition-all duration-300 group"
                   >
                     <div className="flex items-start justify-between mb-2">
@@ -240,15 +240,15 @@ function HomePage() {
             >
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-2xl font-heading font-bold text-magenta">Latest Blog Posts</h3>
-                <Link to="#/blog" className="text-electric-pink hover:text-magenta transition-colors font-medium">
-                  See all →
-                </Link>
-              </div>
-              <div className="space-y-4">
-                {posts.slice(0, 2).map(p => (
-                  <Link
-                    key={p.id}
-                    to={`#/blog/${p.id}`}
+                 <Link to="/blog" className="text-electric-pink hover:text-magenta transition-colors font-medium">
+                   See all →
+                 </Link>
+               </div>
+               <div className="space-y-4">
+                 {posts.slice(0, 2).map(p => (
+                   <Link
+                     key={p.id}
+                     to={`/blog/${p.id}`}
                     className="block p-4 rounded-lg bg-black/30 border border-magenta/30 hover:border-electric-pink transition-all duration-300 group"
                   >
                     <div className="flex items-center justify-between mb-2">
@@ -275,12 +275,12 @@ function HomePage() {
           transition={{ duration: 0.8, delay: 1.4 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-4"
         >
-          {[
-            { name: 'About', icon: Briefcase, link: '#/about', colorClass: 'text-violet', borderClass: 'hover:border-violet' },
-            { name: 'Blog', icon: BookOpen, link: '#/blog', colorClass: 'text-magenta', borderClass: 'hover:border-magenta' },
-            { name: 'Resume', icon: ExternalLink, link: '#/resume', colorClass: 'text-electric-pink', borderClass: 'hover:border-electric-pink' },
-            { name: 'Contact', icon: Mail, link: '#/contact', colorClass: 'text-neon-green', borderClass: 'hover:border-neon-green' },
-          ].map((item) => {
+           {[
+             { name: 'About', icon: Briefcase, link: '/about', colorClass: 'text-violet', borderClass: 'hover:border-violet' },
+             { name: 'Blog', icon: BookOpen, link: '/blog', colorClass: 'text-magenta', borderClass: 'hover:border-magenta' },
+             { name: 'Resume', icon: ExternalLink, link: '/resume', colorClass: 'text-electric-pink', borderClass: 'hover:border-electric-pink' },
+             { name: 'Contact', icon: Mail, link: '/contact', colorClass: 'text-neon-green', borderClass: 'hover:border-neon-green' },
+           ].map((item) => {
             const Icon = item.icon
             return (
               <Link
