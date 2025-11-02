@@ -59,7 +59,7 @@ export default function BlogModal({ isOpen, onClose, postId, onViewDetails }: Bl
               <Clock size={14} />
               <span>{readingTime} min read</span>
             </div>
-            <span className="bg-blue-900/30 text-blue-400 px-2 py-1 rounded-full text-xs border border-blue-500/30">
+            <span className="bg-electric-pink/20 text-electric-pink px-2 py-1 rounded-full text-xs border border-electric-pink/30">
               {post.category}
             </span>
           </div>
@@ -76,7 +76,7 @@ export default function BlogModal({ isOpen, onClose, postId, onViewDetails }: Bl
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-white">Preview</h3>
               <div 
-                className="prose prose-invert max-w-none prose-headings:text-white prose-p:text-gray-300 prose-a:text-cyan-400 prose-strong:text-white prose-code:text-cyan-300 prose-code:bg-gray-700 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-700"
+                className="prose prose-invert max-w-none prose-headings:text-white prose-p:text-gray-300 prose-a:text-electric-pink prose-a:hover:text-magenta prose-strong:text-white prose-code:text-violet prose-code:bg-black/40 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-pre:bg-black/40 prose-pre:border prose-pre:border-violet/30"
                 dangerouslySetInnerHTML={{ 
                   __html: post.content_html.substring(0, 500) + (post.content_html.length > 500 ? '...' : '')
                 }}
@@ -85,10 +85,10 @@ export default function BlogModal({ isOpen, onClose, postId, onViewDetails }: Bl
           )}
 
           {/* Actions */}
-          <div className="flex gap-3 pt-4 border-t border-gray-700">
+          <div className="flex gap-3 pt-4 border-t border-violet/30">
             <button
               onClick={handleViewDetails}
-              className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="flex-1 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105 flex items-center justify-center gap-2 font-semibold"
             >
               Read Full Article
               <ArrowRight size={16} />
