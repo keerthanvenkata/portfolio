@@ -152,31 +152,6 @@ function HomePage() {
           </motion.div>
         </div>
 
-        {/* Stats Section - Commented out for future use */}
-        {/* <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
-        >
-          {stats.map((stat, idx) => {
-            const Icon = stat.icon
-            return (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 1 + idx * 0.1 }}
-                className="glass rounded-xl p-6 text-center hover:border-electric-pink transition-all duration-300 group"
-              >
-                <Icon size={40} className={`${stat.colorClass} mx-auto mb-4 group-hover:scale-110 transition-transform`} />
-                <div className={`text-4xl font-heading font-bold ${stat.colorClass} mb-2`}>{stat.value}</div>
-                <div className="text-gray-300 font-medium">{stat.label}</div>
-              </motion.div>
-            )
-          })}
-        </motion.div> */}
-
         {/* Featured Content Cards */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {/* Featured Projects */}
