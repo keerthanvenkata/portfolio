@@ -44,7 +44,7 @@ export default function ExperimentalModal({ isOpen, onClose, projectId, onViewDe
           {/* Project Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-4">
-              <span className="bg-yellow-900/30 text-yellow-400 px-3 py-1 rounded-full text-sm border border-yellow-500/30 flex items-center gap-1">
+              <span className="bg-electric-pink/20 text-electric-pink px-3 py-1 rounded-full text-sm border border-electric-pink/30 flex items-center gap-1">
                 <Lightbulb size={14} />
                 Experimental
               </span>
@@ -61,7 +61,7 @@ export default function ExperimentalModal({ isOpen, onClose, projectId, onViewDe
             </h3>
             <div className="flex flex-wrap gap-2">
               {project.tech.slice(0, 8).map(tech => (
-                <span key={tech} className="bg-gray-700 text-cyan-400 px-3 py-1 rounded-full text-sm">
+                <span key={tech} className="bg-violet/20 text-violet px-3 py-1 rounded-full text-sm border border-violet/30">
                   {tech}
                 </span>
               ))}
@@ -83,7 +83,7 @@ export default function ExperimentalModal({ isOpen, onClose, projectId, onViewDe
               <ul className="space-y-2">
                 {project.highlights.slice(0, 3).map((highlight, index) => (
                   <li key={index} className="flex items-start gap-2 text-gray-300 text-sm">
-                    <span className="text-cyan-400 mt-1">•</span>
+                    <span className="text-electric-pink mt-1">•</span>
                     <span>{highlight}</span>
                   </li>
                 ))}
@@ -133,10 +133,10 @@ export default function ExperimentalModal({ isOpen, onClose, projectId, onViewDe
           )}
 
           {/* Actions */}
-          <div className="flex gap-3 pt-4 border-t border-gray-700">
+          <div className="flex gap-3 pt-4 border-t border-violet/30">
             <button
               onClick={handleViewDetails}
-              className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
+              className="flex-1 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105 font-semibold"
             >
               View Full Details
             </button>
@@ -145,7 +145,7 @@ export default function ExperimentalModal({ isOpen, onClose, projectId, onViewDe
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 border border-cyan-400 hover:border-cyan-300 px-4 py-2 rounded-lg transition-colors"
+                className="flex items-center gap-2 text-electric-pink hover:text-magenta border border-electric-pink hover:border-magenta px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,128,0.4)] transform hover:scale-105"
               >
                 <ExternalLink size={16} />
                 Visit
