@@ -81,12 +81,10 @@ function Sidebar({ current, onNavigate }: { current: string, onNavigate?: () => 
 function HomePage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [projects, setProjects] = useState<Project[]>([])
-  const [experimental, setExperimental] = useState<Project[]>([])
   
   useEffect(() => { 
     fetchFeaturedPosts().then(setPosts).catch(() => setPosts([]))
     fetchProjects('project', true).then(setProjects).catch(() => setProjects([]))
-    fetchProjects('experimental', true).then(setExperimental).catch(() => setExperimental([]))
   }, [])
 
   return (
