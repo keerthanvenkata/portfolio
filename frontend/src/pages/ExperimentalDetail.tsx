@@ -9,17 +9,33 @@ export default function ExperimentalDetail() {
   const { id } = useParams<{ id: string }>()
   const [project, setProject] = useState<Project | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (id) {
-      setLoading(true)
-      fetchProject(id)
-        .then(setProject)
-        .catch(() => setProject(null))
-        .finally(() => setLoading(false))
-    } else {
+    console.log('ExperimentalDetail rendered, id from params:', id)
+    if (!id) {
+      console.log('No id provided, setting loading to false')
       setLoading(false)
+      setError('No project ID provided')
+      return
     }
+    setLoading(true)
+    setError(null)
+    console.log('Fetching experimental project with id:', id)
+    console.log('API URL will be:', `/api/projects/${id}.json`)
+    fetchProject(id)
+      .then((p) => {
+        console.log('Experimental project fetched successfully:', p)
+        setProject(p)
+      })
+      .catch((error) => {
+        console.error('Error fetching experimental project:', error)
+        console.error('Project ID:', id)
+        console.error('Error details:', error.response?.data || error.message)
+        setError(`Failed to load project: ${error.response?.status === 404 ? 'Project not found' : error.message}`)
+        setProject(null)
+      })
+      .finally(() => setLoading(false))
   }, [id])
 
   if (loading) {
@@ -38,12 +54,16 @@ export default function ExperimentalDetail() {
     )
   }
 
-  if (!project) {
+  if (!project && !loading) {
     return (
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Project Not Found</h1>
-          <p className="text-gray-400 mb-6">The experimental project you're looking for doesn't exist.</p>
+          <h1 className="text-2xl font-bold text-white mb-4">Experimental Project Not Found</h1>
+          <p className="text-gray-400 mb-4">The experimental project you're looking for doesn't exist.</p>
+          {error && (
+            <p className="text-red-400 mb-4 text-sm">Error: {error}</p>
+          )}
+          <p className="text-gray-500 mb-6 text-sm">Project ID: {id}</p>
           <Link 
             to="/experimental" 
             className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
@@ -56,8 +76,17 @@ export default function ExperimentalDetail() {
     )
   }
 
+  if (!project) {
+    return null
+  }
+
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
+      {/* Debug: Component is rendering */}
+      <div className="mb-4 p-2 bg-yellow-900/20 text-yellow-400 text-xs rounded">
+        DEBUG: ExperimentalDetail rendering for ID: {id || 'undefined'} | Project loaded: {project ? 'Yes' : 'No'} | Loading: {loading ? 'Yes' : 'No'}
+      </div>
+      
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
         <Link to="/" className="hover:text-electric-pink transition-colors">Home</Link>
