@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Calendar, Clock } from 'lucide-react'
+import { Calendar, Clock } from 'lucide-react'
 import { fetchPost, fetchPosts, type BlogPost } from '../lib/api'
 
 export default function BlogDetail() {
@@ -56,7 +56,6 @@ export default function BlogDetail() {
             to="/blog" 
             className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
           >
-            <ArrowLeft size={16} />
             Blog
           </Link>
         </div>
@@ -78,15 +77,6 @@ export default function BlogDetail() {
         <span>/</span>
         <span className="text-white">{post.title}</span>
       </nav>
-
-      {/* Back Button */}
-      <Link 
-        to="/blog" 
-        className="inline-flex items-center gap-2 text-electric-pink hover:text-magenta transition-colors mb-8 font-medium"
-      >
-        <ArrowLeft size={16} />
-        Blog
-      </Link>
 
       {/* Article Header */}
       <article className="bg-gray-800 rounded-xl p-8 border border-gray-700">
