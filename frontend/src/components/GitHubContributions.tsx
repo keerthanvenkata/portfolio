@@ -18,10 +18,17 @@ export default function GitHubContributions() {
   }, [])
 
   useEffect(() => {
+    // Check if GitHubCalendar is already loaded (from index.html or previous load)
+    if (typeof window !== 'undefined' && (window as any).GitHubCalendar) {
+      setIsLoaded(true)
+      return
+    }
+
     // Load GitHub Calendar script dynamically
     if (!isLoaded && typeof window !== 'undefined') {
       const script = document.createElement('script')
       script.src = 'https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js'
+      script.async = true
       script.onload = () => setIsLoaded(true)
       script.onerror = () => setError('Failed to load GitHub Calendar')
       document.head.appendChild(script)
@@ -36,28 +43,42 @@ export default function GitHubContributions() {
         if (document.head.contains(script)) {
           document.head.removeChild(script)
         }
+        if (document.head.contains(link)) {
+          document.head.removeChild(link)
+        }
       }
     }
   }, [isLoaded])
 
   useEffect(() => {
-    if (social?.github_username && calendarRef.current && window.GitHubCalendar && isLoaded) {
-      try {
-        // Clear previous content
-        calendarRef.current.innerHTML = ''
-        
-        // Initialize GitHub Calendar with custom colors
-        window.GitHubCalendar(calendarRef.current, social.github_username, {
-          responsive: true,
-          tooltips: true,
-          global_stats: true,
-          cache: 86400,
-          summary_text: 'Summary of Pull Requests, Issues opened, and Commits pushed to GitHub',
-        })
-      } catch (err) {
-        console.error('GitHub Calendar error:', err)
-        setError('Failed to render calendar')
-      }
+    if (social?.github_username && calendarRef.current && isLoaded) {
+      // Wait a bit for the script to fully initialize
+      const timeoutId = setTimeout(() => {
+        if (window.GitHubCalendar && calendarRef.current) {
+          try {
+            // Clear previous content
+            calendarRef.current.innerHTML = ''
+            
+            // Initialize GitHub Calendar with custom colors
+            window.GitHubCalendar(calendarRef.current, social.github_username!, {
+              responsive: true,
+              tooltips: true,
+              global_stats: true,
+              cache: 86400,
+              summary_text: 'Summary of Pull Requests, Issues opened, and Commits pushed to GitHub',
+            })
+          } catch (err) {
+            console.error('GitHub Calendar error:', err)
+            setError('Failed to render calendar')
+          }
+        } else {
+          // Retry if GitHubCalendar is not available yet
+          console.warn('GitHub Calendar script not loaded yet, retrying...')
+          setIsLoaded(false) // Trigger retry
+        }
+      }, 200)
+
+      return () => clearTimeout(timeoutId)
     }
   }, [social, isLoaded])
 
