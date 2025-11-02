@@ -12,10 +12,13 @@ export default function ExperimentalDetail() {
 
   useEffect(() => {
     if (id) {
+      setLoading(true)
       fetchProject(id)
         .then(setProject)
         .catch(() => setProject(null))
         .finally(() => setLoading(false))
+    } else {
+      setLoading(false)
     }
   }, [id])
 
