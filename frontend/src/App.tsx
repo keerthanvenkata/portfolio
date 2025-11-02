@@ -36,8 +36,8 @@ function Sidebar({ current, onNavigate }: { current: string, onNavigate?: () => 
     { name: 'Contact', id: 'contact', icon: Mail },
   ]
   return (
-    <div className="bg-gray-900 border-r border-gray-800 flex flex-col" role="navigation" aria-label="Main">
-      <div className="p-6 border-b border-gray-800 flex justify-center">
+    <div className="bg-black/80 backdrop-blur-sm border-r border-violet/30 flex flex-col" role="navigation" aria-label="Main">
+      <div className="p-6 border-b border-violet/30 flex justify-center">
         <VKLogo size="lg" />
       </div>
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
@@ -55,19 +55,23 @@ function Sidebar({ current, onNavigate }: { current: string, onNavigate?: () => 
               onMouseEnter={onEnter}
               onClick={onNavigate}
               aria-current={current === item.id ? 'page' : undefined}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${current === item.id ? 'bg-cyan-600 text-white' : 'text-gray-300 hover:bg-gray-800'}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                current === item.id 
+                  ? 'bg-gradient-to-r from-violet to-magenta text-white shadow-[0_0_20px_rgba(127,0,255,0.5)]' 
+                  : 'text-gray-300 hover:bg-violet/20 hover:text-violet hover:shadow-[0_0_10px_rgba(127,0,255,0.3)]'
+              }`}
             >
               <Icon size={20} />
-              <span>{item.name}</span>
+              <span className="font-medium">{item.name}</span>
             </Link>
           )
         })}
       </nav>
-      <div className="p-4 border-t border-gray-800">
+      <div className="p-4 border-t border-violet/30">
         <div className="flex justify-center gap-3" aria-label="Social links">
-          <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="GitHub profile"><Github size={20} /></a>
-          <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn profile"><Linkedin size={20} /></a>
-          <a href="mailto:keerthanvenkata@gmail.com" className="text-gray-400 hover:text-white transition-colors" aria-label="Send email"><Mail size={20} /></a>
+          <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="GitHub profile"><Github size={20} /></a>
+          <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="LinkedIn profile"><Linkedin size={20} /></a>
+          <a href="mailto:keerthanvenkata@gmail.com" className="text-gray-400 hover:text-electric-pink transition-colors hover:scale-110 transform duration-300" aria-label="Send email"><Mail size={20} /></a>
         </div>
       </div>
     </div>
@@ -76,32 +80,220 @@ function Sidebar({ current, onNavigate }: { current: string, onNavigate?: () => 
 
 function HomePage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
-  useEffect(() => { fetchFeaturedPosts().then(setPosts).catch(() => setPosts([])) }, [])
+  const [projects, setProjects] = useState<Project[]>([])
+  const [experimental, setExperimental] = useState<Project[]>([])
+  
+  useEffect(() => { 
+    fetchFeaturedPosts().then(setPosts).catch(() => setPosts([]))
+    fetchProjects('project', true).then(setProjects).catch(() => setProjects([]))
+    fetchProjects('experimental', true).then(setExperimental).catch(() => setExperimental([]))
+  }, [])
+
+  const stats = [
+    { label: 'Projects', value: projects.length, icon: Code, color: 'violet', colorClass: 'text-violet' },
+    { label: 'Blog Posts', value: posts.length, icon: BookOpen, color: 'electric-pink', colorClass: 'text-electric-pink' },
+    { label: 'Experiments', value: experimental.length, icon: Lightbulb, color: 'magenta', colorClass: 'text-magenta' },
+  ]
+
   return (
-    <div className="min-h-screen">
-      <div className="max-w-6xl mx-auto px-6 py-20">
-        <div className="text-center space-y-6 mb-16">
-          <motion.h1 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-6xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Venkata Keerthan Nimmala</motion.h1>
-          <p className="text-2xl text-gray-300">SDE Applied AI & Entrepreneur</p>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">Building scalable systems, AI solutions, and entrepreneurial ventures.</p>
+    <div className="min-h-screen relative">
+      {/* Animated background overlay */}
+      <div className="animated-bg"></div>
+      
+      <div className="max-w-6xl mx-auto px-6 py-20 relative z-10">
+        {/* Hero Section */}
+        <div className="text-center space-y-8 mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-6"
+          >
+            <motion.h1 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-7xl md:text-8xl font-heading font-bold gradient-text-purple text-glow-purple"
+            >
+              Venkata Keerthan Nimmala
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-3xl md:text-4xl font-heading font-semibold text-violet"
+            >
+              SDE Applied AI & Entrepreneur
+            </motion.p>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+            >
+              Building scalable systems, AI solutions, and entrepreneurial ventures.
+              <span className="block mt-2 text-electric-pink text-glow-pink">Ready for new challenges and impactful projects.</span>
+            </motion.p>
+            
+            {/* CTA Buttons */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="flex flex-wrap justify-center gap-4 mt-8"
+            >
+              <Link
+                to="#/projects"
+                className="px-8 py-4 bg-gradient-to-r from-violet to-magenta rounded-lg font-heading font-semibold text-white hover:shadow-[0_0_30px_rgba(127,0,255,0.5)] transition-all duration-300 transform hover:scale-105"
+              >
+                View Projects
+              </Link>
+              <Link
+                to="#/contact"
+                className="px-8 py-4 border-2 border-electric-pink rounded-lg font-heading font-semibold text-electric-pink hover:bg-electric-pink hover:text-black transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(255,0,128,0.5)]"
+              >
+                Get In Touch
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
-        {posts.length > 0 && (
-          <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-white font-semibold">Featured Blog</h3>
-              <Link to="#/blog" className="text-cyan-400">See all</Link>
-            </div>
-            <div className="space-y-4">
-              {posts.slice(0, 2).map(p => (
-                <div key={p.id} className="border border-gray-700 p-4 rounded-lg">
-                  <div className="text-gray-500 text-sm">{p.category} • {new Date(p.date).toLocaleDateString()}</div>
-                  <div className="text-white font-bold">{p.title}</div>
-                  <div className="text-gray-400">{p.excerpt}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+
+        {/* Stats Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
+        >
+          {stats.map((stat, idx) => {
+            const Icon = stat.icon
+            return (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 1 + idx * 0.1 }}
+                className="glass rounded-xl p-6 text-center hover:border-electric-pink transition-all duration-300 group"
+              >
+                <Icon size={40} className={`${stat.colorClass} mx-auto mb-4 group-hover:scale-110 transition-transform`} />
+                <div className={`text-4xl font-heading font-bold ${stat.colorClass} mb-2`}>{stat.value}</div>
+                <div className="text-gray-300 font-medium">{stat.label}</div>
+              </motion.div>
+            )
+          })}
+        </motion.div>
+
+        {/* Featured Content Cards */}
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          {/* Featured Projects */}
+          {projects.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              className="glass rounded-xl p-6 neon-border"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-heading font-bold text-violet">Featured Projects</h3>
+                <Link to="#/projects" className="text-electric-pink hover:text-magenta transition-colors font-medium">
+                  See all →
+                </Link>
+              </div>
+              <div className="space-y-4">
+                {projects.slice(0, 2).map(pr => (
+                  <Link
+                    key={pr.id}
+                    to={`#/projects/${pr.id}`}
+                    className="block p-4 rounded-lg bg-black/30 border border-violet/30 hover:border-electric-pink transition-all duration-300 group"
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <h4 className="font-heading font-semibold text-white group-hover:text-electric-pink transition-colors">
+                        {pr.title}
+                      </h4>
+                      {pr.status && (
+                        <span className="bg-neon-green/20 text-neon-green px-2 py-1 rounded text-xs font-medium">
+                          {pr.status}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-gray-400 text-sm line-clamp-2">{pr.description}</p>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {pr.tech.slice(0, 3).map(t => (
+                        <span key={t} className="text-xs px-2 py-1 bg-violet/20 text-violet rounded">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Featured Blog Posts */}
+          {posts.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 1.3 }}
+              className="glass rounded-xl p-6 neon-border"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-heading font-bold text-magenta">Latest Blog Posts</h3>
+                <Link to="#/blog" className="text-electric-pink hover:text-magenta transition-colors font-medium">
+                  See all →
+                </Link>
+              </div>
+              <div className="space-y-4">
+                {posts.slice(0, 2).map(p => (
+                  <Link
+                    key={p.id}
+                    to={`#/blog/${p.id}`}
+                    className="block p-4 rounded-lg bg-black/30 border border-magenta/30 hover:border-electric-pink transition-all duration-300 group"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs px-2 py-1 bg-electric-pink/20 text-electric-pink rounded">
+                        {p.category}
+                      </span>
+                      <span className="text-xs text-gray-500">{new Date(p.date).toLocaleDateString()}</span>
+                    </div>
+                    <h4 className="font-heading font-semibold text-white mb-2 group-hover:text-electric-pink transition-colors">
+                      {p.title}
+                    </h4>
+                    <p className="text-gray-400 text-sm line-clamp-2">{p.excerpt}</p>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </div>
+
+        {/* Quick Links Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.4 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        >
+          {[
+            { name: 'About', icon: Briefcase, link: '#/about', colorClass: 'text-violet', borderClass: 'hover:border-violet' },
+            { name: 'Blog', icon: BookOpen, link: '#/blog', colorClass: 'text-magenta', borderClass: 'hover:border-magenta' },
+            { name: 'Resume', icon: ExternalLink, link: '#/resume', colorClass: 'text-electric-pink', borderClass: 'hover:border-electric-pink' },
+            { name: 'Contact', icon: Mail, link: '#/contact', colorClass: 'text-neon-green', borderClass: 'hover:border-neon-green' },
+          ].map((item) => {
+            const Icon = item.icon
+            return (
+              <Link
+                key={item.name}
+                to={item.link}
+                className={`glass rounded-xl p-6 text-center ${item.borderClass} transition-all duration-300 group transform hover:scale-105`}
+              >
+                <Icon size={32} className={`${item.colorClass} mx-auto mb-3 group-hover:scale-110 transition-transform`} />
+                <div className={`font-heading font-semibold ${item.colorClass}`}>{item.name}</div>
+              </Link>
+            )
+          })}
+        </motion.div>
       </div>
     </div>
   )
@@ -151,45 +343,45 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
               .catch(() => setItems([]))
               .finally(() => setLoading(false))
           }}
-          className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-500"
+          className="flex-1 bg-black/40 border border-violet/30 rounded-lg px-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-electric-pink focus:shadow-[0_0_10px_rgba(255,0,128,0.3)] transition-all"
         />
       </div>
       <div className="grid gap-6">
         {loading ? (
           Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <div key={i} className="glass rounded-xl p-6 neon-border">
               <div className="animate-pulse space-y-4">
-                <div className="h-6 bg-gray-700 rounded w-1/3" />
-                <div className="h-4 bg-gray-700 rounded w-2/3" />
-                <div className="h-4 bg-gray-700 rounded w-1/2" />
+                <div className="h-6 bg-violet/20 rounded w-1/3" />
+                <div className="h-4 bg-violet/20 rounded w-2/3" />
+                <div className="h-4 bg-violet/20 rounded w-1/2" />
               </div>
             </div>
           ))
         ) : (
           items.map(pr => (
-            <div key={pr.id} className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-cyan-500 transition-all">
+            <div key={pr.id} className="glass rounded-xl p-6 neon-border hover:shadow-[0_0_30px_rgba(255,0,128,0.4)] transition-all">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-2xl font-bold text-white">{pr.title}</h3>
-                  {pr.role && <p className="text-cyan-400 mt-1">{pr.role}</p>}
+                  <h3 className="text-2xl font-heading font-bold text-white">{pr.title}</h3>
+                  {pr.role && <p className="text-violet mt-1">{pr.role}</p>}
                 </div>
-                {pr.status && <span className="bg-green-900/30 text-green-400 px-3 py-1 rounded-full text-sm border border-green-500/30">{pr.status}</span>}
+                {pr.status && <span className="bg-neon-green/20 text-neon-green px-3 py-1 rounded-full text-sm border border-neon-green/30">{pr.status}</span>}
               </div>
               <p className="text-gray-300 mb-4">{pr.description}</p>
               <div className="flex flex-wrap gap-2 mb-4">
-                {pr.tech.slice(0, 6).map(t => <span key={t} className="bg-gray-700 text-cyan-400 px-3 py-1 rounded-full text-sm">{t}</span>)}
+                {pr.tech.slice(0, 6).map(t => <span key={t} className="bg-violet/20 text-violet px-3 py-1 rounded-full text-sm">{t}</span>)}
               </div>
               <div className="flex gap-3">
                 <button 
                   onClick={() => handleProjectClick(pr.id)}
-                  className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
                 >
                   Quick Preview
                 </button>
                 <Link 
                   to={`/${kind}/${pr.id}`} 
                   onMouseEnter={() => (kind === 'experimental' ? prefetchExperimentalDetail() : prefetchProjectDetail())}
-                  className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 border border-cyan-400 hover:border-cyan-300 px-4 py-2 rounded-lg transition-colors"
+                  className="inline-flex items-center gap-2 text-electric-pink hover:text-magenta border border-electric-pink hover:border-magenta px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,128,0.4)] transform hover:scale-105"
                 >
                   View Details
                 </Link>
@@ -277,44 +469,44 @@ function BlogPage() {
                 .catch(() => setPosts([]))
                 .finally(() => setLoading(false))
             }}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-cyan-500"
+            className="w-full bg-black/40 border border-violet/30 rounded-lg px-4 py-2 text-gray-200 placeholder-gray-500 focus:outline-none focus:border-electric-pink focus:shadow-[0_0_10px_rgba(255,0,128,0.3)] transition-all"
           />
         </div>
         {cats.map(cat => (
-          <button key={cat} onClick={() => setCategory(cat)} className={`px-4 py-2 rounded-lg transition-colors ${category === cat ? 'bg-cyan-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}`}>{cat}</button>
+          <button key={cat} onClick={() => setCategory(cat)} className={`px-4 py-2 rounded-lg transition-all duration-300 ${category === cat ? 'bg-gradient-to-r from-violet to-magenta text-white shadow-[0_0_15px_rgba(127,0,255,0.4)]' : 'bg-black/40 text-gray-300 hover:bg-violet/20 hover:text-violet border border-violet/30'}`}>{cat}</button>
         ))}
       </div>
       <div className="space-y-6">
         {loading ? (
           Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+            <div key={i} className="glass p-6 rounded-xl neon-border">
               <div className="animate-pulse space-y-3">
-                <div className="h-4 bg-gray-700 rounded w-24" />
-                <div className="h-5 bg-gray-700 rounded w-2/3" />
-                <div className="h-4 bg-gray-700 rounded w-full" />
+                <div className="h-4 bg-violet/20 rounded w-24" />
+                <div className="h-5 bg-violet/20 rounded w-2/3" />
+                <div className="h-4 bg-violet/20 rounded w-full" />
               </div>
             </div>
           ))
         ) : (
           posts.map(p => (
-            <div key={p.id} className="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-cyan-500 transition-all">
+            <div key={p.id} className="glass p-6 rounded-xl neon-border hover:shadow-[0_0_30px_rgba(255,0,128,0.4)] transition-all">
               <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
-                <span className={`px-3 py-1 rounded-full text-sm bg-blue-900/30 text-blue-400 border border-blue-500/30`}>{p.category}</span>
+                <span className={`px-3 py-1 rounded-full text-sm bg-electric-pink/20 text-electric-pink border border-electric-pink/30`}>{p.category}</span>
                 <span className="text-gray-500 text-sm">{new Date(p.date).toLocaleDateString()}</span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">{p.title}</h3>
+              <h3 className="text-xl font-heading font-bold text-white mb-2">{p.title}</h3>
               <p className="text-gray-400 mb-4">{p.excerpt}</p>
               <div className="flex gap-3">
                 <button 
                   onClick={() => handlePostClick(p.id)}
-                  className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
                 >
                   Quick Preview
                 </button>
                 <Link 
                   to={`/blog/${p.id}`} 
                   onMouseEnter={() => prefetchBlogDetail()}
-                  className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 border border-cyan-400 hover:border-cyan-300 px-4 py-2 rounded-lg transition-colors"
+                  className="inline-flex items-center gap-2 text-electric-pink hover:text-magenta border border-electric-pink hover:border-magenta px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,128,0.4)] transform hover:scale-105"
                 >
                   Read Full Article
                 </Link>
@@ -340,7 +532,7 @@ function BlogPage() {
 function ResumePage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
-      <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+      <div className="glass rounded-xl p-6 neon-border">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
           <h2 className="text-3xl font-bold text-white">Resume</h2>
           <div className="flex flex-col sm:flex-row gap-3">
@@ -348,7 +540,7 @@ function ResumePage() {
               href="/resume/resume-latest.pdf" 
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
             >
               <ExternalLink size={16} />
               View PDF
@@ -356,7 +548,7 @@ function ResumePage() {
             <a 
               href="/resume/resume-latest.pdf" 
               download 
-              className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
             >
               <ExternalLink size={16} />
               Download PDF
@@ -377,12 +569,12 @@ function ResumePage() {
           <p>Last updated: January 28, 2025</p>
           <div className="flex flex-wrap gap-4">
             <p>Having trouble viewing? 
-              <a href="/resume/resume-latest.pdf" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 ml-1 underline">
+              <a href="/resume/resume-latest.pdf" target="_blank" rel="noopener noreferrer" className="text-electric-pink hover:text-magenta ml-1 underline">
                 Open in new tab
               </a>
             </p>
             <p>•</p>
-            <a href="/resume/resume-latest.pdf" download className="text-cyan-400 hover:text-cyan-300 underline">
+            <a href="/resume/resume-latest.pdf" download className="text-electric-pink hover:text-magenta underline">
               Download directly
             </a>
           </div>
@@ -417,7 +609,7 @@ function OutsidePage() {
               href="https://open.spotify.com/playlist/7p4UDA3iRUHzOOVB29ySL1?si=7fc6104f871c477b" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm"
+              className="inline-flex items-center gap-2 text-electric-pink hover:text-magenta transition-colors text-sm"
             >
               <ExternalLink size={16} />
               Open in Spotify
@@ -435,9 +627,9 @@ function OutsidePage() {
 
 function Header({ title }: { title: string }) {
   return (
-    <div className="bg-gray-900/80 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-30 px-6 py-4">
-      <h1 className="text-2xl font-bold text-white">{title}</h1>
-    </div>
+        <div className="bg-black/80 backdrop-blur-sm border-b border-violet/30 sticky top-0 z-30 px-6 py-4">
+          <h1 className="text-2xl font-heading font-bold gradient-text-purple">{title}</h1>
+        </div>
   )
 }
 
@@ -487,15 +679,16 @@ export default function App() {
   }[current] ?? 'Home'
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-gray-800 text-white flex">
+    <div className="min-h-screen bg-black text-white flex relative">
+      <div className="animated-bg"></div>
       <div className="hidden lg:flex w-64 flex-shrink-0"><Sidebar current={current} /></div>
-        <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-gray-900 border-b border-gray-800 px-4 py-3 flex justify-between items-center">
+        <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-sm border-b border-violet/30 px-4 py-3 flex justify-between items-center">
           <VKLogo size="md" />
           <button onClick={() => setMobile(!mobile)} aria-label={mobile ? 'Close menu' : 'Open menu'}>{mobile ? <X size={24} /> : <Menu size={24} />}</button>
         </div>
       {mobile && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-gray-900">
-          <div className="p-4 border-b border-gray-800 flex justify-between items-center">
+        <div className="lg:hidden fixed inset-0 z-50 bg-black">
+          <div className="p-4 border-b border-violet/30 flex justify-between items-center">
             <VKLogo size="md" />
             <button onClick={() => setMobile(false)} aria-label="Close menu"><X size={24} /></button>
           </div>
@@ -521,7 +714,7 @@ export default function App() {
             </Routes>
           </Suspense>
         </main>
-        <footer className="bg-gray-900 border-t border-gray-800 py-6 px-6">
+        <footer className="bg-black/80 backdrop-blur-sm border-t border-violet/30 py-6 px-6 relative z-10">
           <div className="max-w-6xl mx-auto text-center">
             <p className="text-gray-400 text-sm">© 2025 Venkata Keerthan Nimmala. Built with React & Tailwind.</p>
             <p className="text-gray-500 text-xs mt-1">Ready for new opportunities • Open to collaboration</p>
