@@ -1,27 +1,6 @@
 import { Github, Linkedin, Mail, ExternalLink, MapPin, Calendar, MessageCircle } from 'lucide-react'
 
 export default function ContactPage() {
-  const openCalendly = () => {
-    // Load Calendly script if not already loaded
-    if (!(window as any).Calendly) {
-      const script = document.createElement('script')
-      script.src = 'https://assets.calendly.com/assets/external/widget.js'
-      script.async = true
-      document.body.appendChild(script)
-      
-      script.onload = () => {
-        if ((window as any).Calendly) {
-          (window as any).Calendly.initPopupWidget({
-            url: 'https://calendly.com/keerthanvenkata/30min'
-          })
-        }
-      }
-    } else {
-      (window as any).Calendly.initPopupWidget({
-        url: 'https://calendly.com/keerthanvenkata/30min'
-      })
-    }
-  }
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
@@ -113,13 +92,15 @@ export default function ContactPage() {
         <p className="text-gray-300 max-w-2xl mx-auto mb-6">
           Book a time slot that works for you. Let's discuss opportunities, collaborations, or just have a chat!
         </p>
-        <button
-          onClick={openCalendly}
+        <a
+          href="https://calendly.com/keerthanvenkata/30min"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center gap-3 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-8 py-4 rounded-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(127,0,255,0.5)] transform hover:scale-105 font-heading font-semibold text-lg"
         >
           <Calendar size={24} />
           Book a Meeting
-        </button>
+        </a>
       </div>
 
       {/* Call to Action */}
