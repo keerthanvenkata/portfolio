@@ -80,7 +80,7 @@ export default function Modal({ isOpen, onClose, children, title, size = 'md' }:
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             onClick={onClose}
           />
 
@@ -91,18 +91,18 @@ export default function Modal({ isOpen, onClose, children, title, size = 'md' }:
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', duration: 0.3 }}
-            className={`relative bg-gray-800 rounded-xl border border-gray-700 w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden`}
+            className={`relative glass rounded-xl neon-border w-full ${sizeClasses[size]} max-h-[90vh] overflow-hidden shadow-[0_0_50px_rgba(127,0,255,0.3)]`}
           >
             {/* Header */}
             {(title || true) && (
-              <div className="flex items-center justify-between p-6 border-b border-gray-700">
+              <div className="flex items-center justify-between p-6 border-b border-violet/30">
                 {title && (
-                  <h2 id={labelledById} className="text-xl font-bold text-white">{title}</h2>
+                  <h2 id={labelledById} className="text-xl font-heading font-bold gradient-text-purple">{title}</h2>
                 )}
                 <button
                   ref={closeBtnRef}
                   onClick={onClose}
-                  className="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-gray-700"
+                  className="text-gray-400 hover:text-electric-pink transition-colors p-1 rounded-lg hover:bg-violet/20"
                   aria-label="Close"
                 >
                   <X size={20} />
