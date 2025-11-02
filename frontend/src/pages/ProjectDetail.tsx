@@ -13,20 +13,15 @@ export default function ProjectDetail() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    console.log('ProjectDetail rendered, id from params:', id)
     if (!id) {
-      console.log('No id provided, setting loading to false')
       setLoading(false)
       setError('No project ID provided')
       return
     }
     setLoading(true)
     setError(null)
-    console.log('Fetching project with id:', id)
-    console.log('API URL will be:', `/api/projects/${id}.json`)
     fetchProject(id)
       .then((p) => {
-        console.log('Project fetched successfully:', p)
         setProject(p)
         return p
       })
@@ -45,10 +40,6 @@ export default function ProjectDetail() {
         setRelated(scored)
       })
       .catch((error) => {
-        console.error('Error fetching project:', error)
-        console.error('Project ID:', id)
-        console.error('Error details:', error.response?.data || error.message)
-        console.error('Full error:', error)
         setError(`Failed to load project: ${error.response?.status === 404 ? 'Project not found' : error.message}`)
         setProject(null)
         setRelated([])
@@ -100,11 +91,6 @@ export default function ProjectDetail() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
-      {/* Debug: Component is rendering */}
-      <div className="mb-4 p-2 bg-yellow-900/20 text-yellow-400 text-xs rounded">
-        DEBUG: ProjectDetail rendering for ID: {id || 'undefined'} | Project loaded: {project ? 'Yes' : 'No'} | Loading: {loading ? 'Yes' : 'No'}
-      </div>
-      
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
         <Link to="/" className="hover:text-electric-pink transition-colors">Home</Link>
