@@ -218,7 +218,7 @@ export default function ProjectDetail() {
           <h2 className="text-2xl font-heading font-bold text-white mb-4">Related Projects</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {related.map(r => (
-              <Link key={r.id} to={`/${r.kind}/${r.id}`} className="block glass rounded-lg p-4 border border-violet/30 hover:border-electric-pink transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.3)] group">
+              <Link key={r.id} to={r.kind === 'project' ? `/projects/${r.id}` : `/experimental/${r.id}`} className="block glass rounded-lg p-4 border border-violet/30 hover:border-electric-pink transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.3)] group">
                 <div className="text-white font-semibold group-hover:text-electric-pink transition-colors">{r.title}</div>
                 <div className="text-gray-400 text-sm mt-1 line-clamp-2">{r.description}</div>
                 <div className="mt-2 flex flex-wrap gap-2">

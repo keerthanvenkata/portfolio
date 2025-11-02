@@ -288,7 +288,8 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
 
   const handleViewDetails = () => {
     if (selectedProject) {
-      navigate(`/${kind}/${selectedProject}`)
+      const routePrefix = kind === 'project' ? '/projects' : '/experimental'
+      navigate(`${routePrefix}/${selectedProject}`)
     }
   }
   return (
@@ -346,7 +347,7 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
                   Quick Preview
                 </button>
                 <Link 
-                  to={`/${kind}/${pr.id}`} 
+                  to={kind === 'project' ? `/projects/${pr.id}` : `/experimental/${pr.id}`}
                   onMouseEnter={() => (kind === 'experimental' ? prefetchExperimentalDetail() : prefetchProjectDetail())}
                   className="inline-flex items-center gap-2 text-electric-pink hover:text-magenta border border-electric-pink hover:border-magenta px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,128,0.4)] transform hover:scale-105"
                 >
