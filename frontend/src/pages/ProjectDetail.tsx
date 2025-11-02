@@ -100,6 +100,11 @@ export default function ProjectDetail() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
+      {/* Debug: Component is rendering */}
+      <div className="mb-4 p-2 bg-yellow-900/20 text-yellow-400 text-xs rounded">
+        DEBUG: ProjectDetail rendering for ID: {id || 'undefined'} | Project loaded: {project ? 'Yes' : 'No'} | Loading: {loading ? 'Yes' : 'No'}
+      </div>
+      
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
         <Link to="/" className="hover:text-electric-pink transition-colors">Home</Link>
