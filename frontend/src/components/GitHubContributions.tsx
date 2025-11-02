@@ -1,110 +1,12 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchSocial, type SocialConfig } from '../lib/api'
-
-declare global {
-  interface Window {
-    GitHubCalendar: (container: HTMLElement, username: string, options?: any) => void
-  }
-}
 
 export default function GitHubContributions() {
   const [social, setSocial] = useState<SocialConfig | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const calendarRef = useRef<HTMLDivElement>(null)
-  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     fetchSocial().then(setSocial).catch(() => setSocial(null))
   }, [])
-
-  useEffect(() => {
-    // Check if GitHubCalendar is already loaded (from index.html)
-    if (typeof window !== 'undefined' && (window as any).GitHubCalendar) {
-      setIsLoaded(true)
-      return
-    }
-
-    // Only load dynamically if not already loaded from index.html
-    if (!isLoaded && typeof window !== 'undefined') {
-      const checkInterval = setInterval(() => {
-        if ((window as any).GitHubCalendar) {
-          setIsLoaded(true)
-          clearInterval(checkInterval)
-        }
-      }, 100)
-
-      // Fallback: load script if not available after 1 second
-      setTimeout(() => {
-        if (!(window as any).GitHubCalendar) {
-          const script = document.createElement('script')
-          script.src = 'https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js'
-          script.async = true
-          script.onload = () => setIsLoaded(true)
-          script.onerror = () => setError('Failed to load GitHub Calendar')
-          document.head.appendChild(script)
-
-          const link = document.createElement('link')
-          link.rel = 'stylesheet'
-          link.href = 'https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css'
-          document.head.appendChild(link)
-        }
-        clearInterval(checkInterval)
-      }, 1000)
-
-      return () => clearInterval(checkInterval)
-    }
-  }, [isLoaded])
-
-  useEffect(() => {
-    if (social?.github_username && calendarRef.current && isLoaded) {
-      // Wait for the script to fully initialize
-      const timeoutId = setTimeout(() => {
-        if (window.GitHubCalendar && calendarRef.current) {
-          try {
-            const username = social.github_username!.trim()
-            console.log('Initializing GitHub Calendar for username:', username)
-            
-            // Clear previous content
-            calendarRef.current.innerHTML = ''
-            
-            // Initialize GitHub Calendar
-            // The library fetches data from GitHub API, so contributions count should be accurate
-            window.GitHubCalendar(calendarRef.current, username, {
-              responsive: true,
-              tooltips: true,
-              global_stats: true,
-              cache: 86400,
-              summary_text: 'Summary of Pull Requests, Issues opened, and Commits pushed to GitHub',
-            })
-            
-            // Verify calendar rendered after API call completes
-            setTimeout(() => {
-              const calendarElement = calendarRef.current?.querySelector('.calendar')
-              const statsElement = calendarRef.current?.querySelector('.contrib-column')
-              
-              if (!calendarElement) {
-                console.warn('GitHub Calendar may not have rendered. Check username:', username)
-                setError('Calendar failed to render. Please check the username is correct.')
-              } else if (!statsElement) {
-                console.warn('GitHub Calendar rendered but stats may be loading. This can happen if GitHub API is rate-limited.')
-              } else {
-                console.log('GitHub Calendar rendered successfully for:', username)
-              }
-            }, 3000)
-          } catch (err) {
-            console.error('GitHub Calendar error:', err)
-            setError(`Failed to render calendar: ${err instanceof Error ? err.message : 'Unknown error'}`)
-          }
-        } else {
-          // Retry if GitHubCalendar is not available yet
-          console.warn('GitHub Calendar script not loaded yet, retrying...')
-          setIsLoaded(false) // Trigger retry
-        }
-      }, 800) // Wait for script from index.html to be ready
-
-      return () => clearTimeout(timeoutId)
-    }
-  }, [social, isLoaded])
 
   if (!social?.github_username) {
     return (
@@ -115,6 +17,7 @@ export default function GitHubContributions() {
   }
 
   const username = social.github_username
+  const chartUrl = `https://ghchart.rshah.org/${username}`
 
   return (
     <div className="glass rounded-xl p-6 neon-border">
@@ -132,58 +35,21 @@ export default function GitHubContributions() {
         )}
       </div>
 
-      {!error ? (
-        <div className="overflow-x-auto rounded-lg bg-black/30 border border-violet/30 p-4">
-          <div ref={calendarRef} className="github-calendar-container">
-            {!isLoaded && (
-              <div className="text-center py-8">
-                <div className="animate-pulse text-gray-400">Loading GitHub contributions...</div>
-              </div>
-            )}
-          </div>
-        </div>
-      ) : (
-        <div className="text-gray-400 text-sm">
-          Unable to load contributions calendar. Visit{' '}
-          <a
-            href={`https://github.com/${username}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-electric-pink hover:text-magenta transition-colors"
-          >
-            @{username}
-          </a>
-          {' '}on GitHub instead.
-        </div>
-      )}
-
-      <style>{`
-        .github-calendar-container .calendar {
-          border: none !important;
-          border-radius: 8px;
-        }
-        .github-calendar-container .calendar .day[data-level="1"] {
-          fill: rgba(127, 0, 255, 0.3) !important;
-        }
-        .github-calendar-container .calendar .day[data-level="2"] {
-          fill: rgba(127, 0, 255, 0.5) !important;
-        }
-        .github-calendar-container .calendar .day[data-level="3"] {
-          fill: rgba(255, 0, 255, 0.7) !important;
-        }
-        .github-calendar-container .calendar .day[data-level="4"] {
-          fill: rgba(255, 0, 128, 0.9) !important;
-        }
-        .github-calendar-container .calendar .contrib-column {
-          border-color: rgba(127, 0, 255, 0.3) !important;
-        }
-        .github-calendar-container .calendar text {
-          fill: rgba(255, 255, 255, 0.8) !important;
-        }
-        .github-calendar-container .calendar .contrib-legend {
-          color: rgba(255, 255, 255, 0.8) !important;
-        }
-      `}</style>
+      <div className="overflow-x-auto rounded-lg bg-black/30 border border-violet/30 p-4">
+        <a
+          href={social.github_url || `https://github.com/${username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block hover:opacity-80 transition-opacity"
+        >
+          <img
+            src={chartUrl}
+            alt={`GitHub contributions graph for ${username}`}
+            className="w-full h-auto rounded-lg"
+            loading="lazy"
+          />
+        </a>
+      </div>
     </div>
   )
 }
