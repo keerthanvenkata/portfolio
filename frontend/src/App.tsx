@@ -113,7 +113,7 @@ function HomePage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-7xl md:text-8xl font-heading font-bold gradient-text-purple text-glow-purple"
+              className="text-7xl md:text-8xl font-heading font-bold bg-gradient-to-r from-violet via-magenta to-electric-pink bg-clip-text text-transparent text-glow-purple"
             >
               Venkata Keerthan Nimmala
             </motion.h1>
