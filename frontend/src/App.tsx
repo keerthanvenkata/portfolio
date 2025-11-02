@@ -36,7 +36,7 @@ function Sidebar({ current, onNavigate }: { current: string, onNavigate?: () => 
     { name: 'Contact', id: 'contact', icon: Mail },
   ]
   return (
-    <div className="bg-black/80 backdrop-blur-sm border-r border-violet/30 flex flex-col" role="navigation" aria-label="Main">
+    <div className="bg-profound-blue/90 backdrop-blur-sm border-r border-violet/50 flex flex-col" role="navigation" aria-label="Main">
       <div className="p-6 border-b border-violet/30 flex justify-center">
         <VKLogo size="lg" />
       </div>
@@ -158,8 +158,8 @@ function HomePage() {
           </motion.div>
         </div>
 
-        {/* Stats Section */}
-        <motion.div 
+        {/* Stats Section - Commented out for future use */}
+        {/* <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
@@ -181,7 +181,7 @@ function HomePage() {
               </motion.div>
             )
           })}
-        </motion.div>
+        </motion.div> */}
 
         {/* Featured Content Cards */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
@@ -627,8 +627,8 @@ function OutsidePage() {
 
 function Header({ title }: { title: string }) {
   return (
-        <div className="bg-black/80 backdrop-blur-sm border-b border-violet/30 sticky top-0 z-30 px-6 py-4">
-          <h1 className="text-2xl font-heading font-bold gradient-text-purple">{title}</h1>
+        <div className="bg-black/90 backdrop-blur-sm border-b border-violet/50 sticky top-0 z-30 px-6 py-4">
+          <h1 className="text-2xl font-heading font-bold text-violet text-glow-purple">{title}</h1>
         </div>
   )
 }
@@ -659,6 +659,31 @@ export default function App() {
       setCurrent('home')
     }
   }, [location.pathname])
+
+  // Update page title
+  useEffect(() => {
+    const titles: Record<string, string> = {
+      home: "Keerthan's Page",
+      about: "About - Keerthan's Page",
+      projects: "Projects - Keerthan's Page",
+      experimental: "Experimental - Keerthan's Page",
+      blog: "Blog - Keerthan's Page",
+      resume: "Resume - Keerthan's Page",
+      outside: "Outside Code - Keerthan's Page",
+      contact: "Contact - Keerthan's Page",
+    }
+    
+    // Handle detail pages
+    if (location.pathname.startsWith('/blog/')) {
+      document.title = "Blog - Keerthan's Page"
+    } else if (location.pathname.startsWith('/projects/')) {
+      document.title = "Projects - Keerthan's Page"
+    } else if (location.pathname.startsWith('/experimental/')) {
+      document.title = "Experimental - Keerthan's Page"
+    } else {
+      document.title = titles[current] || "Keerthan's Page"
+    }
+  }, [current, location.pathname])
 
   // Idle prefetch of likely-next routes (About, Contact, Detail routes)
   useEffect(() => {
