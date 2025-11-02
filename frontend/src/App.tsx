@@ -9,10 +9,9 @@ import BlogModal from './components/BlogModal'
 import ExperimentalModal from './components/ExperimentalModal'
 import LoadingSpinner from './components/LoadingSpinner'
 
-// Temporarily removing lazy loading to debug route issues
-import ProjectDetail from './pages/ProjectDetail'
-import ExperimentalDetail from './pages/ExperimentalDetail'
+const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const BlogDetail = lazy(() => import('./pages/BlogDetail'))
+const ExperimentalDetail = lazy(() => import('./pages/ExperimentalDetail'))
 const AboutPage = lazy(() => import('./pages/About'))
 const ContactPage = lazy(() => import('./components/ContactPage'))
 import PDFViewer from './components/PDFViewer'
@@ -709,7 +708,6 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/projects/:id" element={<ProjectDetail />} />
-              <Route path="/project/:id" element={<ProjectDetail />} />
               <Route path="/projects" element={<ProjectsPage kind="project" />} />
               <Route path="/experimental/:id" element={<ExperimentalDetail />} />
               <Route path="/experimental" element={<ProjectsPage kind="experimental" />} />
