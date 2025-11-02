@@ -53,11 +53,11 @@ export default function BlogDetail() {
           <h1 className="text-2xl font-bold text-white mb-4">Post Not Found</h1>
           <p className="text-gray-400 mb-6">The blog post you're looking for doesn't exist.</p>
           <Link 
-            to="/#/blog" 
-            className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
+            to="/blog" 
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
           >
             <ArrowLeft size={16} />
-            Back to Blog
+            Blog
           </Link>
         </div>
       </div>
@@ -72,20 +72,20 @@ export default function BlogDetail() {
     <div className="max-w-4xl mx-auto px-6 py-12">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
-        <Link to="/#/home" className="hover:text-white transition-colors">Home</Link>
+        <Link to="/" className="hover:text-electric-pink transition-colors">Home</Link>
         <span>/</span>
-        <Link to="/#/blog" className="hover:text-white transition-colors">Blog</Link>
+        <Link to="/blog" className="hover:text-electric-pink transition-colors">Blog</Link>
         <span>/</span>
         <span className="text-white">{post.title}</span>
       </nav>
 
       {/* Back Button */}
       <Link 
-        to="/#/blog" 
-        className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8"
+        to="/blog" 
+        className="inline-flex items-center gap-2 text-electric-pink hover:text-magenta transition-colors mb-8 font-medium"
       >
         <ArrowLeft size={16} />
-        Back to Blog
+        Blog
       </Link>
 
       {/* Article Header */}
@@ -131,7 +131,7 @@ export default function BlogDetail() {
           <h2 className="text-2xl font-bold text-white mb-4">More in {post.category}</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {related.map(r => (
-              <Link key={r.id} to={`/#/blog/${r.id}`} className="block border border-gray-700 rounded-lg p-4 hover:border-cyan-500 transition-colors">
+              <Link key={r.id} to={`/blog/${r.id}`} className="block border border-gray-700 rounded-lg p-4 hover:border-electric-pink transition-colors">
                 <div className="text-white font-semibold">{r.title}</div>
                 <div className="text-gray-400 text-sm mt-1 line-clamp-2">{r.excerpt}</div>
                 <div className="text-gray-500 text-xs mt-2">{new Date(r.date).toLocaleDateString()}</div>
