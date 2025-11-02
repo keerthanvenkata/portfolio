@@ -1,10 +1,6 @@
 import { Github, Linkedin, Mail, ExternalLink, MapPin, Calendar, MessageCircle } from 'lucide-react'
-import { useState } from 'react'
-import Modal from './Modal'
 
 export default function ContactPage() {
-  const [showCalendly, setShowCalendly] = useState(false)
-
   const openCalendly = () => {
     // Load Calendly script if not already loaded
     if (!(window as any).Calendly) {
