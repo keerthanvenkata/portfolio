@@ -66,7 +66,7 @@ export default function BlogModal({ isOpen, onClose, postId, onViewDetails }: Bl
 
           {/* Excerpt */}
           <div className="space-y-4">
-            <p className="text-gray-300 leading-relaxed text-lg">
+            <p className="text-gray-300 leading-relaxed text-lg font-body">
               {post.excerpt}
             </p>
           </div>
@@ -76,11 +76,29 @@ export default function BlogModal({ isOpen, onClose, postId, onViewDetails }: Bl
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-white">Preview</h3>
               <div 
-                className="prose prose-invert max-w-none font-body prose-headings:font-body prose-headings:text-white prose-headings:font-bold prose-p:text-gray-300 prose-a:text-electric-pink prose-a:hover:text-magenta prose-strong:text-white prose-code:text-violet prose-code:bg-black/40 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-pre:bg-black/40 prose-pre:border prose-pre:border-violet/30"
+                className="prose prose-invert max-w-none font-body blog-modal-content prose-headings:text-white prose-headings:font-bold prose-headings:font-heading prose-p:text-gray-300 prose-a:text-electric-pink prose-a:hover:text-magenta prose-strong:text-white prose-code:text-violet prose-code:bg-black/40 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-pre:bg-black/40 prose-pre:border prose-pre:border-violet/30"
                 dangerouslySetInnerHTML={{ 
                   __html: post.content_html.substring(0, 500) + (post.content_html.length > 500 ? '...' : '')
                 }}
               />
+              <style>{`
+                .blog-modal-content {
+                  font-family: 'Inter', sans-serif !important;
+                }
+                .blog-modal-content h1,
+                .blog-modal-content h2,
+                .blog-modal-content h3,
+                .blog-modal-content h4,
+                .blog-modal-content h5,
+                .blog-modal-content h6 {
+                  font-family: 'Orbitron', sans-serif !important;
+                }
+                .blog-modal-content p,
+                .blog-modal-content li,
+                .blog-modal-content blockquote {
+                  font-family: 'Inter', sans-serif !important;
+                }
+              `}</style>
             </div>
           )}
 

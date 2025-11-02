@@ -105,19 +105,19 @@ export default function BlogDetail() {
             {post.title}
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-light">
+          <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-light font-body">
             {post.excerpt}
           </p>
         </header>
 
         {/* Article Content */}
         <div 
-          className="prose prose-invert prose-lg max-w-none font-body
-            prose-headings:font-body prose-headings:text-white prose-headings:font-bold prose-headings:tracking-tight
+          className="prose prose-invert prose-lg max-w-none font-body blog-content
+            prose-headings:text-white prose-headings:font-bold prose-headings:tracking-tight
             prose-h1:text-4xl prose-h1:mb-6 prose-h1:mt-12 prose-h1:leading-tight prose-h1:font-bold
-            prose-h2:text-3xl prose-h2:mb-5 prose-h2:mt-10 prose-h2:leading-tight prose-h2:font-bold
-            prose-h3:text-2xl prose-h3:mb-4 prose-h3:mt-8 prose-h3:font-semibold
-            prose-h4:text-xl prose-h4:mb-3 prose-h4:mt-6 prose-h4:font-semibold
+            prose-h2:text-3xl prose-h2:mb-6 prose-h2:mt-12 prose-h2:leading-tight prose-h2:font-bold prose-h2:text-violet prose-h2:pb-3 prose-h2:border-b prose-h2:border-violet/30
+            prose-h3:text-2xl prose-h3:mb-4 prose-h3:mt-8 prose-h3:font-semibold prose-h3:text-violet
+            prose-h4:text-xl prose-h4:mb-3 prose-h4:mt-6 prose-h4:font-semibold prose-h4:text-gray-200
             prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6 prose-p:text-lg prose-p:font-body
             prose-a:text-electric-pink prose-a:no-underline prose-a:font-medium hover:prose-a:text-magenta prose-a:transition-colors
             prose-strong:text-white prose-strong:font-semibold
@@ -130,6 +130,50 @@ export default function BlogDetail() {
             prose-hr:border-violet/30 prose-hr:my-12"
           dangerouslySetInnerHTML={{ __html: post.content_html || '' }}
         />
+        
+        <style>{`
+          .blog-content {
+            font-family: 'Inter', sans-serif !important;
+          }
+          
+          .blog-content h1,
+          .blog-content h2,
+          .blog-content h3,
+          .blog-content h4,
+          .blog-content h5,
+          .blog-content h6 {
+            font-family: 'Orbitron', sans-serif !important;
+          }
+          
+          .blog-content p,
+          .blog-content li,
+          .blog-content blockquote,
+          .blog-content td,
+          .blog-content th,
+          .blog-content div {
+            font-family: 'Inter', sans-serif !important;
+          }
+          
+          .blog-content h2 {
+            font-size: 1.875rem !important;
+            font-weight: 700 !important;
+            color: #7F00FF !important;
+            margin-top: 3rem !important;
+            margin-bottom: 1.5rem !important;
+            padding-bottom: 0.75rem !important;
+            border-bottom: 2px solid rgba(127, 0, 255, 0.3) !important;
+            line-height: 1.25 !important;
+            letter-spacing: -0.025em !important;
+          }
+          
+          .blog-content h3 {
+            color: #7F00FF !important;
+          }
+          
+          .blog-content h4 {
+            color: #E5E7EB !important;
+          }
+        `}</style>
       </article>
 
       {/* Related Posts */}
