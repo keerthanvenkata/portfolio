@@ -89,12 +89,6 @@ function HomePage() {
     fetchProjects('experimental', true).then(setExperimental).catch(() => setExperimental([]))
   }, [])
 
-  const stats = [
-    { label: 'Projects', value: projects.length, icon: Code, color: 'violet', colorClass: 'text-violet' },
-    { label: 'Blog Posts', value: posts.length, icon: BookOpen, color: 'electric-pink', colorClass: 'text-electric-pink' },
-    { label: 'Experiments', value: experimental.length, icon: Lightbulb, color: 'magenta', colorClass: 'text-magenta' },
-  ]
-
   return (
     <div className="min-h-screen relative">
       {/* Animated background overlay */}
