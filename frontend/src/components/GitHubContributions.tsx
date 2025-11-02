@@ -18,65 +18,89 @@ export default function GitHubContributions() {
   }, [])
 
   useEffect(() => {
-    // Check if GitHubCalendar is already loaded (from index.html or previous load)
+    // Check if GitHubCalendar is already loaded (from index.html)
     if (typeof window !== 'undefined' && (window as any).GitHubCalendar) {
       setIsLoaded(true)
       return
     }
 
-    // Load GitHub Calendar script dynamically
+    // Only load dynamically if not already loaded from index.html
     if (!isLoaded && typeof window !== 'undefined') {
-      const script = document.createElement('script')
-      script.src = 'https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js'
-      script.async = true
-      script.onload = () => setIsLoaded(true)
-      script.onerror = () => setError('Failed to load GitHub Calendar')
-      document.head.appendChild(script)
-
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = 'https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css'
-      document.head.appendChild(link)
-
-      return () => {
-        // Cleanup
-        if (document.head.contains(script)) {
-          document.head.removeChild(script)
+      const checkInterval = setInterval(() => {
+        if ((window as any).GitHubCalendar) {
+          setIsLoaded(true)
+          clearInterval(checkInterval)
         }
-        if (document.head.contains(link)) {
-          document.head.removeChild(link)
+      }, 100)
+
+      // Fallback: load script if not available after 1 second
+      setTimeout(() => {
+        if (!(window as any).GitHubCalendar) {
+          const script = document.createElement('script')
+          script.src = 'https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js'
+          script.async = true
+          script.onload = () => setIsLoaded(true)
+          script.onerror = () => setError('Failed to load GitHub Calendar')
+          document.head.appendChild(script)
+
+          const link = document.createElement('link')
+          link.rel = 'stylesheet'
+          link.href = 'https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css'
+          document.head.appendChild(link)
         }
-      }
+        clearInterval(checkInterval)
+      }, 1000)
+
+      return () => clearInterval(checkInterval)
     }
   }, [isLoaded])
 
   useEffect(() => {
     if (social?.github_username && calendarRef.current && isLoaded) {
-      // Wait a bit for the script to fully initialize
+      // Wait for the script to fully initialize
       const timeoutId = setTimeout(() => {
         if (window.GitHubCalendar && calendarRef.current) {
           try {
+            const username = social.github_username!.trim()
+            console.log('Initializing GitHub Calendar for username:', username)
+            
             // Clear previous content
             calendarRef.current.innerHTML = ''
             
-            // Initialize GitHub Calendar with custom colors
-            window.GitHubCalendar(calendarRef.current, social.github_username!, {
+            // Initialize GitHub Calendar
+            // The library fetches data from GitHub API, so contributions count should be accurate
+            window.GitHubCalendar(calendarRef.current, username, {
               responsive: true,
               tooltips: true,
               global_stats: true,
               cache: 86400,
               summary_text: 'Summary of Pull Requests, Issues opened, and Commits pushed to GitHub',
             })
+            
+            // Verify calendar rendered after API call completes
+            setTimeout(() => {
+              const calendarElement = calendarRef.current?.querySelector('.calendar')
+              const statsElement = calendarRef.current?.querySelector('.contrib-column')
+              
+              if (!calendarElement) {
+                console.warn('GitHub Calendar may not have rendered. Check username:', username)
+                setError('Calendar failed to render. Please check the username is correct.')
+              } else if (!statsElement) {
+                console.warn('GitHub Calendar rendered but stats may be loading. This can happen if GitHub API is rate-limited.')
+              } else {
+                console.log('GitHub Calendar rendered successfully for:', username)
+              }
+            }, 3000)
           } catch (err) {
             console.error('GitHub Calendar error:', err)
-            setError('Failed to render calendar')
+            setError(`Failed to render calendar: ${err instanceof Error ? err.message : 'Unknown error'}`)
           }
         } else {
           // Retry if GitHubCalendar is not available yet
           console.warn('GitHub Calendar script not loaded yet, retrying...')
           setIsLoaded(false) // Trigger retry
         }
-      }, 200)
+      }, 800) // Wait for script from index.html to be ready
 
       return () => clearTimeout(timeoutId)
     }
