@@ -42,8 +42,8 @@ export default function ExperimentalDetail() {
           <h1 className="text-2xl font-bold text-white mb-4">Project Not Found</h1>
           <p className="text-gray-400 mb-6">The experimental project you're looking for doesn't exist.</p>
           <Link 
-            to="/#/experimental" 
-            className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
+            to="/experimental" 
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
           >
             <ArrowLeft size={16} />
             Back to Experimental
@@ -57,29 +57,20 @@ export default function ExperimentalDetail() {
     <div className="max-w-6xl mx-auto px-6 py-12">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
-        <Link to="/#/home" className="hover:text-white transition-colors">Home</Link>
+        <Link to="/" className="hover:text-electric-pink transition-colors">Home</Link>
         <span>/</span>
-        <Link to="/#/experimental" className="hover:text-white transition-colors">Experimental</Link>
+        <Link to="/experimental" className="hover:text-electric-pink transition-colors">Experimental</Link>
         <span>/</span>
         <span className="text-white">{project.title}</span>
       </nav>
 
-      {/* Back Button */}
-      <Link 
-        to="/#/experimental" 
-        className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8"
-      >
-        <ArrowLeft size={16} />
-        Back to Experimental
-      </Link>
-
       {/* Project Header */}
-      <div className="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-8">
+      <div className="glass rounded-xl p-8 neon-border mb-8">
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-4">
-              <h1 className="text-4xl font-bold text-white">{project.title}</h1>
-              <span className="bg-yellow-900/30 text-yellow-400 px-3 py-1 rounded-full text-sm border border-yellow-500/30 flex items-center gap-1">
+              <h1 className="text-4xl font-heading font-bold text-white">{project.title}</h1>
+              <span className="bg-electric-pink/20 text-electric-pink px-3 py-1 rounded-full text-sm border border-electric-pink/30 flex items-center gap-1">
                 <Lightbulb size={14} />
                 Experimental
               </span>
@@ -92,7 +83,7 @@ export default function ExperimentalDetail() {
                 href={project.link} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-3 rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
               >
                 <ExternalLink size={16} />
                 View Project
@@ -103,14 +94,14 @@ export default function ExperimentalDetail() {
       </div>
 
       {/* Tech Stack */}
-      <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-8">
-        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+      <div className="glass rounded-xl p-6 neon-border mb-8">
+        <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
           <Code size={24} />
           Technologies Used
         </h2>
         <div className="flex flex-wrap gap-2">
           {project.tech.map(tech => (
-            <span key={tech} className="bg-gray-700 text-cyan-400 px-4 py-2 rounded-lg text-sm">
+            <span key={tech} className="bg-violet/20 text-violet px-4 py-2 rounded-lg text-sm border border-violet/30">
               {tech}
             </span>
           ))}
@@ -119,15 +110,15 @@ export default function ExperimentalDetail() {
 
       {/* Highlights */}
       {project.highlights && project.highlights.length > 0 && (
-        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+        <div className="glass rounded-xl p-6 neon-border mb-8">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
             <Star size={24} />
             Key Features
           </h2>
           <ul className="space-y-3">
             {project.highlights.map((highlight, index) => (
               <li key={index} className="flex items-start gap-3 text-gray-300">
-                <span className="text-cyan-400 mt-1">•</span>
+                <span className="text-electric-pink mt-1">•</span>
                 <span>{highlight}</span>
               </li>
             ))}
@@ -137,8 +128,8 @@ export default function ExperimentalDetail() {
 
       {/* Details */}
       {project.contribution && (
-        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-4">Project Details</h2>
+        <div className="glass rounded-xl p-6 neon-border mb-8">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4">Project Details</h2>
           <div className="prose prose-invert max-w-none">
             <p className="text-gray-300 leading-relaxed">{project.contribution}</p>
           </div>
@@ -147,8 +138,8 @@ export default function ExperimentalDetail() {
 
       {/* Images/Videos Section */}
       {(project.images.length > 0 || project.video) && (
-        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-4">Media</h2>
+        <div className="glass rounded-xl p-6 neon-border mb-8">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4">Media</h2>
           
           {/* Images */}
           {project.images.length > 0 && (
@@ -178,12 +169,12 @@ export default function ExperimentalDetail() {
       )}
 
       {/* Related Projects */}
-      <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-        <h2 className="text-2xl font-bold text-white mb-4">More Experimental Projects</h2>
-        <p className="text-gray-400 mb-4">Explore other experimental projects and side experiments.</p>
+      <div className="glass rounded-xl p-6 neon-border">
+        <h2 className="text-2xl font-heading font-bold gradient-text-purple mb-4">More Experimental Projects</h2>
+        <p className="text-gray-300 mb-4">Explore other experimental projects and side experiments.</p>
         <Link 
-          to="/#/experimental" 
-          className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors"
+          to="/experimental" 
+          className="inline-flex items-center gap-2 text-electric-pink hover:text-magenta transition-colors font-medium"
         >
           View All Experimental
           <ExternalLink size={16} />

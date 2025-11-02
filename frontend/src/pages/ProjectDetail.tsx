@@ -63,8 +63,8 @@ export default function ProjectDetail() {
           <h1 className="text-2xl font-bold text-white mb-4">Project Not Found</h1>
           <p className="text-gray-400 mb-6">The project you're looking for doesn't exist.</p>
           <Link 
-            to="/#/projects" 
-            className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors"
+            to="/projects" 
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
           >
             <ArrowLeft size={16} />
             Back to Projects
@@ -78,37 +78,28 @@ export default function ProjectDetail() {
     <div className="max-w-6xl mx-auto px-6 py-12">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm text-gray-400 mb-8">
-        <Link to="/#/home" className="hover:text-white transition-colors">Home</Link>
+        <Link to="/" className="hover:text-electric-pink transition-colors">Home</Link>
         <span>/</span>
-        <Link to="/#/projects" className="hover:text-white transition-colors">Projects</Link>
+        <Link to="/projects" className="hover:text-electric-pink transition-colors">Projects</Link>
         <span>/</span>
         <span className="text-white">{project.title}</span>
       </nav>
 
-      {/* Back Button */}
-      <Link 
-        to="/#/projects" 
-        className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8"
-      >
-        <ArrowLeft size={16} />
-        Back to Projects
-      </Link>
-
       {/* Project Header */}
-      <div className="bg-gray-800 rounded-xl p-8 border border-gray-700 mb-8">
+      <div className="glass rounded-xl p-8 neon-border mb-8">
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-4">
-              <h1 className="text-4xl font-bold text-white">{project.title}</h1>
+              <h1 className="text-4xl font-heading font-bold text-white">{project.title}</h1>
               {project.status && (
-                <span className="bg-green-900/30 text-green-400 px-3 py-1 rounded-full text-sm border border-green-500/30">
+                <span className="bg-neon-green/20 text-neon-green px-3 py-1 rounded-full text-sm border border-neon-green/30">
                   {project.status}
                 </span>
               )}
             </div>
             
             {project.role && (
-              <div className="flex items-center gap-2 text-cyan-400 mb-4">
+              <div className="flex items-center gap-2 text-violet mb-4">
                 <User size={16} />
                 <span>{project.role}</span>
               </div>
@@ -121,7 +112,7 @@ export default function ProjectDetail() {
                 href={project.link} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-3 rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
               >
                 <ExternalLink size={16} />
                 Visit Project
@@ -132,14 +123,14 @@ export default function ProjectDetail() {
       </div>
 
       {/* Tech Stack */}
-      <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-8">
-        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+      <div className="glass rounded-xl p-6 neon-border mb-8">
+        <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
           <Code size={24} />
           Tech Stack
         </h2>
         <div className="flex flex-wrap gap-2">
           {project.tech.map(tech => (
-            <span key={tech} className="bg-gray-700 text-cyan-400 px-4 py-2 rounded-lg text-sm">
+            <span key={tech} className="bg-violet/20 text-violet px-4 py-2 rounded-lg text-sm border border-violet/30">
               {tech}
             </span>
           ))}
@@ -148,15 +139,15 @@ export default function ProjectDetail() {
 
       {/* Highlights */}
       {project.highlights && project.highlights.length > 0 && (
-        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+        <div className="glass rounded-xl p-6 neon-border mb-8">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
             <Star size={24} />
             Key Highlights
           </h2>
           <ul className="space-y-3">
             {project.highlights.map((highlight, index) => (
               <li key={index} className="flex items-start gap-3 text-gray-300">
-                <span className="text-cyan-400 mt-1">•</span>
+                <span className="text-electric-pink mt-1">•</span>
                 <span>{highlight}</span>
               </li>
             ))}
@@ -166,8 +157,8 @@ export default function ProjectDetail() {
 
       {/* Contribution */}
       {project.contribution && (
-        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-4">My Contribution</h2>
+        <div className="glass rounded-xl p-6 neon-border mb-8">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4">My Contribution</h2>
           <div className="prose prose-invert max-w-none">
             <p className="text-gray-300 leading-relaxed">{project.contribution}</p>
           </div>
@@ -176,8 +167,8 @@ export default function ProjectDetail() {
 
       {/* Images/Videos Section */}
       {(project.images.length > 0 || project.video) && (
-        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-4">Media</h2>
+        <div className="glass rounded-xl p-6 neon-border mb-8">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4">Media</h2>
           
           {/* Images */}
           {project.images.length > 0 && (
@@ -208,16 +199,16 @@ export default function ProjectDetail() {
 
       {/* Related Projects */}
       {related.length > 0 && (
-        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-          <h2 className="text-2xl font-bold text-white mb-4">Related Projects</h2>
+        <div className="glass rounded-xl p-6 neon-border">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4">Related Projects</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {related.map(r => (
-              <Link key={r.id} to={`/#/${r.kind}/${r.id}`} className="block border border-gray-700 rounded-lg p-4 hover:border-cyan-500 transition-colors">
-                <div className="text-white font-semibold">{r.title}</div>
+              <Link key={r.id} to={`/${r.kind}/${r.id}`} className="block glass rounded-lg p-4 border border-violet/30 hover:border-electric-pink transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.3)] group">
+                <div className="text-white font-semibold group-hover:text-electric-pink transition-colors">{r.title}</div>
                 <div className="text-gray-400 text-sm mt-1 line-clamp-2">{r.description}</div>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {r.tech.slice(0, 4).map(t => (
-                    <span key={t} className="bg-gray-700 text-cyan-400 px-2 py-0.5 rounded text-xs">{t}</span>
+                    <span key={t} className="bg-violet/20 text-violet px-2 py-0.5 rounded text-xs">{t}</span>
                   ))}
                 </div>
               </Link>
