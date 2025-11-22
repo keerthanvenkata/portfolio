@@ -6,6 +6,7 @@
     "tech": ["Python", "Pandas"],
     "details": "Uses technical indicators and simple rules.",
     "highlights": ["Real-time data processing", "Backtesting framework"],
+    "images": [],
     "featured": false,
     "kind": "experimental"
   },
@@ -16,6 +17,7 @@
     "tech": ["Python", "Click"],
     "details": "Handles repetitive CSV cleaning tasks.",
     "highlights": ["Quick transformations", "Batch processing"],
+    "images": [],
     "featured": false,
     "kind": "experimental"
   }
