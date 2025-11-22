@@ -50,8 +50,9 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
   // Delay before expanding on hover (in milliseconds)
   const HOVER_EXPAND_DELAY = 500
 
-  const handleMouseEnter = () => {
-    if (isMobile) return // No hover behavior on mobile
+  // Unified hover handler for both hover zone and logo - treated the same
+  const handleTriggerMouseEnter = () => {
+    if (isMobile) return
     // Clear any pending retract timeout
     if (retractTimeoutRef.current) {
       clearTimeout(retractTimeoutRef.current)
@@ -64,38 +65,28 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
     }, HOVER_EXPAND_DELAY)
   }
   
-  const handleMouseLeave = (e: React.MouseEvent) => {
-    if (isMobile) return // No hover behavior on mobile
-    // Check if mouse is moving to a child element (sidebar content)
-    const relatedTarget = e.relatedTarget as HTMLElement
-    if (relatedTarget && (e.currentTarget as HTMLElement).contains(relatedTarget)) {
-      // Mouse is moving to a child element, don't close
-      return
-    }
+  const handleTriggerMouseLeave = () => {
+    if (isMobile) return
     // Clear any pending expand timeout
     if (expandTimeoutRef.current) {
       clearTimeout(expandTimeoutRef.current)
       expandTimeoutRef.current = null
     }
-    if (isPinned) {
-      // If pinned, wait 1.5 seconds before retracting
-      retractTimeoutRef.current = setTimeout(() => {
-        setIsExpanded(false)
-        setIsPinned(false) // Clear pinned state when sidebar closes
-        retractTimeoutRef.current = null
-      }, PINNED_RETRACT_DELAY)
-    } else {
-      // If not pinned, retract immediately
-      setIsExpanded(false)
-    }
+    // Don't close here - let sidebar mouse leave handle it
   }
   
-  const handleSidebarMouseEnter = () => {
+  // Handler for when mouse enters sidebar OR logo area (keeps sidebar open)
+  const handleSidebarAreaMouseEnter = () => {
     if (isMobile) return
-    // When mouse enters sidebar, cancel any pending retract
+    // Clear any pending retract timeout
     if (retractTimeoutRef.current) {
       clearTimeout(retractTimeoutRef.current)
       retractTimeoutRef.current = null
+    }
+    // Clear any pending expand timeout and expand immediately
+    if (expandTimeoutRef.current) {
+      clearTimeout(expandTimeoutRef.current)
+      expandTimeoutRef.current = null
     }
     // Ensure sidebar is expanded
     if (!isExpanded) {
@@ -103,27 +94,25 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
     }
   }
   
-  const handleSidebarMouseLeave = (e: React.MouseEvent) => {
+  // Handler for when mouse leaves sidebar area (not hover zone or logo)
+  const handleSidebarAreaMouseLeave = (e: React.MouseEvent) => {
     if (isMobile) return
-    // Check if mouse is moving to hover zone or logo
     const relatedTarget = e.relatedTarget as HTMLElement
+    // Check if mouse is moving to hover zone, logo, or sidebar
     if (relatedTarget && (
       relatedTarget.closest('[data-hover-zone]') || 
-      relatedTarget.closest('[data-logo]')
+      relatedTarget.closest('[data-logo]') ||
+      relatedTarget.closest('[data-sidebar]')
     )) {
-      // Mouse is moving to hover zone or logo, don't close
+      // Mouse is moving to hover zone, logo, or sidebar - keep open
       return
     }
-    // Clear any pending expand timeout
-    if (expandTimeoutRef.current) {
-      clearTimeout(expandTimeoutRef.current)
-      expandTimeoutRef.current = null
-    }
+    // Mouse is leaving the entire sidebar area
     if (isPinned) {
       // If pinned, wait 1.5 seconds before retracting
       retractTimeoutRef.current = setTimeout(() => {
         setIsExpanded(false)
-        setIsPinned(false)
+        setIsPinned(false) // Unpin after closing
         retractTimeoutRef.current = null
       }, PINNED_RETRACT_DELAY)
     } else {
@@ -141,9 +130,9 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
       return
     }
     // Toggle pin state
-    setIsPinned(!isPinned)
-    // If pinning, ensure sidebar is expanded
-    if (!isPinned) {
+    setIsPinned(prev => !prev)
+    // Ensure sidebar is expanded when clicking
+    if (!isExpanded) {
       setIsExpanded(true)
     }
   }
@@ -215,6 +204,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
   return (
     <>
       {/* Logo - Single logo, always at same position (24px from top and left), always visible and clickable */}
+      {/* Logo area: triggers sidebar expansion AND keeps it open */}
       <div
         data-logo
         className="hidden lg:block fixed z-50"
@@ -224,23 +214,42 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
           transition: 'none',
           transform: 'none'
         }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={(e) => {
+          handleTriggerMouseEnter()
+          handleSidebarAreaMouseEnter() // Also keep sidebar open when on logo
+        }}
+        onMouseLeave={handleTriggerMouseLeave}
       >
         <VKLogo size="lg" />
       </div>
+      
+      {/* Invisible area around logo to keep sidebar open when mouse is near logo */}
+      {/* This area doesn't block pointer events to logo, but tracks mouse for sidebar state */}
+      <div
+        data-logo-area
+        className="hidden lg:block fixed z-49 pointer-events-none"
+        style={{ 
+          left: '24px', 
+          top: '24px',
+          width: '64px', // Logo width
+          height: '64px', // Logo height
+        }}
+      />
 
       {/* Invisible hover zone on extreme left edge - doubled width */}
+      {/* Hover zone and logo treated the same - both trigger expansion */}
       <div
         data-hover-zone
         className="hidden lg:block fixed left-0 top-0 w-10 h-screen z-50"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={handleTriggerMouseEnter}
+        onMouseLeave={handleTriggerMouseLeave}
       />
       
       {/* Sidebar - expands on hover with increased transparency */}
       {/* Z-index: above header/footer (z-40) but below logo (z-50), so using z-45 */}
+      {/* Logo is 24px from top/left, diameter 64px, so top section: 24px + 64px + 24px = 112px */}
       <div
+        data-sidebar
         className={`hidden lg:flex fixed left-0 top-0 h-screen bg-profound-blue/70 backdrop-blur-sm border-r border-violet/50 flex-col transition-all ${
           isExpanded ? 'w-64' : 'w-0 overflow-hidden'
         }`}
@@ -248,20 +257,21 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
           transitionDuration: `${TRANSITION_DURATION}ms`,
           zIndex: 45
         }}
-        onMouseEnter={handleSidebarMouseEnter}
-        onMouseLeave={handleSidebarMouseLeave}
+        onMouseEnter={handleSidebarAreaMouseEnter}
+        onMouseLeave={handleSidebarAreaMouseLeave}
         onClick={handleSidebarClick}
         role="navigation"
         aria-label="Main"
       >
-        {/* Sidebar Header - Name appears right-aligned when expanded */}
-        <div className="relative min-w-[256px] min-h-[96px]">
+        {/* Sidebar Header - Logo area with name right-aligned */}
+        {/* Height: 24px (top) + 64px (logo) + 24px (bottom) = 112px */}
+        <div className="relative min-w-[256px]" style={{ minHeight: '112px', paddingTop: '24px' }}>
           {/* Name - right-aligned from right edge of sidebar with padding, only visible when sidebar is expanded */}
           {isExpanded && (
             <div 
               className="absolute flex flex-col items-end"
               style={{ 
-                right: '16px', // Padding from right edge
+                right: '24px', // Padding from right edge
                 top: '24px'
               }}
             >
