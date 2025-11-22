@@ -214,7 +214,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
           transition: 'none',
           transform: 'none'
         }}
-        onMouseEnter={(e) => {
+        onMouseEnter={() => {
           handleTriggerMouseEnter()
           handleSidebarAreaMouseEnter() // Also keep sidebar open when on logo
         }}
