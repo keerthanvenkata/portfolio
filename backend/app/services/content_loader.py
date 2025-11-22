@@ -84,6 +84,10 @@ def load_projects(featured: Optional[bool] = None, kind: Optional[str] = None) -
     projects: List[Project] = []
     for d in data:
         try:
+            # Ensure required fields have defaults
+            d.setdefault("images", [])
+            d.setdefault("tech", [])
+            d.setdefault("highlights", [])
             projects.append(Project(**d))
         except Exception:
             continue
@@ -98,6 +102,10 @@ def load_project_by_id(project_id: str) -> Optional[Project]:
     for path in (settings.PROJECTS_FILE, settings.EXPERIMENTAL_FILE):
         for d in _read_json_array(path):
             if str(d.get("id")) == project_id:
+                # Ensure required fields have defaults
+                d.setdefault("images", [])
+                d.setdefault("tech", [])
+                d.setdefault("highlights", [])
                 return Project(**d)
     return None
 

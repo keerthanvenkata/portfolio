@@ -94,6 +94,10 @@ async function generateProjects(contentDir, outDir) {
   const experimental = await readJsonIfExists(experimentalFile)
   for (const item of experimental) {
     if (!('kind' in item)) item.kind = 'experimental'
+    // Ensure required fields have defaults (mirror how projects.json works)
+    if (!('images' in item)) item.images = []
+    if (!('tech' in item)) item.tech = []
+    if (!('highlights' in item)) item.highlights = []
   }
   const combined = [...projects, ...experimental]
 
