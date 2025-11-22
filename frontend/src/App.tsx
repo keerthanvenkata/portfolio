@@ -184,8 +184,8 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
   // Mobile sidebar - always visible, no hover behavior
   if (isMobile) {
     return (
-      <div className="bg-profound-blue/90 backdrop-blur-sm border-r border-violet/50 flex flex-col h-full" role="navigation" aria-label="Main">
-        <div className="p-6 border-b border-violet/30 flex justify-center">
+      <div className="bg-profound-blue/90 backdrop-blur-sm flex flex-col h-full" role="navigation" aria-label="Main">
+        <div className="p-4 border-b border-violet/30 flex justify-center">
           <VKLogo size="lg" />
         </div>
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
@@ -203,10 +203,10 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
                 onMouseEnter={onEnter}
                 onClick={onNavigate}
                 aria-current={current === item.id ? 'page' : undefined}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 min-h-[44px] ${
                   current === item.id 
                     ? 'bg-gradient-to-r from-violet to-magenta text-white shadow-[0_0_20px_rgba(127,0,255,0.5)]' 
-                    : 'text-gray-300 hover:bg-violet/20 hover:text-violet hover:shadow-[0_0_10px_rgba(127,0,255,0.3)]'
+                    : 'text-gray-300 hover:bg-violet/20 hover:text-violet active:bg-violet/30 hover:shadow-[0_0_10px_rgba(127,0,255,0.3)]'
                 }`}
               >
                 <Icon size={20} />
@@ -217,9 +217,9 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
         </nav>
         <div className="p-4 border-t border-violet/30">
           <div className="flex justify-center gap-3" aria-label="Social links">
-            <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="GitHub profile"><Github size={20} /></a>
-            <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="LinkedIn profile"><Linkedin size={20} /></a>
-            <a href="mailto:keerthanvenkata@gmail.com" className="text-gray-400 hover:text-electric-pink transition-colors hover:scale-110 transform duration-300" aria-label="Send email"><Mail size={20} /></a>
+            <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" className="p-3 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-gray-400 hover:text-violet active:bg-violet/20 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-electric-pink" aria-label="GitHub profile"><Github size={24} /></a>
+            <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer" className="p-3 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-gray-400 hover:text-violet active:bg-violet/20 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-electric-pink" aria-label="LinkedIn profile"><Linkedin size={24} /></a>
+            <a href="mailto:keerthanvenkata@gmail.com" className="p-3 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-gray-400 hover:text-electric-pink active:bg-violet/20 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-electric-pink" aria-label="Send email"><Mail size={24} /></a>
           </div>
         </div>
       </div>
@@ -864,7 +864,7 @@ function OutsidePage() {
 
 function Header({ title }: { title: string }) {
   return (
-        <div className="bg-black/30 backdrop-blur-sm sticky top-0 z-40 px-6 py-4 transition-all duration-300">
+        <div className="hidden lg:block bg-black/30 backdrop-blur-sm sticky top-0 z-40 px-6 py-4 transition-all duration-300">
           <h1 className="text-2xl font-heading font-bold text-violet text-glow-purple text-right">{title}</h1>
         </div>
   )
@@ -888,6 +888,18 @@ export default function App() {
   const [current, setCurrent] = useState('home')
   const [mobile, setMobile] = useState(false)
   const location = useLocation()
+  
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobile) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [mobile])
   
   // Update current page based on route
   useEffect(() => {
@@ -962,19 +974,39 @@ export default function App() {
       <Sidebar current={current} />
       
       {/* Mobile Header */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-sm border-b border-violet/30 px-4 py-3 flex justify-between items-center">
-        <VKLogo size="md" />
-        <button onClick={() => setMobile(!mobile)} aria-label={mobile ? 'Close menu' : 'Open menu'}>{mobile ? <X size={24} /> : <Menu size={24} />}</button>
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-violet/30 px-4 py-3 flex justify-between items-center">
+        <div className="relative z-10">
+          <VKLogo size="md" />
+        </div>
+        <button 
+          onClick={() => setMobile(!mobile)} 
+          aria-label={mobile ? 'Close menu' : 'Open menu'}
+          className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-violet/20 active:bg-violet/30 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-electric-pink relative z-10"
+        >
+          {mobile ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
       
       {/* Mobile Menu */}
       {mobile && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-black">
-          <div className="p-4 border-b border-violet/30 flex justify-between items-center">
-            <VKLogo size="md" />
-            <button onClick={() => setMobile(false)} aria-label="Close menu"><X size={24} /></button>
+        <div className="lg:hidden fixed inset-0 z-50 bg-profound-blue/90 backdrop-blur-sm flex flex-col">
+          {/* Menu Header */}
+          <div className="p-4 border-b border-violet/30 flex justify-between items-center flex-shrink-0">
+            <div className="relative z-10">
+              <VKLogo size="md" />
+            </div>
+            <button 
+              onClick={() => setMobile(false)} 
+              aria-label="Close menu"
+              className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg hover:bg-violet/20 active:bg-violet/30 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-electric-pink relative z-10"
+            >
+              <X size={24} />
+            </button>
           </div>
-          <div className="flex flex-col h-[calc(100vh-73px)]"><Sidebar current={current} onNavigate={() => setMobile(false)} isMobile={true} /></div>
+          {/* Sidebar */}
+          <div className="flex-1 overflow-hidden">
+            <Sidebar current={current} onNavigate={() => setMobile(false)} isMobile={true} />
+          </div>
         </div>
       )}
       
