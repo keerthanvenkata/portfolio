@@ -62,6 +62,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
       // If pinned, wait 1.5 seconds before retracting
       retractTimeoutRef.current = setTimeout(() => {
         setIsExpanded(false)
+        setIsPinned(false) // Clear pinned state when sidebar closes
         retractTimeoutRef.current = null
       }, PINNED_RETRACT_DELAY)
     } else {
@@ -70,19 +71,25 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
     }
   }
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleSidebarClick = (e: React.MouseEvent) => {
     if (isMobile) return // No pin behavior on mobile
+    // Only pin if clicking directly on sidebar container, not on links/buttons
+    if ((e.target as HTMLElement).closest('a') || (e.target as HTMLElement).closest('button')) {
+      // Don't pin if clicking on links or buttons
+      return
+    }
     // Toggle pin state
     setIsPinned(!isPinned)
     // If pinning, ensure sidebar is expanded
     if (!isPinned) {
       setIsExpanded(true)
     }
-    // Prevent navigation if clicking on sidebar itself (not a link)
-    if ((e.target as HTMLElement).closest('a')) {
-      // Let the link handle navigation
-      if (onNavigate) onNavigate()
-    }
+  }
+
+  const handleLinkClick = (e: React.MouseEvent) => {
+    // Stop propagation to prevent sidebar click handler from firing
+    e.stopPropagation()
+    if (onNavigate) onNavigate()
   }
 
   // Cleanup timeout on unmount
@@ -142,34 +149,37 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
   // Desktop sidebar - hover-based with collapse/expand
   return (
     <>
-      {/* Invisible hover zone on extreme left edge */}
+      {/* Invisible hover zone on extreme left edge - doubled width */}
       <div
-        className="hidden lg:block fixed left-0 top-0 w-5 h-screen z-50"
+        className="hidden lg:block fixed left-0 top-0 w-10 h-screen z-50"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       />
       
-      {/* Logo - always visible when collapsed */}
+      {/* Logo - smoothly animates position with sidebar (moves slower but same duration) */}
+      {/* Positioned below header to avoid covering title */}
       <div
-        className={`hidden lg:block fixed left-4 top-6 z-50 transition-opacity ${
-          isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        className={`hidden lg:block fixed z-40 transition-all ${
+          isExpanded 
+            ? 'left-28 top-6 opacity-0 pointer-events-none' 
+            : 'left-4 top-20 opacity-100'
         }`}
-        style={{ transitionDuration: `${TRANSITION_DURATION}ms` }}
+        style={{ transitionDuration: `${TRANSITION_DURATION}ms`, transitionTimingFunction: 'ease-in-out' }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <VKLogo size="lg" />
       </div>
 
-      {/* Sidebar - expands on hover */}
+      {/* Sidebar - expands on hover with increased transparency */}
       <div
-        className={`hidden lg:flex fixed left-0 top-0 h-screen z-50 bg-profound-blue/90 backdrop-blur-sm border-r border-violet/50 flex-col transition-all ${
+        className={`hidden lg:flex fixed left-0 top-0 h-screen z-50 bg-profound-blue/70 backdrop-blur-sm border-r border-violet/50 flex-col transition-all ${
           isExpanded ? 'w-64' : 'w-0 overflow-hidden'
         }`}
         style={{ transitionDuration: `${TRANSITION_DURATION}ms` }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        onClick={handleClick}
+        onClick={handleSidebarClick}
         role="navigation"
         aria-label="Main"
       >
@@ -189,7 +199,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
                 key={item.id} 
                 to={href}
                 onMouseEnter={onEnter}
-                onClick={onNavigate}
+                onClick={handleLinkClick}
                 aria-current={current === item.id ? 'page' : undefined}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                   current === item.id 
@@ -205,9 +215,9 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
         </nav>
         <div className="p-4 border-t border-violet/30 min-w-[256px]">
           <div className="flex justify-center gap-3" aria-label="Social links">
-            <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="GitHub profile"><Github size={20} /></a>
-            <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="LinkedIn profile"><Linkedin size={20} /></a>
-            <a href="mailto:keerthanvenkata@gmail.com" className="text-gray-400 hover:text-electric-pink transition-colors hover:scale-110 transform duration-300" aria-label="Send email"><Mail size={20} /></a>
+            <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="GitHub profile"><Github size={20} /></a>
+            <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="LinkedIn profile"><Linkedin size={20} /></a>
+            <a href="mailto:keerthanvenkata@gmail.com" onClick={(e) => e.stopPropagation()} className="text-gray-400 hover:text-electric-pink transition-colors hover:scale-110 transform duration-300" aria-label="Send email"><Mail size={20} /></a>
           </div>
         </div>
       </div>
@@ -732,7 +742,7 @@ function OutsidePage() {
 
 function Header({ title }: { title: string }) {
   return (
-        <div className="bg-black/90 backdrop-blur-sm border-b border-violet/50 sticky top-0 z-30 px-6 py-4">
+        <div className="bg-black/70 backdrop-blur-sm border-b border-violet/50 sticky top-0 z-40 px-6 py-4 transition-all duration-300">
           <h1 className="text-2xl font-heading font-bold text-violet text-glow-purple">{title}</h1>
         </div>
   )
@@ -867,7 +877,7 @@ export default function App() {
             </Routes>
           </Suspense>
         </main>
-        <footer className="bg-black/80 backdrop-blur-sm border-t border-violet/30 py-6 px-6 relative z-10">
+        <footer className="bg-black/70 backdrop-blur-sm border-t border-violet/30 py-6 px-6 relative z-10 transition-all duration-300">
           <div className="max-w-6xl mx-auto text-center">
             <p className="text-gray-400 text-sm">© 2025 Venkata Keerthan Nimmala. Built with React & Tailwind.</p>
             <p className="text-gray-500 text-xs mt-1">Ready for new opportunities • Open to collaboration</p>
