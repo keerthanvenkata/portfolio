@@ -298,9 +298,9 @@ className="bg-gradient-to-br from-violet to-magenta hover:from-electric-pink hov
   5. Is optimized for web (SVG preferred, or high-quality PNG)
 
 #### Logo Placement
-- **Sidebar**: Centered in header section (`flex justify-center`)
-- **Mobile Header**: Left side with menu toggle on right
-- **Mobile Menu**: Same placement as mobile header
+- **Sidebar**: Centered in header section (`flex justify-center`) - desktop only
+- **Mobile Header**: Fixed top bar with logo (left) and hamburger menu toggle (right)
+- **Mobile Menu**: Full-screen overlay with close button only (no duplicate logo)
 
 #### Logo Accessibility
 - Logo is wrapped in a `<Link>` component for keyboard navigation
@@ -454,10 +454,11 @@ shadow-[0_0_30px_rgba(255,0,128,0.5)]
 ### Responsive Conventions
 
 #### Breakpoint Usage
-- **Mobile First**: Default styles for mobile, add `md:` or `lg:` for larger screens
+- **Mobile First**: Default styles for mobile, add `sm:`, `md:`, or `lg:` for larger screens
 - **Sidebar**: `hidden lg:flex` (hidden on mobile, visible on desktop)
-- **Text Sizes**: `text-7xl md:text-8xl` (responsive scaling)
+- **Text Sizes**: `text-4xl sm:text-5xl md:text-7xl lg:text-8xl` (responsive scaling)
 - **Grids**: `grid-cols-2 md:grid-cols-4` (responsive columns)
+- **Overflow**: `overflow-x-hidden` on containers to prevent horizontal scrolling
 
 #### Mobile Considerations
 - Always account for mobile header: `pt-16 lg:pt-0`
@@ -1506,48 +1507,70 @@ backgroundImage: {
 
 #### Large (Desktop)
 - **Breakpoint**: `lg:` prefix (1024px+)
-- **Sidebar**: Visible (`hidden lg:flex`)
+- **Sidebar**: Visible (`hidden lg:flex`) - hover-based expansion
 - **Mobile Menu**: Hidden
+- **Header**: Desktop header visible (`hidden lg:block`)
 
 #### Medium (Tablet)
 - **Breakpoint**: `md:` prefix (768px+)
 - **Grid**: 2 columns (`md:grid-cols-2`)
-- **Text**: Responsive sizes (`md:text-8xl`, `md:text-4xl`)
+- **Text**: Responsive sizes (`md:text-7xl`, `md:text-4xl`, `md:text-2xl`)
 
-#### Mobile
+#### Small (Mobile)
+- **Breakpoint**: `sm:` prefix (640px+)
+- **Text**: Intermediate sizes (`sm:text-5xl`, `sm:text-2xl`, `sm:text-xl`)
+
+#### Mobile (Phone)
 - **Breakpoint**: Below `lg` (< 1024px)
-- **Sidebar**: Hidden, replaced with mobile menu
-- **Mobile Menu**: `fixed inset-0 z-50 bg-black`
-- **Header**: Fixed top bar with menu toggle
+- **Sidebar**: Hidden, replaced with mobile hamburger menu
+- **Mobile Menu**: Full-screen overlay (`fixed inset-0 z-50`)
+- **Header**: Fixed top bar with logo and hamburger toggle (`lg:hidden fixed z-50`)
 
 ### Responsive Utilities
 
 #### Visibility
-- **Desktop Only**: `hidden lg:flex`
+- **Desktop Only**: `hidden lg:flex` or `hidden lg:block`
 - **Mobile Only**: `lg:hidden`
 
 #### Spacing Adjustments
 - **Top Padding**: `pt-16 lg:pt-0` (accounts for mobile header)
+- **Horizontal Padding**: `px-4 sm:px-6` (smaller on mobile)
+- **Vertical Padding**: `py-12 sm:py-16 md:py-20` (responsive vertical spacing)
 
 #### Layout
-- **Flex Direction**: Responsive flex layouts
+- **Flex Direction**: Responsive flex layouts (`flex-col sm:flex-row`)
 - **Grid**: Responsive grid for cards (`grid-cols-2 md:grid-cols-4`)
+- **Overflow**: `overflow-x-hidden` on containers to prevent horizontal scrolling
 
 #### Text Sizes
-- **Responsive Text**: `text-7xl md:text-8xl`, `text-xl md:text-2xl`, `text-3xl md:text-4xl`
+- **Hero Title**: `text-4xl sm:text-5xl md:text-7xl lg:text-8xl`
+- **Section Titles**: `text-xl sm:text-2xl md:text-4xl`
+- **Body Text**: `text-lg sm:text-xl md:text-2xl`
 
 ### Mobile-Specific Styles
 
 #### Mobile Header
-- Fixed position, full width
-- Logo + menu toggle
-- Z-index: `z-40`
-- Backdrop blur
+- Fixed position, full width (`fixed top-0 left-0 right-0`)
+- Logo (left) + hamburger menu toggle (right)
+- Z-index: `z-50` (above content, below modals)
+- Background: `bg-black/90 backdrop-blur-sm`
+- Border: `border-b border-violet/30`
+- Padding: `px-4 py-3`
 
 #### Mobile Menu
-- Full screen overlay (`fixed inset-0`)
-- Z-index: `z-50`
-- Same sidebar component, full height
+- Full-screen overlay (`fixed inset-0 z-50`)
+- Background: `bg-profound-blue/90 backdrop-blur-sm` (matches desktop sidebar)
+- Flexbox layout (`flex flex-col`)
+- Close button in header (right-aligned)
+- Sidebar component fills remaining space (`flex-1 overflow-hidden`)
+- Body scroll locked when open
+
+#### Mobile Navigation
+- Touch targets: Minimum `44×44px` (`min-h-[44px] min-w-[44px]`)
+- Navigation items: `px-4 py-3` with `min-h-[44px]`
+- Social icons: `size={24}` with `p-3` padding for adequate touch area
+- Active states: `active:bg-violet/30` for touch feedback
+- Focus states: `focus-visible:outline` for accessibility
 
 ### Responsive Patterns
 
@@ -1563,10 +1586,13 @@ className="grid md:grid-cols-2 gap-8"
 #### Text Responsiveness
 ```tsx
 // Hero text: smaller on mobile, larger on desktop
-className="text-7xl md:text-8xl"
+className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl"
 
 // Section titles: responsive sizing
-className="text-2xl md:text-3xl"
+className="text-xl sm:text-2xl md:text-4xl"
+
+// Body text: responsive sizing
+className="text-lg sm:text-xl md:text-2xl"
 ```
 
 #### Button Groups
@@ -1639,7 +1665,7 @@ className="px-3 py-1 rounded-full text-sm bg-electric-pink/20 text-electric-pink
 ---
 
 **Last Updated**: 2025-01-XX  
-**Maintained By**: Development Team  
+**Maintained By**: Keerthan Venkata 
 **Purpose**: Ensure consistent styling across portfolio website
 
 
