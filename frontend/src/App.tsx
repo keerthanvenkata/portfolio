@@ -143,6 +143,32 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
     if (onNavigate) onNavigate()
   }
 
+  // Handle tab visibility change - reset sidebar state when tab becomes inactive
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        // Tab became inactive - clear timeouts and reset sidebar state
+        if (retractTimeoutRef.current) {
+          clearTimeout(retractTimeoutRef.current)
+          retractTimeoutRef.current = null
+        }
+        if (expandTimeoutRef.current) {
+          clearTimeout(expandTimeoutRef.current)
+          expandTimeoutRef.current = null
+        }
+        // Reset sidebar state (but keep pinned state if it was pinned)
+        if (!isPinned) {
+          setIsExpanded(false)
+        }
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [isPinned])
+
   // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
