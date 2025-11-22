@@ -379,7 +379,7 @@ function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-semibold text-violet"
+              className="text-xl sm:text-2xl md:text-4xl font-heading font-semibold text-violet"
             >
               SDE Applied AI & Entrepreneur
             </motion.p>
