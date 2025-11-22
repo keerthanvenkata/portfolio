@@ -264,6 +264,39 @@ import VKLogo from './components/VKLogo'
 className="bg-gradient-to-br from-violet to-magenta hover:from-electric-pink hover:to-magenta"
 ```
 
+#### Logo Requirements & Guidelines
+
+**Shape Requirement:**
+- **MUST be circular** (`rounded-full`) - The logo component and all future logo implementations must maintain a circular shape
+- This ensures consistency across the site and works well with the sidebar hover behavior
+
+**Size Requirements:**
+- **Small**: 32px × 32px (`w-8 h-8`)
+- **Medium**: 48px × 48px (`w-12 h-12`) - Default
+- **Large**: 64px × 64px (`w-16 h-16`)
+
+**Design Guidelines:**
+- Logo should be **circular only** - no square, rectangular, or other shapes
+- Should work well at all three size variants
+- Must maintain readability and visual clarity at small sizes
+- Should complement the purple/pink color scheme (current cyan-blue can be updated to match brand)
+
+**Implementation Notes:**
+- Logo is used in:
+  - Sidebar header (large size)
+  - Mobile header (medium size)
+  - Floating logo when sidebar is collapsed (large size)
+- Logo is always clickable and navigates to home page
+- Logo should have hover state for visual feedback
+
+**Future Logo Updates:**
+- When updating the logo, ensure it:
+  1. Maintains circular shape
+  2. Works at all three size variants
+  3. Matches or complements the purple/pink color scheme
+  4. Is accessible (good contrast, readable)
+  5. Is optimized for web (SVG preferred, or high-quality PNG)
+
 #### Logo Placement
 - **Sidebar**: Centered in header section (`flex justify-center`)
 - **Mobile Header**: Left side with menu toggle on right

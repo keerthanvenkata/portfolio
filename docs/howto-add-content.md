@@ -133,6 +133,43 @@ Quick workflow
 - Reference media paths in JSON/MD exactly as stored under `media/`, e.g. `"projects/your-project-id/screenshots/shot-1.png"`.
 - Build copies these to `/media/` under the frontend.
 
+## Logo
+
+### Logo Requirements
+
+**Shape:**
+- **MUST be circular** - The logo must maintain a circular shape (`rounded-full`)
+- This is a design requirement for consistency across the site
+- Works well with the sidebar hover behavior (floating logo when collapsed)
+
+**Sizes:**
+- **Small**: 32px × 32px (`w-8 h-8`)
+- **Medium**: 48px × 48px (`w-12 h-12`) - Default
+- **Large**: 64px × 64px (`w-16 h-16`)
+
+**Design Guidelines:**
+- Logo should be **circular only** - no square, rectangular, or other shapes
+- Should work well at all three size variants
+- Must maintain readability at small sizes
+- Should complement the purple/pink color scheme
+- SVG format preferred for scalability, or high-quality PNG
+
+**Implementation:**
+- Logo component: `frontend/src/components/VKLogo.tsx`
+- Alternative implementations available: `VKLogoSVG.tsx`, `VKLogoImage.tsx`
+- Logo is used in:
+  - Sidebar header (large)
+  - Mobile header (medium)
+  - Floating logo when sidebar collapsed (large)
+
+**Updating the Logo:**
+1. If using SVG: Update `VKLogoSVG.tsx` component
+2. If using image: Place image in `frontend/public/` and update `VKLogoImage.tsx`
+3. Ensure the logo maintains circular shape
+4. Test at all three sizes (sm, md, lg)
+5. Verify hover states work correctly
+6. Ensure accessibility (good contrast, alt text if image-based)
+
 ## What Shows in Modals vs Pages
 
 - Modals (quick preview):
