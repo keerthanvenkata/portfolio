@@ -263,16 +263,16 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
         role="navigation"
         aria-label="Main"
       >
-        {/* Sidebar Header - Logo area with name right-aligned */}
+        {/* Sidebar Header - Logo area with name positioned between logo and right edge */}
         {/* Height: 24px (top) + 64px (logo) + 24px (bottom) = 112px */}
         <div className="relative min-w-[256px]" style={{ minHeight: '112px', paddingTop: '24px' }}>
-          {/* Name - right-aligned from right edge of sidebar with padding, only visible when sidebar is expanded */}
+          {/* Name - positioned between logo and right edge, vertically aligned with logo center */}
           {isExpanded && (
             <div 
-              className="absolute flex flex-col items-end"
+              className="absolute flex flex-col"
               style={{ 
-                right: '24px', // Padding from right edge
-                top: '24px'
+                left: '100px', // Position between logo (ends at 88px) and right edge
+                top: '48px' // Aligned with logo center (24px + 32px = 56px, but slightly lower for better alignment)
               }}
             >
               <div className="text-lg font-heading font-semibold text-magenta leading-tight">Keerthan</div>
