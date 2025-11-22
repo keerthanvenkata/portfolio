@@ -38,8 +38,8 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
   
   const [isExpanded, setIsExpanded] = useState(isMobile) // Mobile is always expanded
   const [isPinned, setIsPinned] = useState(false)
-  const retractTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const expandTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const retractTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const expandTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   
   // Transition duration in milliseconds - adjust here for smoothness
   const TRANSITION_DURATION = 300
@@ -173,9 +173,16 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
         onMouseLeave={handleMouseLeave}
       />
       
-      {/* Logo - fixed position, no animation, same distance from top and left */}
+      {/* Logo - completely fixed position, no animation, no transitions, same distance from top and left */}
+      {/* Position is absolute and never changes regardless of sidebar state */}
       <div
-        className="hidden lg:block fixed left-6 top-6 z-50"
+        className="hidden lg:block fixed z-50"
+        style={{ 
+          left: '24px', 
+          top: '24px', 
+          transition: 'none',
+          transform: 'none'
+        }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -194,12 +201,12 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
         role="navigation"
         aria-label="Main"
       >
-        <div className="p-6 border-b border-violet/30 flex flex-col items-center gap-4 min-w-[256px]">
+        <div className="p-6 border-b border-violet/30 flex items-center justify-center gap-4 min-w-[256px]">
           <VKLogo size="lg" />
-          {/* Name on right side when sidebar is open */}
-          <div className="text-center">
-            <div className="text-sm font-heading font-semibold text-violet">Keerthan</div>
-            <div className="text-sm font-heading font-semibold text-magenta">Venkata</div>
+          {/* Name on right side of logo when sidebar is open */}
+          <div className="flex flex-col items-start">
+            <div className="text-base font-heading font-semibold text-violet leading-tight">Keerthan</div>
+            <div className="text-base font-heading font-semibold text-magenta leading-tight">Venkata</div>
           </div>
         </div>
         <nav className="flex-1 p-4 space-y-1 min-w-[256px]">
