@@ -64,8 +64,14 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
     }, HOVER_EXPAND_DELAY)
   }
   
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (e: React.MouseEvent) => {
     if (isMobile) return // No hover behavior on mobile
+    // Check if mouse is moving to a child element (sidebar content)
+    const relatedTarget = e.relatedTarget as HTMLElement
+    if (relatedTarget && (e.currentTarget as HTMLElement).contains(relatedTarget)) {
+      // Mouse is moving to a child element, don't close
+      return
+    }
     // Clear any pending expand timeout
     if (expandTimeoutRef.current) {
       clearTimeout(expandTimeoutRef.current)
@@ -76,6 +82,48 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
       retractTimeoutRef.current = setTimeout(() => {
         setIsExpanded(false)
         setIsPinned(false) // Clear pinned state when sidebar closes
+        retractTimeoutRef.current = null
+      }, PINNED_RETRACT_DELAY)
+    } else {
+      // If not pinned, retract immediately
+      setIsExpanded(false)
+    }
+  }
+  
+  const handleSidebarMouseEnter = () => {
+    if (isMobile) return
+    // When mouse enters sidebar, cancel any pending retract
+    if (retractTimeoutRef.current) {
+      clearTimeout(retractTimeoutRef.current)
+      retractTimeoutRef.current = null
+    }
+    // Ensure sidebar is expanded
+    if (!isExpanded) {
+      setIsExpanded(true)
+    }
+  }
+  
+  const handleSidebarMouseLeave = (e: React.MouseEvent) => {
+    if (isMobile) return
+    // Check if mouse is moving to hover zone or logo
+    const relatedTarget = e.relatedTarget as HTMLElement
+    if (relatedTarget && (
+      relatedTarget.closest('[data-hover-zone]') || 
+      relatedTarget.closest('[data-logo]')
+    )) {
+      // Mouse is moving to hover zone or logo, don't close
+      return
+    }
+    // Clear any pending expand timeout
+    if (expandTimeoutRef.current) {
+      clearTimeout(expandTimeoutRef.current)
+      expandTimeoutRef.current = null
+    }
+    if (isPinned) {
+      // If pinned, wait 1.5 seconds before retracting
+      retractTimeoutRef.current = setTimeout(() => {
+        setIsExpanded(false)
+        setIsPinned(false)
         retractTimeoutRef.current = null
       }, PINNED_RETRACT_DELAY)
     } else {
@@ -168,6 +216,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
     <>
       {/* Invisible hover zone on extreme left edge - doubled width */}
       <div
+        data-hover-zone
         className="hidden lg:block fixed left-0 top-0 w-10 h-screen z-50"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -176,6 +225,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
       {/* Logo - completely fixed position, no animation, no transitions, same distance from top and left */}
       {/* Position is absolute and never changes regardless of sidebar state */}
       <div
+        data-logo
         className="hidden lg:block fixed z-50"
         style={{ 
           left: '24px', 
@@ -195,18 +245,18 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
           isExpanded ? 'w-64' : 'w-0 overflow-hidden'
         }`}
         style={{ transitionDuration: `${TRANSITION_DURATION}ms` }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={handleSidebarMouseEnter}
+        onMouseLeave={handleSidebarMouseLeave}
         onClick={handleSidebarClick}
         role="navigation"
         aria-label="Main"
       >
-        <div className="p-6 border-b border-violet/30 flex items-center justify-center gap-4 min-w-[256px]">
+        <div className="p-6 border-b border-violet/30 flex flex-col items-center gap-3 min-w-[256px]">
           <VKLogo size="lg" />
-          {/* Name on right side of logo when sidebar is open */}
-          <div className="flex flex-col items-start">
-            <div className="text-base font-heading font-semibold text-violet leading-tight">Keerthan</div>
-            <div className="text-base font-heading font-semibold text-magenta leading-tight">Venkata</div>
+          {/* Name below logo when sidebar is open */}
+          <div className="flex flex-col items-center text-center">
+            <div className="text-lg font-heading font-semibold text-magenta leading-tight">Keerthan</div>
+            <div className="text-lg font-heading font-semibold text-magenta leading-tight">Venkata</div>
           </div>
         </div>
         <nav className="flex-1 p-4 space-y-1 min-w-[256px]">
@@ -765,7 +815,7 @@ function OutsidePage() {
 
 function Header({ title }: { title: string }) {
   return (
-        <div className="bg-black/30 backdrop-blur-sm border-b border-violet/50 sticky top-0 z-40 px-6 py-4 transition-all duration-300">
+        <div className="bg-black/30 backdrop-blur-sm sticky top-0 z-40 px-6 py-4 transition-all duration-300">
           <h1 className="text-2xl font-heading font-bold text-violet text-glow-purple text-right">{title}</h1>
         </div>
   )
