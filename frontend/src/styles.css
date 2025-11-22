@@ -42,6 +42,7 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
+  max-width: 100vw;
 }
 
 .animated-bg::before {

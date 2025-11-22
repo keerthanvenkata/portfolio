@@ -184,11 +184,8 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
   // Mobile sidebar - always visible, no hover behavior
   if (isMobile) {
     return (
-      <div className="bg-profound-blue/90 backdrop-blur-sm flex flex-col h-full" role="navigation" aria-label="Main">
-        <div className="p-4 border-b border-violet/30 flex justify-center">
-          <VKLogo size="lg" />
-        </div>
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+      <div className="bg-profound-blue/90 backdrop-blur-sm flex flex-col h-full w-full overflow-x-hidden" role="navigation" aria-label="Main">
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto overflow-x-hidden">
           {navigation.map((item) => {
             const Icon = item.icon
             const href = item.id === 'home' ? '/' : `/${item.id}`
@@ -361,7 +358,7 @@ function HomePage() {
       {/* Animated background overlay */}
       <div className="animated-bg"></div>
       
-      <div className="max-w-6xl mx-auto px-6 py-20 relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 relative z-10 w-full overflow-x-hidden">
         {/* Hero Section */}
         <div className="text-center space-y-8 mb-20">
           <motion.div
@@ -374,7 +371,7 @@ function HomePage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-7xl md:text-8xl font-heading font-bold bg-gradient-to-r from-violet via-magenta to-electric-pink bg-clip-text text-transparent text-glow-purple"
+              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-heading font-bold bg-gradient-to-r from-violet via-magenta to-electric-pink bg-clip-text text-transparent text-glow-purple"
             >
               Venkata Keerthan Nimmala
             </motion.h1>
@@ -382,7 +379,7 @@ function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-3xl md:text-4xl font-heading font-semibold text-violet"
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-semibold text-violet"
             >
               SDE Applied AI & Entrepreneur
             </motion.p>
@@ -390,7 +387,7 @@ function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+              className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2 sm:px-0"
             >
               Building scalable systems, AI solutions, and entrepreneurial ventures.
               <span className="block mt-2 text-electric-pink text-glow-pink">Ready for new challenges and impactful projects.</span>
@@ -967,7 +964,7 @@ export default function App() {
   }[current] ?? 'Home'
 
   return (
-    <div className="min-h-screen bg-black text-white flex relative">
+    <div className="min-h-screen bg-black text-white flex relative overflow-x-hidden">
       <div className="animated-bg"></div>
       
       {/* Desktop Sidebar - hover-based */}
@@ -990,11 +987,8 @@ export default function App() {
       {/* Mobile Menu */}
       {mobile && (
         <div className="lg:hidden fixed inset-0 z-50 bg-profound-blue/90 backdrop-blur-sm flex flex-col">
-          {/* Menu Header */}
-          <div className="p-4 border-b border-violet/30 flex justify-between items-center flex-shrink-0">
-            <div className="relative z-10">
-              <VKLogo size="md" />
-            </div>
+          {/* Menu Header - Just close button, logo is in main header */}
+          <div className="p-4 border-b border-violet/30 flex justify-end items-center flex-shrink-0">
             <button 
               onClick={() => setMobile(false)} 
               aria-label="Close menu"
@@ -1011,9 +1005,9 @@ export default function App() {
       )}
       
       {/* Main Content - full width since sidebar overlays */}
-      <div className="flex-1 flex flex-col min-h-screen lg:min-h-0 w-full">
+      <div className="flex-1 flex flex-col min-h-screen lg:min-h-0 w-full overflow-x-hidden">
         <Header title={title} />
-        <main id="main-content" role="main" className="flex-1 overflow-y-auto pt-16 lg:pt-0">
+        <main id="main-content" role="main" className="flex-1 overflow-y-auto overflow-x-hidden pt-16 lg:pt-0 w-full">
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<HomePage />} />
