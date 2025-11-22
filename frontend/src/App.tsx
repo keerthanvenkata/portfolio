@@ -239,25 +239,29 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
       />
       
       {/* Sidebar - expands on hover with increased transparency */}
+      {/* Z-index: above header/footer (z-40) but below logo (z-50), so using z-45 */}
       <div
-        className={`hidden lg:flex fixed left-0 top-0 h-screen z-40 bg-profound-blue/70 backdrop-blur-sm border-r border-violet/50 flex-col transition-all ${
+        className={`hidden lg:flex fixed left-0 top-0 h-screen bg-profound-blue/70 backdrop-blur-sm border-r border-violet/50 flex-col transition-all ${
           isExpanded ? 'w-64' : 'w-0 overflow-hidden'
         }`}
-        style={{ transitionDuration: `${TRANSITION_DURATION}ms` }}
+        style={{ 
+          transitionDuration: `${TRANSITION_DURATION}ms`,
+          zIndex: 45
+        }}
         onMouseEnter={handleSidebarMouseEnter}
         onMouseLeave={handleSidebarMouseLeave}
         onClick={handleSidebarClick}
         role="navigation"
         aria-label="Main"
       >
-        {/* Sidebar Header - Name appears to the right of logo when expanded */}
+        {/* Sidebar Header - Name appears right-aligned when expanded */}
         <div className="relative min-w-[256px] min-h-[96px]">
-          {/* Name - to the right of logo position, only visible when sidebar is expanded */}
+          {/* Name - right-aligned from right edge of sidebar with padding, only visible when sidebar is expanded */}
           {isExpanded && (
             <div 
-              className="absolute flex flex-col items-start"
+              className="absolute flex flex-col items-end"
               style={{ 
-                left: '88px', // 24px (logo left) + 64px (logo width) + some gap
+                right: '16px', // Padding from right edge
                 top: '24px'
               }}
             >
