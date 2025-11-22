@@ -38,13 +38,17 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
   
   const [isExpanded, setIsExpanded] = useState(isMobile) // Mobile is always expanded
   const [isPinned, setIsPinned] = useState(false)
-  const retractTimeoutRef = useRef<number | null>(null)
+  const retractTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const expandTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   
   // Transition duration in milliseconds - adjust here for smoothness
   const TRANSITION_DURATION = 300
   
   // Delay before retracting when pinned (in milliseconds)
   const PINNED_RETRACT_DELAY = 1500
+  
+  // Delay before expanding on hover (in milliseconds)
+  const HOVER_EXPAND_DELAY = 500
 
   const handleMouseEnter = () => {
     if (isMobile) return // No hover behavior on mobile
@@ -53,11 +57,20 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
       clearTimeout(retractTimeoutRef.current)
       retractTimeoutRef.current = null
     }
-    setIsExpanded(true)
+    // Add delay before expanding
+    expandTimeoutRef.current = setTimeout(() => {
+      setIsExpanded(true)
+      expandTimeoutRef.current = null
+    }, HOVER_EXPAND_DELAY)
   }
-
+  
   const handleMouseLeave = () => {
     if (isMobile) return // No hover behavior on mobile
+    // Clear any pending expand timeout
+    if (expandTimeoutRef.current) {
+      clearTimeout(expandTimeoutRef.current)
+      expandTimeoutRef.current = null
+    }
     if (isPinned) {
       // If pinned, wait 1.5 seconds before retracting
       retractTimeoutRef.current = setTimeout(() => {
@@ -70,6 +83,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
       setIsExpanded(false)
     }
   }
+
 
   const handleSidebarClick = (e: React.MouseEvent) => {
     if (isMobile) return // No pin behavior on mobile
@@ -92,11 +106,14 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
     if (onNavigate) onNavigate()
   }
 
-  // Cleanup timeout on unmount
+  // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
       if (retractTimeoutRef.current) {
         clearTimeout(retractTimeoutRef.current)
+      }
+      if (expandTimeoutRef.current) {
+        clearTimeout(expandTimeoutRef.current)
       }
     }
   }, [])
@@ -156,15 +173,9 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
         onMouseLeave={handleMouseLeave}
       />
       
-      {/* Logo - smoothly animates position with sidebar (moves slower but same duration) */}
-      {/* Positioned at top above header */}
+      {/* Logo - fixed position, no animation, same distance from top and left */}
       <div
-        className={`hidden lg:block fixed z-50 transition-all ${
-          isExpanded 
-            ? 'left-28 top-6 opacity-0 pointer-events-none' 
-            : 'left-4 top-6 opacity-100'
-        }`}
-        style={{ transitionDuration: `${TRANSITION_DURATION}ms`, transitionTimingFunction: 'ease-in-out' }}
+        className="hidden lg:block fixed left-6 top-6 z-50"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -183,8 +194,13 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
         role="navigation"
         aria-label="Main"
       >
-        <div className="p-6 border-b border-violet/30 flex justify-center min-w-[256px]">
+        <div className="p-6 border-b border-violet/30 flex flex-col items-center gap-4 min-w-[256px]">
           <VKLogo size="lg" />
+          {/* Name on right side when sidebar is open */}
+          <div className="text-center">
+            <div className="text-sm font-heading font-semibold text-violet">Keerthan</div>
+            <div className="text-sm font-heading font-semibold text-magenta">Venkata</div>
+          </div>
         </div>
         <nav className="flex-1 p-4 space-y-1 min-w-[256px]">
           {navigation.map((item) => {
@@ -742,7 +758,7 @@ function OutsidePage() {
 
 function Header({ title }: { title: string }) {
   return (
-        <div className="bg-black/50 backdrop-blur-sm border-b border-violet/50 sticky top-0 z-40 px-6 py-4 transition-all duration-300">
+        <div className="bg-black/30 backdrop-blur-sm border-b border-violet/50 sticky top-0 z-40 px-6 py-4 transition-all duration-300">
           <h1 className="text-2xl font-heading font-bold text-violet text-glow-purple text-right">{title}</h1>
         </div>
   )
@@ -877,7 +893,7 @@ export default function App() {
             </Routes>
           </Suspense>
         </main>
-        <footer className="bg-black/50 backdrop-blur-sm border-t border-violet/30 py-6 px-6 relative z-10 transition-all duration-300">
+        <footer className="bg-black/30 backdrop-blur-sm border-t border-violet/30 py-6 px-6 relative z-10 transition-all duration-300">
           <div className="max-w-6xl mx-auto text-center">
             <p className="text-gray-400 text-sm">© 2025 Venkata Keerthan Nimmala. Built with React & Tailwind.</p>
             <p className="text-gray-500 text-xs mt-1">Ready for new opportunities • Open to collaboration</p>
