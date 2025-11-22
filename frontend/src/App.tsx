@@ -222,23 +222,6 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
         onMouseLeave={handleMouseLeave}
       />
       
-      {/* Logo - completely fixed position, no animation, no transitions, same distance from top and left */}
-      {/* Position is absolute and never changes regardless of sidebar state */}
-      <div
-        data-logo
-        className="hidden lg:block fixed z-50"
-        style={{ 
-          left: '24px', 
-          top: '24px', 
-          transition: 'none',
-          transform: 'none'
-        }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <VKLogo size="lg" />
-      </div>
-
       {/* Sidebar - expands on hover with increased transparency */}
       <div
         className={`hidden lg:flex fixed left-0 top-0 h-screen z-50 bg-profound-blue/70 backdrop-blur-sm border-r border-violet/50 flex-col transition-all ${
@@ -251,14 +234,37 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
         role="navigation"
         aria-label="Main"
       >
-        <div className="p-6 border-b border-violet/30 flex flex-col items-center gap-3 min-w-[256px]">
-          <VKLogo size="lg" />
-          {/* Name below logo when sidebar is open */}
-          <div className="flex flex-col items-center text-center">
-            <div className="text-lg font-heading font-semibold text-magenta leading-tight">Keerthan</div>
-            <div className="text-lg font-heading font-semibold text-magenta leading-tight">Venkata</div>
+        {/* Sidebar Header - Logo at fixed position, name to the right */}
+        <div className="relative min-w-[256px] min-h-[96px]">
+          {/* Logo - always at same position (24px from top and left of viewport) */}
+          <div
+            data-logo
+            className="absolute"
+            style={{ 
+              left: '24px', 
+              top: '24px',
+              zIndex: 10
+            }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <VKLogo size="lg" />
           </div>
+          {/* Name - to the right of logo, only visible when sidebar is expanded */}
+          {isExpanded && (
+            <div 
+              className="absolute flex flex-col items-start"
+              style={{ 
+                left: '88px', // 24px (logo left) + 64px (logo width) + some gap
+                top: '24px'
+              }}
+            >
+              <div className="text-lg font-heading font-semibold text-magenta leading-tight">Keerthan</div>
+              <div className="text-lg font-heading font-semibold text-magenta leading-tight">Venkata</div>
+            </div>
+          )}
         </div>
+        <div className="border-b border-violet/30 min-w-[256px]"></div>
         <nav className="flex-1 p-4 space-y-1 min-w-[256px]">
           {navigation.map((item) => {
             const Icon = item.icon
