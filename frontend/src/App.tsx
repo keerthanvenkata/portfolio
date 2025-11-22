@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, BookOpen, Music, Coffee, Lightbulb, Heart, Home } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Link, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
@@ -24,7 +24,7 @@ const prefetchExperimentalDetail = () => import('./pages/ExperimentalDetail')
 const prefetchAbout = () => import('./pages/About')
 const prefetchContact = () => import('./components/ContactPage')
 
-function Sidebar({ current, onNavigate }: { current: string, onNavigate?: () => void }) {
+function Sidebar({ current, onNavigate, isMobile = false }: { current: string, onNavigate?: () => void, isMobile?: boolean }) {
   const navigation = [
     { name: 'Home', id: 'home', icon: Home },
     { name: 'About', id: 'about', icon: Briefcase },
@@ -35,46 +35,183 @@ function Sidebar({ current, onNavigate }: { current: string, onNavigate?: () => 
     { name: 'Outside Code', id: 'outside', icon: Heart },
     { name: 'Contact', id: 'contact', icon: Mail },
   ]
-  return (
-    <div className="bg-profound-blue/90 backdrop-blur-sm border-r border-violet/50 flex flex-col" role="navigation" aria-label="Main">
-      <div className="p-6 border-b border-violet/30 flex justify-center">
-        <VKLogo size="lg" />
-      </div>
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-        {navigation.map((item) => {
-          const Icon = item.icon
-          const href = item.id === 'home' ? '/' : `/${item.id}`
-          const onEnter = () => {
-            if (item.id === 'about') prefetchAbout()
-            if (item.id === 'contact') prefetchContact()
-          }
-          return (
-            <Link 
-              key={item.id} 
-              to={href}
-              onMouseEnter={onEnter}
-              onClick={onNavigate}
-              aria-current={current === item.id ? 'page' : undefined}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
-                current === item.id 
-                  ? 'bg-gradient-to-r from-violet to-magenta text-white shadow-[0_0_20px_rgba(127,0,255,0.5)]' 
-                  : 'text-gray-300 hover:bg-violet/20 hover:text-violet hover:shadow-[0_0_10px_rgba(127,0,255,0.3)]'
-              }`}
-            >
-              <Icon size={20} />
-              <span className="font-medium">{item.name}</span>
-            </Link>
-          )
-        })}
-      </nav>
-      <div className="p-4 border-t border-violet/30">
-        <div className="flex justify-center gap-3" aria-label="Social links">
-          <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="GitHub profile"><Github size={20} /></a>
-          <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="LinkedIn profile"><Linkedin size={20} /></a>
-          <a href="mailto:keerthanvenkata@gmail.com" className="text-gray-400 hover:text-electric-pink transition-colors hover:scale-110 transform duration-300" aria-label="Send email"><Mail size={20} /></a>
+  
+  const [isExpanded, setIsExpanded] = useState(isMobile) // Mobile is always expanded
+  const [isPinned, setIsPinned] = useState(false)
+  const retractTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  
+  // Transition duration in milliseconds - adjust here for smoothness
+  const TRANSITION_DURATION = 300
+  
+  // Delay before retracting when pinned (in milliseconds)
+  const PINNED_RETRACT_DELAY = 1500
+
+  const handleMouseEnter = () => {
+    if (isMobile) return // No hover behavior on mobile
+    // Clear any pending retract timeout
+    if (retractTimeoutRef.current) {
+      clearTimeout(retractTimeoutRef.current)
+      retractTimeoutRef.current = null
+    }
+    setIsExpanded(true)
+  }
+
+  const handleMouseLeave = () => {
+    if (isMobile) return // No hover behavior on mobile
+    if (isPinned) {
+      // If pinned, wait 1.5 seconds before retracting
+      retractTimeoutRef.current = setTimeout(() => {
+        setIsExpanded(false)
+        retractTimeoutRef.current = null
+      }, PINNED_RETRACT_DELAY)
+    } else {
+      // If not pinned, retract immediately
+      setIsExpanded(false)
+    }
+  }
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (isMobile) return // No pin behavior on mobile
+    // Toggle pin state
+    setIsPinned(!isPinned)
+    // If pinning, ensure sidebar is expanded
+    if (!isPinned) {
+      setIsExpanded(true)
+    }
+    // Prevent navigation if clicking on sidebar itself (not a link)
+    if ((e.target as HTMLElement).closest('a')) {
+      // Let the link handle navigation
+      if (onNavigate) onNavigate()
+    }
+  }
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (retractTimeoutRef.current) {
+        clearTimeout(retractTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  // Mobile sidebar - always visible, no hover behavior
+  if (isMobile) {
+    return (
+      <div className="bg-profound-blue/90 backdrop-blur-sm border-r border-violet/50 flex flex-col h-full" role="navigation" aria-label="Main">
+        <div className="p-6 border-b border-violet/30 flex justify-center">
+          <VKLogo size="lg" />
+        </div>
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+          {navigation.map((item) => {
+            const Icon = item.icon
+            const href = item.id === 'home' ? '/' : `/${item.id}`
+            const onEnter = () => {
+              if (item.id === 'about') prefetchAbout()
+              if (item.id === 'contact') prefetchContact()
+            }
+            return (
+              <Link 
+                key={item.id} 
+                to={href}
+                onMouseEnter={onEnter}
+                onClick={onNavigate}
+                aria-current={current === item.id ? 'page' : undefined}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                  current === item.id 
+                    ? 'bg-gradient-to-r from-violet to-magenta text-white shadow-[0_0_20px_rgba(127,0,255,0.5)]' 
+                    : 'text-gray-300 hover:bg-violet/20 hover:text-violet hover:shadow-[0_0_10px_rgba(127,0,255,0.3)]'
+                }`}
+              >
+                <Icon size={20} />
+                <span className="font-medium">{item.name}</span>
+              </Link>
+            )
+          })}
+        </nav>
+        <div className="p-4 border-t border-violet/30">
+          <div className="flex justify-center gap-3" aria-label="Social links">
+            <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="GitHub profile"><Github size={20} /></a>
+            <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="LinkedIn profile"><Linkedin size={20} /></a>
+            <a href="mailto:keerthanvenkata@gmail.com" className="text-gray-400 hover:text-electric-pink transition-colors hover:scale-110 transform duration-300" aria-label="Send email"><Mail size={20} /></a>
+          </div>
         </div>
       </div>
-    </div>
+    )
+  }
+
+  // Desktop sidebar - hover-based with collapse/expand
+  return (
+    <>
+      {/* Invisible hover zone on extreme left edge */}
+      <div
+        className="hidden lg:block fixed left-0 top-0 w-5 h-screen z-50"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      />
+      
+      {/* Logo - always visible when collapsed */}
+      <div
+        className={`hidden lg:block fixed left-4 top-6 z-50 transition-opacity ${
+          isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
+        style={{ transitionDuration: `${TRANSITION_DURATION}ms` }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <VKLogo size="lg" />
+      </div>
+
+      {/* Sidebar - expands on hover */}
+      <div
+        className={`hidden lg:flex fixed left-0 top-0 h-screen z-50 bg-profound-blue/90 backdrop-blur-sm border-r border-violet/50 flex-col transition-all ${
+          isExpanded ? 'w-64' : 'w-0 overflow-hidden'
+        }`}
+        style={{ transitionDuration: `${TRANSITION_DURATION}ms` }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
+        role="navigation"
+        aria-label="Main"
+      >
+        <div className="p-6 border-b border-violet/30 flex justify-center min-w-[256px]">
+          <VKLogo size="lg" />
+        </div>
+        <nav className="flex-1 p-4 space-y-1 min-w-[256px]">
+          {navigation.map((item) => {
+            const Icon = item.icon
+            const href = item.id === 'home' ? '/' : `/${item.id}`
+            const onEnter = () => {
+              if (item.id === 'about') prefetchAbout()
+              if (item.id === 'contact') prefetchContact()
+            }
+            return (
+              <Link 
+                key={item.id} 
+                to={href}
+                onMouseEnter={onEnter}
+                onClick={onNavigate}
+                aria-current={current === item.id ? 'page' : undefined}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                  current === item.id 
+                    ? 'bg-gradient-to-r from-violet to-magenta text-white shadow-[0_0_20px_rgba(127,0,255,0.5)]' 
+                    : 'text-gray-300 hover:bg-violet/20 hover:text-violet hover:shadow-[0_0_10px_rgba(127,0,255,0.3)]'
+                }`}
+              >
+                <Icon size={20} />
+                <span className="font-medium">{item.name}</span>
+              </Link>
+            )
+          })}
+        </nav>
+        <div className="p-4 border-t border-violet/30 min-w-[256px]">
+          <div className="flex justify-center gap-3" aria-label="Social links">
+            <a href="https://github.com/keerthanvenkata" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="GitHub profile"><Github size={20} /></a>
+            <a href="https://www.linkedin.com/in/venkata-keerthan/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-violet transition-colors hover:scale-110 transform duration-300" aria-label="LinkedIn profile"><Linkedin size={20} /></a>
+            <a href="mailto:keerthanvenkata@gmail.com" className="text-gray-400 hover:text-electric-pink transition-colors hover:scale-110 transform duration-300" aria-label="Send email"><Mail size={20} /></a>
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -688,21 +825,29 @@ export default function App() {
   return (
     <div className="min-h-screen bg-black text-white flex relative">
       <div className="animated-bg"></div>
-      <div className="hidden lg:flex w-64 flex-shrink-0"><Sidebar current={current} /></div>
-        <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-sm border-b border-violet/30 px-4 py-3 flex justify-between items-center">
-          <VKLogo size="md" />
-          <button onClick={() => setMobile(!mobile)} aria-label={mobile ? 'Close menu' : 'Open menu'}>{mobile ? <X size={24} /> : <Menu size={24} />}</button>
-        </div>
+      
+      {/* Desktop Sidebar - hover-based */}
+      <Sidebar current={current} />
+      
+      {/* Mobile Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-sm border-b border-violet/30 px-4 py-3 flex justify-between items-center">
+        <VKLogo size="md" />
+        <button onClick={() => setMobile(!mobile)} aria-label={mobile ? 'Close menu' : 'Open menu'}>{mobile ? <X size={24} /> : <Menu size={24} />}</button>
+      </div>
+      
+      {/* Mobile Menu */}
       {mobile && (
         <div className="lg:hidden fixed inset-0 z-50 bg-black">
           <div className="p-4 border-b border-violet/30 flex justify-between items-center">
             <VKLogo size="md" />
             <button onClick={() => setMobile(false)} aria-label="Close menu"><X size={24} /></button>
           </div>
-          <div className="flex flex-col h-[calc(100vh-73px)]"><Sidebar current={current} onNavigate={() => setMobile(false)} /></div>
+          <div className="flex flex-col h-[calc(100vh-73px)]"><Sidebar current={current} onNavigate={() => setMobile(false)} isMobile={true} /></div>
         </div>
       )}
-      <div className="flex-1 flex flex-col min-h-screen lg:min-h-0">
+      
+      {/* Main Content - full width since sidebar overlays */}
+      <div className="flex-1 flex flex-col min-h-screen lg:min-h-0 w-full">
         <Header title={title} />
         <main id="main-content" role="main" className="flex-1 overflow-y-auto pt-16 lg:pt-0">
           <Suspense fallback={<LoadingSpinner />}>
