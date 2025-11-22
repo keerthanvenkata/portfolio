@@ -157,12 +157,12 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
       />
       
       {/* Logo - smoothly animates position with sidebar (moves slower but same duration) */}
-      {/* Positioned below header to avoid covering title */}
+      {/* Positioned at top above header */}
       <div
-        className={`hidden lg:block fixed z-40 transition-all ${
+        className={`hidden lg:block fixed z-50 transition-all ${
           isExpanded 
             ? 'left-28 top-6 opacity-0 pointer-events-none' 
-            : 'left-4 top-20 opacity-100'
+            : 'left-4 top-6 opacity-100'
         }`}
         style={{ transitionDuration: `${TRANSITION_DURATION}ms`, transitionTimingFunction: 'ease-in-out' }}
         onMouseEnter={handleMouseEnter}
@@ -742,8 +742,8 @@ function OutsidePage() {
 
 function Header({ title }: { title: string }) {
   return (
-        <div className="bg-black/70 backdrop-blur-sm border-b border-violet/50 sticky top-0 z-40 px-6 py-4 transition-all duration-300">
-          <h1 className="text-2xl font-heading font-bold text-violet text-glow-purple">{title}</h1>
+        <div className="bg-black/50 backdrop-blur-sm border-b border-violet/50 sticky top-0 z-40 px-6 py-4 transition-all duration-300">
+          <h1 className="text-2xl font-heading font-bold text-violet text-glow-purple text-right">{title}</h1>
         </div>
   )
 }
@@ -877,7 +877,7 @@ export default function App() {
             </Routes>
           </Suspense>
         </main>
-        <footer className="bg-black/70 backdrop-blur-sm border-t border-violet/30 py-6 px-6 relative z-10 transition-all duration-300">
+        <footer className="bg-black/50 backdrop-blur-sm border-t border-violet/30 py-6 px-6 relative z-10 transition-all duration-300">
           <div className="max-w-6xl mx-auto text-center">
             <p className="text-gray-400 text-sm">© 2025 Venkata Keerthan Nimmala. Built with React & Tailwind.</p>
             <p className="text-gray-500 text-xs mt-1">Ready for new opportunities • Open to collaboration</p>
