@@ -38,7 +38,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
   
   const [isExpanded, setIsExpanded] = useState(isMobile) // Mobile is always expanded
   const [isPinned, setIsPinned] = useState(false)
-  const retractTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const retractTimeoutRef = useRef<number | null>(null)
   
   // Transition duration in milliseconds - adjust here for smoothness
   const TRANSITION_DURATION = 300
