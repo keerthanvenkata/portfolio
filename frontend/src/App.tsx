@@ -271,7 +271,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
             <div 
               className="absolute flex flex-col justify-center"
               style={{ 
-                left: '96px', // Right after logo (logo at 24px, width 64px, ends at 88px, so start at 96px)
+                left: '120px', // Right after logo (logo at 24px, width 64px, ends at 88px, so start at 96px) + 24px more
                 top: '24px', // Same top as logo
                 height: '64px' // Same height as logo for vertical centering
               }}
