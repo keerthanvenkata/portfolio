@@ -975,7 +975,7 @@ export default function App() {
         </main>
         <footer className="bg-black/30 backdrop-blur-sm py-6 px-6 relative z-10 transition-all duration-300">
           <div className="max-w-6xl mx-auto text-center">
-            <p className="text-gray-400 text-sm">© 2025 Venkata Keerthan Nimmala. Built with React & Tailwind.</p>
+            <p className="text-gray-400 text-sm">© 2025 Venkata Keerthan Nimmala</p>
             <p className="text-gray-500 text-xs mt-1">Ready for new opportunities • Open to collaboration</p>
           </div>
         </footer>
