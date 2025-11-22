@@ -214,6 +214,22 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
   // Desktop sidebar - hover-based with collapse/expand
   return (
     <>
+      {/* Logo - Single logo, always at same position (24px from top and left), always visible and clickable */}
+      <div
+        data-logo
+        className="hidden lg:block fixed z-50"
+        style={{ 
+          left: '24px', 
+          top: '24px',
+          transition: 'none',
+          transform: 'none'
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <VKLogo size="lg" />
+      </div>
+
       {/* Invisible hover zone on extreme left edge - doubled width */}
       <div
         data-hover-zone
@@ -224,7 +240,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
       
       {/* Sidebar - expands on hover with increased transparency */}
       <div
-        className={`hidden lg:flex fixed left-0 top-0 h-screen z-50 bg-profound-blue/70 backdrop-blur-sm border-r border-violet/50 flex-col transition-all ${
+        className={`hidden lg:flex fixed left-0 top-0 h-screen z-40 bg-profound-blue/70 backdrop-blur-sm border-r border-violet/50 flex-col transition-all ${
           isExpanded ? 'w-64' : 'w-0 overflow-hidden'
         }`}
         style={{ transitionDuration: `${TRANSITION_DURATION}ms` }}
@@ -234,23 +250,9 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
         role="navigation"
         aria-label="Main"
       >
-        {/* Sidebar Header - Logo at fixed position, name to the right */}
+        {/* Sidebar Header - Name appears to the right of logo when expanded */}
         <div className="relative min-w-[256px] min-h-[96px]">
-          {/* Logo - always at same position (24px from top and left of viewport) */}
-          <div
-            data-logo
-            className="absolute"
-            style={{ 
-              left: '24px', 
-              top: '24px',
-              zIndex: 10
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <VKLogo size="lg" />
-          </div>
-          {/* Name - to the right of logo, only visible when sidebar is expanded */}
+          {/* Name - to the right of logo position, only visible when sidebar is expanded */}
           {isExpanded && (
             <div 
               className="absolute flex flex-col items-start"
