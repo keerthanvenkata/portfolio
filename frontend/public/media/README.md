@@ -16,7 +16,8 @@ media/
 │   └── featured/      # Featured images
 ├── portrait/          # Hero section portrait images
 │   ├── 13.png         # Full body portrait (DEFAULT, PNG with transparency)
-│   ├── 3.jpeg         # Portrait till thigh
+│   ├── 19.png         # Alternate full body portrait (legacy 13)
+│   ├── 3.png          # Portrait till thigh
 │   └── 5.jpeg         # Half body portrait
 ├── screenshots/       # General screenshots
 ├── diagrams/          # Architecture diagrams, flowcharts
@@ -40,8 +41,9 @@ media/
 - Supported formats: JPG, PNG, WebP
 - Recommended: Transparent background (PNG) or images with transparent backgrounds
 - Current images:
-  - `13.png` - Full body portrait (DEFAULT - layout optimized for this, PNG with transparency)
-  - `3.jpeg` - Portrait till thigh
+  - `13.png` - Full body portrait (DEFAULT - layout optimized for this, PNG with transparency, red aura accent)
+  - `19.png` - Alternate full body portrait (legacy default)
+  - `3.png` - Portrait till thigh
   - `5.jpeg` - Half body portrait
 - **Note**: PNG format recommended for transparent backgrounds. JPEG files will show checkered pattern if they have transparency baked in.
 - To change the displayed portrait, update `PORTRAIT_IMAGE` constant in `frontend/src/App.tsx` (HomePage component)

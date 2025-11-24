@@ -351,7 +351,7 @@ function HomePage() {
   // Portrait image configuration - easily change the filename here
   // Available images: 
   //   - 13.png (full body) - DEFAULT, layout optimized for this
-  //   - 3.jpeg (till thigh)
+  //   - 3.png (till thigh)
   //   - 5.jpeg (half body)
   // To change: Update the PORTRAIT_IMAGE constant below
   const PORTRAIT_IMAGE = '13.png' // Change this to switch between images
@@ -438,9 +438,14 @@ function HomePage() {
                 alt="Venkata Keerthan Nimmala"
                 className="w-auto max-w-full h-auto max-h-[650px] object-contain"
                 style={{
-                  filter: 'drop-shadow(0 0 20px rgba(127, 0, 255, 0.5)) drop-shadow(0 0 40px rgba(255, 0, 128, 0.4))',
+                  filter: [
+                    'drop-shadow(0 0 20px rgba(127, 0, 255, 0.45))',
+                    'drop-shadow(0 0 40px rgba(255, 0, 128, 0.4))',
+                    'drop-shadow(0 0 60px rgba(255, 90, 0, 0.35))',
+                    'drop-shadow(0 0 110px rgba(255, 120, 0, 0.15))'
+                  ].join(' '),
                   // Flexible sizing that adapts to different aspect ratios
-                  // Works for: 13.jpeg (full body - optimized), 3.jpeg (till thigh), 5.jpeg (half body)
+                  // Works for: 13.png (full body - optimized), 3.png (till thigh), 5.jpeg (half body)
                 }}
               />
             </div>
