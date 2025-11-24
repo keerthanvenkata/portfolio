@@ -9,6 +9,7 @@ Short, high-signal backlog for this portfolio. Keep tasks grouped by theme; stri
 - [ ] Implement keyboard-accessible theme toggle (dark default, bright optional).
 - [ ] Add query param + persisted preference for bright/professional mode.
 - [ ] Review mobile navigation gestures after latest sidebar changes.
+- [ ] Redesign VK logo variant that works for both dark neon and bright professional themes.
 
 ## Content & Docs
 
