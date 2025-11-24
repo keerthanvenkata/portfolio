@@ -4,11 +4,11 @@ Single reference for architecture, UX, and roadmap decisions so anyone can ramp 
 
 ## 1. Product Story
 
-- **Site role**: Personal laboratory for blogs, experiments, travel shorts, and entrepreneurial notes while still acting as a recruiter/VC-friendly profile.
+- **Site role**: Dual-purpose portfolio — "My Space" (dark neon personal lab) for friends/makers with travel, stories, playlists, and random content; "Professional Mode" (bright parchment) for recruiters/VCs with clean, formal presentation.
 - **Personas**:
-  - *Explorers* (friends, makers) → default neon/dark mode, playful tone, fast iteration.
-  - *Professionals* (recruiters, investors) → future bright mode with the same content surfaced more formally.
-- **North Star**: One codebase, two skins, identical routes/content.
+  - *My Space* (dark mode): Personal lab, informal, creative space — travel stories, music playlists, journal entries, random thoughts, lifestyle content.
+  - *Professional Mode* (bright mode): Recruiter/VC-facing, formal, clean — technical deep-dives, professional insights, career highlights.
+- **North Star**: One codebase, two skins, mostly shared content with theme-filtered sections (Blog, Outside Code subsections, future personal sections).
 
 ## 2. Architecture Snapshot
 
@@ -28,13 +28,17 @@ Single reference for architecture, UX, and roadmap decisions so anyone can ramp 
 
 ## 4. Component Inventory
 
-- **Layout**: Fixed sidebar (hover/pin), global header/footer, mobile hamburger overlay.
+- **Layout**: Fixed sidebar (hover/pin), global header/footer, mobile hamburger overlay, theme toggle (top-right + sidebar bottom).
 - **Hero**: Two-column layout with portrait slot (desktop). Portrait assets live in `public/media/portrait/`; drop-shadow stack documented in `style-guide`.
 - **Content Modules**: Featured projects, blog summaries, experimental cards, quick links, timeline, modals (`ProjectModal`, `ExperimentalModal`, `BlogModal`).
+- **Sections**:
+  - **Universal** (both themes): Home, About, Projects, Experimental, Resume, Contact
+  - **Theme-filtered**: Blog (posts with `theme` param), Outside Code (subsections with `theme` param)
+  - **Future personal sections** (dark default, configurable): Travel, Stories/Journal, Playlists, Reading List, Photography
 - **Utilities**: `Modal` base component, `ImageCarousel`, `VideoPlayer`, `PDFViewer`, `GitHubContributions`.
 - **Docs Reference**:
   - Visual language → `docs/style-guide.md`
-  - Bright/Professional mode spec → `docs/professional_version.md`
+  - Bright/Professional mode spec → `docs/professional-version.md`
   - Deployment process → `docs/vercel-deploy.md`
 
 ## 5. Roadmap (High Level)

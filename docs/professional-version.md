@@ -1,6 +1,6 @@
 # Professional (Bright) Version Spec
 
-Intent: “Artisanal Professionalism” — a warm parchment experience with modern precision. Dark neon remains the lab/default; bright mode becomes the recruiter/VC-facing skin, accessible via toggle and URL param without duplicating content.
+Intent: “Artisanal Professionalism” — a warm parchment experience with modern precision. Dark neon remains the primary personal/lab experience; bright mode becomes the recruiter/VC-facing skin, accessible via toggle and URL param without duplicating content.
 
 ## 1. Goals
 
@@ -43,7 +43,10 @@ Portrait & imagery:
 - **Modals**: Raised cards (12px radius, 2px charcoal border @ ~8% opacity) with drop-in animation (scale 0.98→1, y 12px→0, shadow bloom). Overlay `rgba(44,36,22,0.55)` with gentle vignette.
 - **Background**: Ultra-light parchment grain plus slow-moving spotlight. Sparse gold dust/sand particles around hero CTA for a living feel (extremely subtle).
 - **Hero Imagery**: Optionally introduce a new portrait illustration tailored to the parchment aesthetic while keeping transparent background.
-- **Toggle**: Slider with iconography (spark ↔ sunburst). Keyboard accessible, `aria-pressed`, respects reduced-motion.
+- **Theme Toggle**: Two distinct designs per theme (not hybrid). Dual placement: top-right below header (home page) + bottom of sidebar above socials. State synced across both locations.
+  - **Dark Mode Toggle (personal/lab default)**: Spark/neon icon (active) ↔ parchment sun icon. Subtle glow, small neon border. Label: "Personal Lab" / "My Space". Tooltip: "Stay in neon lab mode for personal site, experiments, playlists, stories."
+  - **Bright Mode Toggle (professional)**: Sun/light icon (active) ↔ moon/spark icon. Clean, minimal, amber accent. Label: "Professional Mode" / "Recruiter View". Tooltip: "Switch to the polished professional version for recruiters, VCs, formal sharing."
+  - Keyboard accessible, `aria-pressed`, respects reduced-motion. Micro-interaction: mechanical slider feel with optional subtle sound/gear rotation on toggle.
 
 ## 5. Animation Philosophy
 
@@ -77,11 +80,47 @@ Portrait & imagery:
 - Capture before/after screenshots once bright mode launches.
 - Track implementation tasks (starfield, logo redesign, portrait variants, toggle) in `docs/TODOS.md`.
 
-## 8. Open Questions
+## 8. Content Strategy
+
+**Core Principle**: Both themes ("My Space" dark mode + "Professional Mode" bright mode) will mostly share the same content. Only specific sections have theme filtering.
+
+**Universal Sections** (visible in both themes):
+- Home, About, Projects, Experimental, Resume, Contact
+- These sections show identical content; only visual presentation (theme, typography, animations) changes.
+
+**Theme-Filtered Sections**:
+
+1. **Blog Posts**: Add `theme` parameter (`"dark" | "bright" | "both"`):
+   - `"dark"`: Personal stories, travel journal, random thoughts, lifestyle content (visible only in dark "My Space" mode)
+   - `"bright"`: Technical deep-dives, professional insights, career updates (visible only in bright "Professional Mode")
+   - `"both"`: General posts visible in both themes (default)
+
+2. **Outside Code Section**: Subsections (Music, Food, etc.) have `theme` parameter:
+   - Each subsection can be `"dark" | "bright" | "both"`
+   - Current: Music and Food (both personal, default to `"dark"` but configurable)
+   - Future subsections (Travel, Playlists, etc.) default to `"dark"` but easily configurable to `"both"` or `"bright"` via codebase config
+
+**Future Personal-Only Sections** (dark mode default, configurable):
+- **Travel**: Stories, photos, journal entries (personal space)
+- **Stories/Journal**: Micro-blog style entries (personal space)
+- **Playlists**: Music curation (could merge with Music in Outside Code or be separate)
+- **Reading List**: Books/articles (personal space)
+- **Photography**: Visual portfolio (personal space)
+
+**Configuration Pattern**: All personal sections default to `theme: "dark"` but can be easily configured in codebase to also appear in bright mode (`theme: "both"`) if desired. This keeps flexibility without maintenance overhead.
+
+**Implementation Note**: Start with same content for universal sections, add theme filtering for Blog and Outside Code subsections. Keep architecture flexible for future section additions with theme params.
+
+## 9. Open Questions
 
 - Logo/portrait: ship dedicated bright-mode assets or recolor existing ones?
 - Optional “presentation” landing auto-opening bright mode for recruiters?
 - Analytics: do we log theme preference/toggle usage?
 
-Document answers before implementation to keep alignment tight.
+**Decided**: 
+- Universal sections (Projects, Experimental, About, Resume, Contact) remain the same across themes.
+- Only Blog and Outside Code subsections have theme filtering.
+- Future personal sections (Travel, Stories, Playlists, Reading List, Photography) default to dark mode but are configurable.
+
+Document remaining answers before implementation to keep alignment tight.
 

@@ -79,10 +79,15 @@ Quick workflow
   excerpt: One-liner summary
   date: 2025-01-28
   featured: true
+  theme: both
   ---
 
   Your markdown content here. Code blocks, images, etc.
   ```
+- **Theme Parameter**: Add `theme: "dark" | "bright" | "both"` to frontmatter:
+  - `"dark"`: Personal stories, travel journal, lifestyle content (visible only in dark "My Space" mode)
+  - `"bright"`: Technical deep-dives, professional insights (visible only in bright "Professional Mode")
+  - `"both"`: General posts visible in both themes (default if omitted)
 - The generator renders HTML and emits `posts.json` and per-post JSON.
 
 ## Timeline (Career + Education)
@@ -117,6 +122,25 @@ Quick workflow
   ```
 - GitHub contributions chart uses `github_username`.
 
+## Outside Code Section
+
+- Edit `backend/app/content/outside-code.json` (or similar structure).
+- Each subsection (Music, Food, Travel, etc.) can have a `theme` parameter:
+  ```json
+  {
+    "id": "music",
+    "title": "Music",
+    "theme": "dark",
+    "content": "..."
+  }
+  ```
+- **Theme Parameter**: `"dark" | "bright" | "both"`:
+  - `"dark"`: Personal content (default for lifestyle sections)
+  - `"bright"`: Professional content (rare for Outside Code)
+  - `"both"`: Visible in both themes
+- Current subsections: Music, Food (both default to `"dark"` but configurable).
+- Future subsections (Travel, Playlists, etc.) default to `"dark"` but easily configurable in codebase.
+
 ## Media (Images, Diagrams, Videos)
 
 - Place files under `backend/app/content/media/`:
@@ -126,6 +150,7 @@ Quick workflow
   ├── projects/{project-id}/diagrams/*
   ├── projects/{project-id}/videos/*
   ├── blog/{post-id}/*
+  ├── outside-code/{section-id}/*
   ├── screenshots/*
   ├── diagrams/*
   └── videos/*
