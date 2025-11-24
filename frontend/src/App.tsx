@@ -348,6 +348,11 @@ function HomePage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [projects, setProjects] = useState<Project[]>([])
   
+  // Portrait image configuration - easily change the filename here
+  // Available images: 3.jpeg (full body), 5.jpeg (half body), 13.jpeg (thighs)
+  // To change: Update the PORTRAIT_IMAGE constant below
+  const PORTRAIT_IMAGE = '3.jpeg' // Change this to switch between images
+  
   useEffect(() => { 
     fetchFeaturedPosts().then(setPosts).catch(() => setPosts([]))
     fetchProjects('project', true).then(setProjects).catch(() => setProjects([]))
@@ -359,13 +364,14 @@ function HomePage() {
       <div className="animated-bg"></div>
       
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 relative z-10 w-full overflow-x-hidden">
-        {/* Hero Section */}
-        <div className="text-center space-y-8 mb-20">
+        {/* Hero Section - Two column layout on desktop, centered on mobile */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-12 mb-20">
+          {/* Text Column - Left on desktop, centered on mobile */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-6"
+            className="flex-1 text-center lg:text-left space-y-6"
           >
             <motion.h1 
               initial={{ opacity: 0, scale: 0.9 }}
@@ -387,7 +393,7 @@ function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed px-2 sm:px-0"
+              className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto lg:mx-0 leading-relaxed px-2 sm:px-0"
             >
               Building scalable systems, AI solutions, and entrepreneurial ventures.
               <span className="block mt-2 text-electric-pink text-glow-pink">Ready for new challenges and impactful projects.</span>
@@ -398,7 +404,7 @@ function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex flex-wrap justify-center gap-4 mt-8"
+              className="flex flex-wrap justify-center lg:justify-start gap-4 mt-8"
             >
               <Link
                 to="/projects"
@@ -413,6 +419,25 @@ function HomePage() {
                 Get In Touch
               </Link>
             </motion.div>
+          </motion.div>
+
+          {/* Portrait Image Column - Right on desktop, hidden on mobile */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="hidden lg:flex flex-shrink-0 items-center justify-center"
+          >
+            <div className="relative">
+              <img
+                src={`/media/portrait/${PORTRAIT_IMAGE}`}
+                alt="Venkata Keerthan Nimmala"
+                className="w-auto h-[600px] max-w-[400px] object-contain drop-shadow-[0_0_30px_rgba(127,0,255,0.4)] drop-shadow-[0_0_50px_rgba(255,0,128,0.3)]"
+                style={{
+                  filter: 'drop-shadow(0 0 20px rgba(127, 0, 255, 0.5)) drop-shadow(0 0 40px rgba(255, 0, 128, 0.4))'
+                }}
+              />
+            </div>
           </motion.div>
         </div>
 
