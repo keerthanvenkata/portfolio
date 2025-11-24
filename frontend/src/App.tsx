@@ -351,7 +351,8 @@ function HomePage() {
   // Portrait image configuration - easily change the filename here
   // Available images: 3.jpeg (full body), 5.jpeg (half body), 13.jpeg (thighs)
   // To change: Update the PORTRAIT_IMAGE constant below
-  const PORTRAIT_IMAGE = '3.jpeg' // Change this to switch between images
+  // Default: 13.jpeg (portrait to thighs) - layout optimized for this
+  const PORTRAIT_IMAGE = '13.jpeg' // Change this to switch between images
   
   useEffect(() => { 
     fetchFeaturedPosts().then(setPosts).catch(() => setPosts([]))
@@ -422,19 +423,22 @@ function HomePage() {
           </motion.div>
 
           {/* Portrait Image Column - Right on desktop, hidden on mobile */}
+          {/* Layout optimized for 13.jpeg (thighs portrait) but flexible for all three images */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="hidden lg:flex flex-shrink-0 items-center justify-center"
+            className="hidden lg:flex flex-shrink-0 items-center justify-center w-full lg:w-auto lg:max-w-[450px]"
           >
-            <div className="relative">
+            <div className="relative w-full flex items-center justify-center">
               <img
                 src={`/media/portrait/${PORTRAIT_IMAGE}`}
                 alt="Venkata Keerthan Nimmala"
-                className="w-auto h-[600px] max-w-[400px] object-contain drop-shadow-[0_0_30px_rgba(127,0,255,0.4)] drop-shadow-[0_0_50px_rgba(255,0,128,0.3)]"
+                className="w-auto max-w-full h-auto max-h-[650px] object-contain"
                 style={{
-                  filter: 'drop-shadow(0 0 20px rgba(127, 0, 255, 0.5)) drop-shadow(0 0 40px rgba(255, 0, 128, 0.4))'
+                  filter: 'drop-shadow(0 0 20px rgba(127, 0, 255, 0.5)) drop-shadow(0 0 40px rgba(255, 0, 128, 0.4))',
+                  // Flexible sizing that adapts to different aspect ratios
+                  // Works for full body (taller), half body (medium), and thighs (shorter)
                 }}
               />
             </div>
