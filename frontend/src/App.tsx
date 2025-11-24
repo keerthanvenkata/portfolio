@@ -350,11 +350,11 @@ function HomePage() {
   
   // Portrait image configuration - easily change the filename here
   // Available images: 
-  //   - 13.jpeg (full body) - DEFAULT, layout optimized for this
+  //   - 13.png (full body) - DEFAULT, layout optimized for this
   //   - 3.jpeg (till thigh)
   //   - 5.jpeg (half body)
   // To change: Update the PORTRAIT_IMAGE constant below
-  const PORTRAIT_IMAGE = '13.jpeg' // Change this to switch between images
+  const PORTRAIT_IMAGE = '13.png' // Change this to switch between images
   
   useEffect(() => { 
     fetchFeaturedPosts().then(setPosts).catch(() => setPosts([]))
