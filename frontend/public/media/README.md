@@ -14,6 +14,10 @@ media/
 ├── blog/              # Blog post media
 │   ├── {post-id}/     # Individual post folders
 │   └── featured/      # Featured images
+├── portrait/          # Hero section portrait images
+│   ├── 3.jpeg         # Full body portrait
+│   ├── 5.jpeg         # Half body portrait
+│   └── 13.jpeg        # Portrait to thighs
 ├── screenshots/       # General screenshots
 ├── diagrams/          # Architecture diagrams, flowcharts
 └── videos/           # Demo videos, presentations
@@ -30,6 +34,17 @@ media/
 - Place blog images in `blog/{post-id}/`
 - Featured images can go in `blog/featured/`
 - Use descriptive filenames: `hero-image.jpg`, `code-snippet.png`
+
+### Portrait Images
+- Place hero section portrait images in `portrait/`
+- Supported formats: JPG, PNG, WebP
+- Recommended: Transparent background (PNG) or images with transparent backgrounds
+- Current images:
+  - `3.jpeg` - Full body portrait
+  - `5.jpeg` - Half body portrait  
+  - `13.jpeg` - Portrait to thighs
+- To change the displayed portrait, update `PORTRAIT_IMAGE` constant in `frontend/src/App.tsx` (HomePage component)
+- Images are hidden on mobile devices, visible on desktop (lg breakpoint and above)
 
 ### General Media
 - Screenshots: `screenshots/` for general portfolio screenshots
