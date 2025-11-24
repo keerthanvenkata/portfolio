@@ -1,6 +1,6 @@
 # Keerthan.dev — Portfolio
 
-A minimalist, modern, and maintainable portfolio built with React + Tailwind (static on Vercel), with a backend-first content pipeline that keeps the path open for a future FastAPI backend.
+Personal playground + professional profile for Keerthan Venkata Nimmala. The dark “neon lab” is the default experience for storytelling, experiments, travel shorts, and long-form blogs; a future bright/professional mode will share the same content but present a clean recruiter/VC-ready skin that can be deep linked from resumes.
 
 ## Tech Stack
 
@@ -8,6 +8,7 @@ A minimalist, modern, and maintainable portfolio built with React + Tailwind (st
 - Content pipeline: Node (generate-content.mjs) → static JSON/assets
 - Backend (future-ready): FastAPI skeleton + content directory
 - Hosting: Vercel (static frontend for now)
+- Theme plan: Dark neon default, bright “professional version” toggle (URL param + UI switch, see `docs/professional_version.md`)
 
 ## Architecture (Backend-First Content)
 
@@ -29,8 +30,11 @@ During `npm run build` in `frontend/`:
 Frontend reads from these static endpoints (e.g. `/api/posts.json`). This mirrors a future FastAPI API so we can switch to dynamic hosting later without changing the frontend.
 
 See details:
-- docs/howto-add-content.md — how to add/update content
-- docs/architecture-and-performance.md — pipeline, modals vs pages, performance
+- `docs/howto-add-content.md` — add/update content & assets
+- `docs/style-guide.md` — full visual language + neon palette
+- `docs/professional_version.md` — bright-mode concept & requirements
+- `docs/MASTER_PLAN.md` — architecture + UX roadmap
+- `docs/architecture-and-performance.md` — content pipeline, perf strategy
 
 ## Local Development
 
@@ -107,6 +111,7 @@ frontend/
 - Lazy-loaded routes with Suspense, on-hover route prefetch, idle prefetch
 - Lazy images (`loading="lazy"`) and `decoding="async"`
 - Lightweight skeletons while loading lists
+- Checklist lives in `docs/checklist-a11y-performance.md` (include future bright mode contrast check + toggle keyboard access)
 
 ## Updating Content (TL;DR)
 

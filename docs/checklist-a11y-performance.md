@@ -19,13 +19,16 @@ Alternatively, use PageSpeed Insights.
 - Lazy routes + on-hover prefetch + idle prefetch
 - Lazy images (loading="lazy", decoding="async")
 - Skeleton loading states on lists
+- Theme-ready tokens: global CSS variables scoped to `body[data-theme="dark"]` (light tokens TBD, see professional version doc)
 
 ## What To Watch For
 
 - Contrast: verify text/background contrast meets WCAG AA
+- When bright/professional mode ships, re-run contrast + prefers-color-scheme tests
 - Image dimensions: add width/height if CLS is flagged
 - Large assets: compress images/videos (WebP/MP4 H.264)
 - Unused JS: run bundle analysis if performance score dips
+- Theme toggle: keyboard focusable, ARIA-pressed set, respects reduced-motion
 
 ## Quick Fix Steps
 

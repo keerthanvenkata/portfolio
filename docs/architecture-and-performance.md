@@ -27,6 +27,7 @@ This document explains how the site is organized (content-first), how the static
 
 - Current: Static hosting on Vercel for the frontend only.
 - Future: Enable FastAPI backend for dynamic serving; the frontend already supports switching `VITE_API_BASE` via env if needed.
+- Theme strategy: Dark mode is the render baseline. Bright/professional mode will be a CSS + token layer loaded on demand via toggle/query param (no separate deploy).
 
 ## Modal vs Detail Pages
 
@@ -65,6 +66,7 @@ This document explains how the site is organized (content-first), how the static
 - Add `srcset` and `sizes` for images if 2x assets exist (see below).
 - Bundle analysis and vendor chunk splitting if needed.
 - Service Worker for offline (optional).
+- Theme toggle hydration hint (preload light tokens) once professional version ships.
 
 ## Adding HiDPI Images (Optional)
 

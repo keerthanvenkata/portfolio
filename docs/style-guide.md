@@ -28,6 +28,17 @@ This document outlines the complete styling system, color palette, typography, e
 
 The portfolio website embodies a **futuristic, cyberpunk-inspired aesthetic** with a dark, immersive atmosphere. Think of it as a sleek, high-tech interface you might see in a sci-fi film—deep space black backgrounds punctuated by vibrant neon purple and pink accents that create an energetic, cutting-edge feel.
 
+### Professional Bright Mode (Planned)
+
+- **Purpose**: Same content, different skin—clean, high-contrast light UI for recruiters, investors, and resume links.
+- **Tone**: Still Keerthan’s voice (informal, friendly), but expressed through warm neutrals, charcoal accents, and measured color pops.
+- **Access**: Dark remains default; bright mode will be opt-in via toggle + URL parameter (see `docs/professional_version.md`).
+- **Design Pillars**:
+  - Matte off-white canvas (`#F5F3EF`) with charcoal typography.
+  - Reuse accent colors sparingly (violet/magenta for dividers, CTA outlines).
+  - Subtle embossing/glass for cards instead of neon glows.
+  - Maintain identical layout, spacing, and content hierarchy to avoid regressions when flipping themes.
+
 ### Color Story
 
 #### The Foundation: Deep Space Black
@@ -123,7 +134,7 @@ The design uses **generous spacing** and padding, preventing the interface from 
 
 ### Design Principles
 
-1. **Dark-First Philosophy**: The design is built for dark mode, creating a comfortable, modern viewing experience
+1. **Dark-First Philosophy**: The design is built for dark mode, creating a comfortable, modern viewing experience (bright/professional mode inherits the same spacing but swaps colors—see professional version doc)
 2. **Neon Accents**: Purple and pink create energy and innovation without overwhelming
 3. **Atmospheric Depth**: Animated gradients and glows add dimension and prevent flatness
 4. **High Contrast**: Bright neon accents on deep black backgrounds ensure excellent readability
@@ -145,7 +156,7 @@ The design conveys:
 
 - **Primary Background**: Pure black (the foundation)
 - **Primary Accents**: Vibrant neon purple (`#7F00FF`), magenta (`#FF00FF`), and electric pink (`#FF0080`)
-- **Supporting Colors**: Deep blue-purple for atmosphere, neon green for status, orange for special sections
+- **Supporting Colors**: Deep blue-purple for atmosphere, neon green for status, orange for special sections, and a future bright palette (warm neutrals + muted gold) reserved for the professional version
 - **Neutrals**: Sophisticated grays and semi-transparent blacks for structure and hierarchy
 
 ### When to Use Which Colors
@@ -1323,6 +1334,23 @@ backgroundImage: {
   - `hover:text-magenta`
   - `hover:shadow-[0_0_15px_rgba(255,0,128,0.4)]`
   - `hover:scale-105`
+
+### Hero & Portrait
+
+- **Layout**: `flex flex-col lg:flex-row lg:items-center lg:gap-12`. Text column stays `flex-1`; portrait column is `hidden lg:flex flex-shrink-0`.
+- **Portrait Slot**:
+  - Wrapper: `relative w-full flex items-center justify-center lg:max-w-[450px]`.
+  - Image: `max-h-[650px] object-contain`.
+  - Default asset `13.png` (new illustrated full body). Alternates: `19.png` (legacy full body), `3.png` (till thigh), `5.jpeg` (half body). Update the `PORTRAIT_IMAGE` constant in `HomePage` to switch.
+  - Glow stack:
+    ```
+    drop-shadow(0 0 20px rgba(127, 0, 255, 0.45))
+    drop-shadow(0 0 40px rgba(255, 0, 128, 0.4))
+    drop-shadow(0 0 60px rgba(255, 90, 0, 0.35))
+    drop-shadow(0 0 110px rgba(255, 120, 0, 0.15))
+    ```
+  - Use transparent PNGs to keep the animated background visible (JPEGs will display checkerboards).
+- **Text Column**: `text-center lg:text-left space-y-6`, hero gradient h1 (`text-4xl sm:text-5xl md:text-7xl lg:text-8xl`) plus subtitle/body copy and CTA buttons following patterns above.
 
 ### Badges & Tags
 

@@ -29,6 +29,8 @@ This project now builds all content into static JSON under `frontend/public/` an
 7. Environment Variables: none required
 8. Deploy
 
+> Bright/Professional mode will be handled entirely in the frontend via query params + local preference, so no additional env vars are needed.
+
 ### Deploy via CLI
 ```
 npm i -g vercel
@@ -42,5 +44,6 @@ vercel --prod
   - `/api/projects.json`, `/api/projects/{id}.json`
   - `/media/*` for images/videos
 - To update content, edit files in `backend/app/content/` and redeploy.
+- When bright mode ships, ensure `Vercel → Settings → Headers` allows `Preference-Applied` cookies if you choose to persist theme per visitor. For now, no server config change is required.
 
 

@@ -133,6 +133,18 @@ Quick workflow
 - Reference media paths in JSON/MD exactly as stored under `media/`, e.g. `"projects/your-project-id/screenshots/shot-1.png"`.
 - Build copies these to `/media/` under the frontend.
 
+### Hero Portraits
+
+- Folder: `backend/app/content/media/portrait/`.
+- Default assets mirrored to `frontend/public/media/portrait/` during build.
+- Current lineup:
+  - `13.png` — Illustrated full body with red aura (default).
+  - `19.png` — Legacy full body.
+  - `3.png` — Thigh-length.
+  - `5.jpeg` — Half body (convert to PNG for transparency when possible).
+- Update the `PORTRAIT_IMAGE` constant inside the `HomePage` component to switch the active image.
+- PNG with transparent background is preferred; otherwise the checker pattern is visible.
+
 ## Logo
 
 ### Logo Requirements
@@ -200,3 +212,9 @@ Quick workflow
 ## Future Dynamic Backend
 
 - This static pipeline mirrors the future API schema. When moving to FastAPI hosting, you can serve the same shapes dynamically without changing the frontend.
+
+## Bright / Professional Mode Content Notes
+
+- Theme toggle (dark default, bright optional) will not duplicate data—keep YAML/JSON identical so both skins read from the same source.
+- If you add recruiter-facing copy or CTAs, gate via theme flags inside the frontend instead of branching content files.
+- Document any bright-mode-specific assets (e.g., alternate logos, toned-down illustrations) in `docs/professional_version.md`.
