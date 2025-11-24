@@ -349,9 +349,11 @@ function HomePage() {
   const [projects, setProjects] = useState<Project[]>([])
   
   // Portrait image configuration - easily change the filename here
-  // Available images: 3.jpeg (full body), 5.jpeg (half body), 13.jpeg (thighs)
+  // Available images: 
+  //   - 13.jpeg (full body) - DEFAULT, layout optimized for this
+  //   - 3.jpeg (till thigh)
+  //   - 5.jpeg (half body)
   // To change: Update the PORTRAIT_IMAGE constant below
-  // Default: 13.jpeg (portrait to thighs) - layout optimized for this
   const PORTRAIT_IMAGE = '13.jpeg' // Change this to switch between images
   
   useEffect(() => { 
@@ -423,7 +425,7 @@ function HomePage() {
           </motion.div>
 
           {/* Portrait Image Column - Right on desktop, hidden on mobile */}
-          {/* Layout optimized for 13.jpeg (thighs portrait) but flexible for all three images */}
+          {/* Layout optimized for 13.jpeg (full body) but flexible for all three images */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -438,7 +440,7 @@ function HomePage() {
                 style={{
                   filter: 'drop-shadow(0 0 20px rgba(127, 0, 255, 0.5)) drop-shadow(0 0 40px rgba(255, 0, 128, 0.4))',
                   // Flexible sizing that adapts to different aspect ratios
-                  // Works for full body (taller), half body (medium), and thighs (shorter)
+                  // Works for: 13.jpeg (full body - optimized), 3.jpeg (till thigh), 5.jpeg (half body)
                 }}
               />
             </div>

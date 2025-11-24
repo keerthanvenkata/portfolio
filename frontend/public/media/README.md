@@ -15,9 +15,9 @@ media/
 │   ├── {post-id}/     # Individual post folders
 │   └── featured/      # Featured images
 ├── portrait/          # Hero section portrait images
-│   ├── 3.jpeg         # Full body portrait
-│   ├── 5.jpeg         # Half body portrait
-│   └── 13.jpeg        # Portrait to thighs
+│   ├── 13.jpeg        # Full body portrait (DEFAULT)
+│   ├── 3.jpeg         # Portrait till thigh
+│   └── 5.jpeg         # Half body portrait
 ├── screenshots/       # General screenshots
 ├── diagrams/          # Architecture diagrams, flowcharts
 └── videos/           # Demo videos, presentations
@@ -40,11 +40,12 @@ media/
 - Supported formats: JPG, PNG, WebP
 - Recommended: Transparent background (PNG) or images with transparent backgrounds
 - Current images:
-  - `3.jpeg` - Full body portrait
-  - `5.jpeg` - Half body portrait  
-  - `13.jpeg` - Portrait to thighs
+  - `13.jpeg` - Full body portrait (DEFAULT - layout optimized for this)
+  - `3.jpeg` - Portrait till thigh
+  - `5.jpeg` - Half body portrait
 - To change the displayed portrait, update `PORTRAIT_IMAGE` constant in `frontend/src/App.tsx` (HomePage component)
 - Images are hidden on mobile devices, visible on desktop (lg breakpoint and above)
+- Layout is flexible and adapts to different aspect ratios automatically
 
 ### General Media
 - Screenshots: `screenshots/` for general portfolio screenshots
