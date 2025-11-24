@@ -425,7 +425,7 @@ function HomePage() {
           </motion.div>
 
           {/* Portrait Image Column - Right on desktop, hidden on mobile */}
-          {/* Layout optimized for 13.jpeg (full body) but flexible for all three images */}
+          {/* Layout optimized for 13.png (full body) but flexible for all three images */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
