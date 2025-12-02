@@ -89,6 +89,7 @@
       "Real-time data processing",
       "Backtesting framework"
     ],
+    "images": [],
     "featured": false,
     "kind": "experimental"
   },
@@ -105,6 +106,7 @@
       "Quick transformations",
       "Batch processing"
     ],
+    "images": [],
     "featured": false,
     "kind": "experimental"
   }
