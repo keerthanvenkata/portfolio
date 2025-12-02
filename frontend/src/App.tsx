@@ -821,6 +821,11 @@ function ResumePage() {
     ? formatDate(resumeData.metadata.last_updated) 
     : 'Unknown'
   
+  // Add cache-busting query parameter based on version to ensure latest version is loaded
+  // This bypasses Vercel's CDN cache when the resume version changes
+  const cacheBuster = resumeData?.current_version || resumeData?.metadata?.last_updated?.replace(/-/g, '') || 'latest'
+  const resumePath = `/resume/resume-latest.pdf?v=${cacheBuster}`
+  
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       <div className="glass rounded-xl p-6 neon-border">
@@ -828,7 +833,7 @@ function ResumePage() {
           <h2 className="text-3xl font-bold text-white">Resume</h2>
           <div className="flex flex-col sm:flex-row gap-3">
             <a 
-              href="/resume/resume-latest.pdf" 
+              href={resumePath} 
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
@@ -837,7 +842,7 @@ function ResumePage() {
               View PDF
             </a>
             <a 
-              href="/resume/resume-latest.pdf" 
+              href={resumePath} 
               download 
               className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
             >
@@ -850,7 +855,7 @@ function ResumePage() {
         {/* PDF Viewer Section */}
         <div className="mb-4">
           <PDFViewer 
-            src="/resume/resume-latest.pdf"
+            src={resumePath}
             title="Resume Preview"
             height="800px"
           />
@@ -860,12 +865,12 @@ function ResumePage() {
           <p>Last updated: {lastUpdated}</p>
           <div className="flex flex-wrap gap-4">
             <p>Having trouble viewing? 
-              <a href="/resume/resume-latest.pdf" target="_blank" rel="noopener noreferrer" className="text-electric-pink hover:text-magenta ml-1 underline">
+              <a href={resumePath} target="_blank" rel="noopener noreferrer" className="text-electric-pink hover:text-magenta ml-1 underline">
                 Open in new tab
               </a>
             </p>
             <p>•</p>
-            <a href="/resume/resume-latest.pdf" download className="text-electric-pink hover:text-magenta underline">
+            <a href={resumePath} download className="text-electric-pink hover:text-magenta underline">
               Download directly
             </a>
           </div>
