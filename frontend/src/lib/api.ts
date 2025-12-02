@@ -100,4 +100,26 @@ export async function fetchSocial() {
   return data
 }
 
+export type ResumeVersion = {
+  version: string
+  filename: string
+  date: string
+  description: string
+  is_latest: boolean
+}
+
+export type ResumeData = {
+  current_version: string
+  versions: ResumeVersion[]
+  metadata: {
+    last_updated: string
+    total_versions: number
+  }
+}
+
+export async function fetchResume() {
+  const { data } = await api.get<ResumeData>('/resume/resume.json')
+  return data
+}
+
 

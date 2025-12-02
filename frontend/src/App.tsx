@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, BookOpen, Music, Coffee, Lightbulb, Heart, Home } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Link, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
-import { fetchFeaturedPosts, fetchPosts, fetchProjects, type BlogPost, type Project } from './lib/api'
+import { fetchFeaturedPosts, fetchPosts, fetchProjects, fetchResume, type BlogPost, type Project, type ResumeData } from './lib/api'
 import { useEffect, Suspense, lazy } from 'react'
 import ProjectModal from './components/ProjectModal'
 import BlogModal from './components/BlogModal'
@@ -800,6 +800,27 @@ function BlogPage() {
 }
 
 function ResumePage() {
+  const [resumeData, setResumeData] = useState<ResumeData | null>(null)
+  
+  useEffect(() => {
+    fetchResume()
+      .then(setResumeData)
+      .catch(() => setResumeData(null))
+  }, [])
+  
+  const formatDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString)
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    } catch {
+      return dateString
+    }
+  }
+  
+  const lastUpdated = resumeData?.metadata?.last_updated 
+    ? formatDate(resumeData.metadata.last_updated) 
+    : 'Unknown'
+  
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       <div className="glass rounded-xl p-6 neon-border">
@@ -836,7 +857,7 @@ function ResumePage() {
         </div>
         
         <div className="text-sm text-gray-400 space-y-2">
-          <p>Last updated: January 28, 2025</p>
+          <p>Last updated: {lastUpdated}</p>
           <div className="flex flex-wrap gap-4">
             <p>Having trouble viewing? 
               <a href="/resume/resume-latest.pdf" target="_blank" rel="noopener noreferrer" className="text-electric-pink hover:text-magenta ml-1 underline">
