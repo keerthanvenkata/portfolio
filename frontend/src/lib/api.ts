@@ -2,6 +2,8 @@ import axios from 'axios'
 
 // In Vercel/static deploy, data is served as static files under /api
 const API_BASE = (import.meta as any).env?.VITE_API_BASE ?? ''
+const BUILD_ID = (import.meta as any).env?.VITE_BUILD_ID || ''
+const v = BUILD_ID ? `?v=${BUILD_ID}` : ''
 
 export const api = axios.create({ baseURL: API_BASE })
 
@@ -34,12 +36,12 @@ export type Project = {
 }
 
 export async function fetchFeaturedPosts() {
-  const { data } = await api.get<BlogPost[]>('/api/posts.json')
+  const { data } = await api.get<BlogPost[]>(`/api/posts.json${v}`)
   return data.filter(p => p.featured)
 }
 
 export async function fetchPosts(category?: string) {
-  const { data } = await api.get<BlogPost[]>('/api/posts.json')
+  const { data } = await api.get<BlogPost[]>(`/api/posts.json${v}`)
   if (category && category.toLowerCase() !== 'all') {
     return data.filter(p => p.category === category)
   }
@@ -47,12 +49,12 @@ export async function fetchPosts(category?: string) {
 }
 
 export async function fetchPost(id: string) {
-  const { data } = await api.get<BlogPost>(`/api/posts/${id}.json`)
+  const { data } = await api.get<BlogPost>(`/api/posts/${id}.json${v}`)
   return data
 }
 
 export async function fetchProjects(kind?: 'project' | 'experimental' | 'all', featured?: boolean) {
-  const { data } = await api.get<Project[]>('/api/projects.json')
+  const { data } = await api.get<Project[]>(`/api/projects.json${v}`)
   let out = data
   if (kind && kind !== 'all') out = out.filter(p => p.kind === kind)
   if (typeof featured === 'boolean') out = out.filter(p => Boolean(p.featured) === featured)
@@ -60,7 +62,7 @@ export async function fetchProjects(kind?: 'project' | 'experimental' | 'all', f
 }
 
 export async function fetchProject(id: string) {
-  const { data } = await api.get<Project>(`/api/projects/${id}.json`)
+  const { data } = await api.get<Project>(`/api/projects/${id}.json${v}`)
   return data
 }
 
@@ -76,7 +78,7 @@ export type TimelineItem = {
 }
 
 export async function fetchTimeline() {
-  const { data } = await api.get<TimelineItem[]>('/api/timeline.json')
+  const { data } = await api.get<TimelineItem[]>(`/api/timeline.json${v}`)
   // Sort by start date desc, ongoing first
   const toDate = (s?: string | null) => (s ? new Date(s).getTime() : 0)
   return data.sort((a, b) => {
@@ -96,7 +98,7 @@ export type SocialConfig = {
 }
 
 export async function fetchSocial() {
-  const { data } = await api.get<SocialConfig>('/api/social.json')
+  const { data } = await api.get<SocialConfig>(`/api/social.json${v}`)
   return data
 }
 
