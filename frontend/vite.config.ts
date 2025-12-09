@@ -16,7 +16,10 @@ export default defineConfig({
       }
     }
   },
-  base: '/'
+  base: '/',
+  define: {
+    'import.meta.env.VITE_BUILD_ID': JSON.stringify(process.env.VERCEL_GIT_COMMIT_SHA || String(Date.now()))
+  }
 })
 
 
