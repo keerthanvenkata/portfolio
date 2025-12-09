@@ -1,41 +1,41 @@
 [
   {
-    "id": "edu-btech",
-    "type": "education",
-    "title": "B.Tech, Aerospace Engineering",
-    "organization": "IIT (Example)",
-    "location": "India",
-    "start": "2018-07-01",
-    "end": "2022-05-31",
-    "highlights": [
-      "Specialized in control systems and optimization",
-      "Captain, robotics club; national-level competitions"
-    ]
-  },
-  {
     "id": "exp-adaequare-sde-ai",
     "type": "experience",
     "title": "SDE Applied AI",
     "organization": "Adaequare",
-    "location": "Hyderabad, India",
-    "start": "2023-01-01",
-    "end": "2024-12-31",
+    "location": "Hyderabad, IN",
+    "start": "2025-03-01",
+    "end": null,
     "highlights": [
-      "Built OCR + NLP/LLM pipeline processing 10,000+ PDFs/year with 95%+ accuracy",
-      "Designed ETL automation reducing analyst hours by 85%"
+      "Built backend and app for OCR + NLP/LLM pipeline; automated 10,000+ appraisal PDFs/year, saving ~300 manual hours/month.",
+      "Designed two-layer matching/ETL (Heuristics + LLM) standardizing 50+ tax-roll datasets/year; scalable to 3,000+ counties and cut review time by 85%."
     ]
   },
   {
-    "id": "exp-qfi-cto",
+    "id": "exp-qfi-parttime",
     "type": "experience",
-    "title": "Co‑Founder & Part‑Time CTO",
+    "title": "Founding Engineer / Consultant",
     "organization": "QFI Research Capital",
-    "location": "Remote / India",
-    "start": "2024-06-01",
-    "end": null,
+    "location": "Hyderabad, IN",
+    "start": "2025-04-01",
+    "end": "2025-08-31",
     "highlights": [
-      "Architected real-time trading platform with Kafka event streaming",
-      "Risk engines, portfolio analytics, and live production deployment"
+      "Led development and planning for algorithm‑driven trade execution with real‑time analytics, risk management, and signal generation.",
+      "Built core backend with PostgreSQL, InfluxDB, Docker, Kafka, Redis, Kite Connect; integrated risk engines enabling real‑time execution and aggregation."
+    ]
+  },
+  {
+    "id": "edu-btech",
+    "type": "education",
+    "title": "B.Tech, Aerospace Engineering",
+    "organization": "Indian Institute of Technology, Madras (IITM)",
+    "location": "Chennai, IN",
+    "start": "2021-07-01",
+    "end": "2025-05-31",
+    "highlights": [
+      "Specialized in autonomous systems, guidance & navigation, and applied control theory.",
+      "Worked on UAV path planning and computer vision as part of academic research."
     ]
   }
 ]
