@@ -6,11 +6,13 @@
   "contribution": "Designed and delivered the hybrid AI‑assisted transformation platform end‑to‑end.",
   "contributionBullets": [
     "Two‑layer matching: Heuristics (token fuzzy, Jaccard, datatype scoring) + Gemini semantic matching on sampled values.",
-    "Refactor to target‑based architecture (8 phases, 45+ subtasks): multi‑source transformations and dependency tracking.",
+    "Experimented with different matching algorithms and models to improve accuracy and recall.",
+    "Built a feedback loop where analyst corrections improve future processing.",
+    "Exposed FastAPI routers to orchestrate OCR/LLM flows as well as ETL pipeline operations.",
+    "Target‑based architecture with multi‑source transformations and dependency tracking.",
     "Operator‑driven ETL engine: copy, trim, concat, static, arithmetic, and custom functions with full auditability.",
-    "Preview mode (7–50 rows) for rapid QA; seconds vs. minutes for full ETL runs.",
+    "Preview mode for rapid QA; seconds vs. minutes for full ETL runs.",
     "React frontend for job management: uploads/merging, status tracking, target‑based review; localStorage + DB sync.",
-    "Static derivation automation (FIPS/state) with confidence=1.0 and year provenance.",
     "Similarity score pipeline (0–1) integrated DB → API → UI as an analyst decision signal."
   ],
   "tech": [
@@ -19,7 +21,7 @@
     "PostgreSQL (Azure)",
     "SQLAlchemy",
     "Pandas",
-    "Google Gemini 1.5 Pro",
+    "Google Gemini 2.5",
     "React 18",
     "TypeScript",
     "Vite",
@@ -37,11 +39,10 @@
     "projects/tax-roll-pipeline/ss9.png"
   ],
   "highlights": [
-    "60% reduction in analyst review time; higher throughput for operations.",
-    "70%+ auto‑acceptance without manual intervention; 95%+ with AI escalation.",
-    "8–12% improvement in Recall@1 vs. baseline matching.",
-    "30% LLM escalation rate via hybrid gating and caching for cost control.",
-    "3,000+ counties supported with historical lookback and county‑aware normalization.",
+    "Significant reduction in analyst review time; higher throughput for operations.",
+    "70%+ auto‑acceptance using AI-assisted matching without manual intervention.",
+    "100% accuracy, 78% recall and an F1 score of 88%.",
+    "Scalable architecture for 3,000+ counties.",
     "Production‑ready POC: OpenAPI docs, Docker‑ready, PII masking and sample limiting."
   ],
   "featured": false,
