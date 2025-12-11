@@ -1,5 +1,5 @@
 {
-  "current_version": "v2",
+  "current_version": "v3.1",
   "versions": [
     {
       "version": "v1",
@@ -13,11 +13,18 @@
       "filename": "resume-v2.pdf",
       "date": "2025-01-29",
       "description": "Updated resume version",
+      "is_latest": false
+    },
+    {
+      "version": "v3.1",
+      "filename": "resume-v3.1.pdf",
+      "date": "2025-12-11",
+      "description": "Minor corrections; version 3.1",
       "is_latest": true
     }
   ],
   "metadata": {
-    "last_updated": "2025-01-29",
-    "total_versions": 2
+    "last_updated": "2025-12-11",
+    "total_versions": 3
   }
 }
