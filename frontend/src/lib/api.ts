@@ -23,6 +23,7 @@ export type Project = {
   role?: string
   description: string
   contribution?: string
+  contributionBullets?: string[]
   tech: string[]
   link?: string
   embedSite?: string
