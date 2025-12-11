@@ -33,6 +33,8 @@ export type Project = {
   highlights: string[]
   featured?: boolean
   kind: 'project' | 'experimental'
+  relatedProjects?: string[]
+  relatedPosts?: string[]
 }
 
 export async function fetchFeaturedPosts() {
