@@ -242,14 +242,25 @@ export default function ProjectDetail() {
       </div>
 
       {/* Contribution */}
-      {project.contribution && (
+      {(project.contributionBullets && project.contributionBullets.length > 0) || project.contribution ? (
         <div className="glass rounded-xl p-6 neon-border mb-8">
           <h2 className="text-2xl font-heading font-bold text-white mb-4">My Contribution</h2>
-          <div className="prose prose-invert max-w-none">
-            <p className="text-gray-300 leading-relaxed">{project.contribution}</p>
+          <div className="max-w-none">
+            {project.contributionBullets && project.contributionBullets.length > 0 ? (
+              <ul className="space-y-3">
+                {project.contributionBullets.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-gray-300">
+                    <span className="text-electric-pink mt-1">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-300 leading-relaxed">{project.contribution}</p>
+            )}
           </div>
         </div>
-      )}
+      ) : null}
 
       {/* Related Projects */}
       {related.length > 0 && (
