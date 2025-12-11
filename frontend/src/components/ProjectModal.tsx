@@ -104,12 +104,38 @@ export default function ProjectModal({ isOpen, onClose, projectId, onViewDetails
             </div>
           )}
 
-          {/* Images Preview */}
-          {project.images.length > 0 && (
+          {/* Preview: Video thumbnail (if available) + Images */}
+          {(project.videoPoster || project.images.length > 0) && (
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Preview</h3>
               <div className="grid grid-cols-2 gap-3">
-                {project.images.slice(0, 2).map((image, index) => (
+                {/* Video thumbnail tile */}
+                {project.video && (
+                  <button
+                    onClick={handleViewDetails}
+                    className="relative bg-gray-900 rounded-lg overflow-hidden group border border-violet/30 hover:border-electric-pink transition-all duration-300"
+                    aria-label="Open video"
+                    title="Open video"
+                  >
+                    <img
+                      src={`/media/${project.videoPoster || project.images[0] || ''}`}
+                      alt={`${project.title} video preview`}
+                      className="w-full h-32 object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                    />
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-black/60 group-hover:bg-black/70 flex items-center justify-center ring-1 ring-white/30">
+                        {/* Simple play icon */}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                          <path d="M8 5v14l11-7z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </button>
+                )}
+
+                {/* Image tiles */}
+                {project.images.slice(0, project.video ? 1 : 2).map((image, index) => (
                   <div key={index} className="bg-gray-700 rounded-lg overflow-hidden">
                     <img 
                       src={`/media/${image}`} 
@@ -118,9 +144,11 @@ export default function ProjectModal({ isOpen, onClose, projectId, onViewDetails
                     />
                   </div>
                 ))}
-                {project.images.length > 2 && (
+
+                {/* More count */}
+                {project.images.length > (project.video ? 1 : 2) && (
                   <div className="bg-gray-700 rounded-lg flex items-center justify-center text-gray-400 text-sm">
-                    +{project.images.length - 2} more
+                    +{project.images.length - (project.video ? 1 : 2)} more
                   </div>
                 )}
               </div>
