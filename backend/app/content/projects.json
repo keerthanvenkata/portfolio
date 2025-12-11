@@ -107,6 +107,7 @@
       "Scalable architecture for 3,000+ counties.",
       "Production‑ready POC: OpenAPI docs, Docker‑ready, PII masking and sample limiting."
     ],
+    "relatedProjects": ["property-appraisal"],
     "featured": false,
     "kind": "project"
   }
