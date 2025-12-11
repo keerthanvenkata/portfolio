@@ -33,6 +33,12 @@
     "Intermediate JSONL persistence for traceability and debugging; centralized logs and config.",
     "Business impact: hours-to-minutes turnaround, reduced manual entry, improved accuracy, production-ready."
   ],
+  "relatedProjects": [
+    "etl-pipeline"
+  ],
+  "relatedPosts": [
+    "fastapi-practices"
+  ],
   "featured": true,
   "kind": "project"
 }
