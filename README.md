@@ -60,6 +60,13 @@ Each project entry in `backend/app/content/projects.json` may include:
   - If `video` is an external embed (Loom/YouTube iframe URL), it renders an iframe.
   - If `video` is self‑hosted (path under `/media`), it uses the built-in player.
 
+### Writing highlights and contributions
+- Keep both “highlights” and “contributionBullets” concise and non‑overlapping:
+  - Target 5–8 bullets each.
+  - Highlights: outcomes, capabilities, and at least one business impact metric.
+  - Contributions: what you specifically built/led (architecture, services, data, APIs, tooling).
+  - Avoid repeating the same point in both sections; keep highlights user‑facing and contributions engineer‑facing.
+
 ### External video (Loom/YouTube)
 - The detail page iframe shows the platform’s preview image.
 - The modal still uses `videoPoster` (or falls back to the first screenshot) because the modal does not load the iframe.
