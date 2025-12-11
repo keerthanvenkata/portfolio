@@ -137,21 +137,6 @@ export default function ProjectDetail() {
         </div>
       </div>
 
-      {/* Tech Stack */}
-      <div className="glass rounded-xl p-6 neon-border mb-8">
-        <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
-          <Code size={24} />
-          Tech Stack
-        </h2>
-        <div className="flex flex-wrap gap-2">
-          {project.tech.map(tech => (
-            <span key={tech} className="bg-violet/20 text-violet px-4 py-2 rounded-lg text-sm border border-violet/30">
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
-
       {/* Highlights */}
       {project.highlights && project.highlights.length > 0 && (
         <div className="glass rounded-xl p-6 neon-border mb-8">
@@ -180,23 +165,11 @@ export default function ProjectDetail() {
         </div>
       )}
 
-      {/* Images/Videos Section */}
-      {(project.images.length > 0 || project.video) && (
+      {/* Media Sections: Video first, then Images */}
+      {(project.video || project.images.length > 0) && (
         <div className="glass rounded-xl p-6 neon-border mb-8">
           <h2 className="text-2xl font-heading font-bold text-white mb-4">Media</h2>
           
-          {/* Images */}
-          {project.images.length > 0 && (
-            <div className="mb-6" id="images">
-              <h3 className="text-lg font-semibold text-white mb-4">Images</h3>
-              <ImageCarousel 
-                images={project.images}
-                altPrefix={`${project.title} screenshot`}
-                className="w-full"
-              />
-            </div>
-          )}
-
           {/* Video */}
           {project.video && (
             <div id="video">
@@ -229,8 +202,35 @@ export default function ProjectDetail() {
               )}
             </div>
           )}
+
+          {/* Images */}
+          {project.images.length > 0 && (
+            <div className="mt-6" id="images">
+              <h3 className="text-lg font-semibold text-white mb-4">Images</h3>
+              <ImageCarousel 
+                images={project.images}
+                altPrefix={`${project.title} screenshot`}
+                className="w-full"
+              />
+            </div>
+          )}
         </div>
       )}
+
+      {/* Tech Stack */}
+      <div className="glass rounded-xl p-6 neon-border mb-8">
+        <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
+          <Code size={24} />
+          Tech Stack
+        </h2>
+        <div className="flex flex-wrap gap-2">
+          {project.tech.map(tech => (
+            <span key={tech} className="bg-violet/20 text-violet px-4 py-2 rounded-lg text-sm border border-violet/30">
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
 
       {/* Related Projects */}
       {related.length > 0 && (
