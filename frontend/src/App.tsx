@@ -591,7 +591,7 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
   const handleViewDetails = () => {
     if (selectedProject) {
       const routePrefix = kind === 'project' ? '/projects' : '/experimental'
-      navigate(`${routePrefix}/${selectedProject}`)
+      navigate(`${routePrefix}/${selectedProject}#video`)
     }
   }
   return (
