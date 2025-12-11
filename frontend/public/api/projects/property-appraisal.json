@@ -2,23 +2,36 @@
   "id": "property-appraisal",
   "title": "Automated Property Appraisal Extraction",
   "role": "SDE Applied AI at Adaequare",
-  "description": "OCR + NLP/LLM pipeline extracting structured data from 10,000+ PDFs per year.",
-  "contribution": "Built end-to-end extraction pipeline from scratch...",
+  "description": "Automated PDF report extraction that converts unstructured appraisal PDFs into structured JSON using a dual OCR + LLM pipeline.",
+  "contribution": "Architected and built a modular dual-pipeline (OCR + LLM) system with FastAPI and Streamlit, covering PDF splitting, image preprocessing, layout parsing, OCR, chunked LLM extraction, merging/deduplication, normalization, and API orchestration with centralized logging.",
   "tech": [
     "FastAPI",
-    "Tesseract",
+    "Python",
+    "Poppler",
+    "OpenCV",
     "Detectron2",
-    "NLTK",
-    "Gemini",
-    "LangChain",
+    "LayoutParser",
+    "Tesseract",
+    "GPT-4",
     "Streamlit",
+    "JSONL",
     "PostgreSQL"
   ],
   "status": "Production",
-  "images": [],
+  "images": [
+    "projects/property-appraisal/arch.jpg",
+    "projects/property-appraisal/sample.jpg",
+    "projects/property-appraisal/ss.jpg"
+  ],
+  "video": "https://www.loom.com/embed/0c90f480866644fc9677b4d7feaeb4af",
+  "videoPoster": "projects/property-appraisal/videoframe.png",
   "highlights": [
-    "Processes 10,000+ PDFs annually with 95%+ accuracy",
-    "Saves 300 manual hours per month"
+    "Dual-pipeline architecture: independent OCR and LLM components for modularity.",
+    "Automated PDF processing: splitting, preprocessing, layout parsing, OCR text extraction.",
+    "Intelligent LLM extraction: chunking, merging, deduplication, normalization for structured JSON.",
+    "FastAPI REST endpoints orchestrating OCR and LLM workflows; Streamlit dashboard for review/export.",
+    "Intermediate JSONL persistence for traceability and debugging; centralized logs and config.",
+    "Business impact: hours-to-minutes turnaround, reduced manual entry, improved accuracy, production-ready."
   ],
   "featured": true,
   "kind": "project"
