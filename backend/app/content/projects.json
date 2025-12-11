@@ -23,6 +23,8 @@
       "Multi‑asset support across equities and derivatives via unified data plane.",
       "Foundations for AI signal generation and future portfolio management extensions."
     ],
+    "relatedProjects": ["trading-bot"],
+    "relatedPosts": ["startup-journey"],
     "featured": true,
     "kind": "project"
   },
@@ -49,6 +51,8 @@
       "Intermediate JSONL persistence for traceability and debugging; centralized logs and config.",
       "Business impact: hours-to-minutes turnaround, reduced manual entry, improved accuracy, production-ready."
     ],
+    "relatedProjects": ["etl-pipeline"],
+    "relatedPosts": ["fastapi-practices"],
     "featured": true,
     "kind": "project"
   },
