@@ -1,3 +1,4 @@
+import type React from 'react'
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -6,9 +7,11 @@ interface ImageCarouselProps {
   images: string[]
   altPrefix?: string
   className?: string
+  renderOverlay?: (index: number) => React.ReactNode
+  onMainClick?: (index: number) => void
 }
 
-export default function ImageCarousel({ images, altPrefix = 'Image', className = '' }: ImageCarouselProps) {
+export default function ImageCarousel({ images, altPrefix = 'Image', className = '', renderOverlay, onMainClick }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
 
@@ -43,10 +46,23 @@ export default function ImageCarousel({ images, altPrefix = 'Image', className =
             src={`/media/${images[currentIndex]}`}
             alt={`${altPrefix} ${currentIndex + 1}`}
             className="w-full h-64 md:h-80 object-cover cursor-pointer"
-            onClick={openFullscreen}
+            onClick={() => {
+              if (onMainClick) {
+                onMainClick(currentIndex)
+              } else {
+                openFullscreen()
+              }
+            }}
             loading="lazy"
             decoding="async"
           />
+
+          {/* Custom overlay renderer */}
+          {renderOverlay && (
+            <div className="pointer-events-none absolute inset-0">
+              {renderOverlay(currentIndex)}
+            </div>
+          )}
           
           {/* Navigation Arrows */}
           {images.length > 1 && (
