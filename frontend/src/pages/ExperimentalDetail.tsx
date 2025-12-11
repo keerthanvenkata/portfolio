@@ -110,20 +110,51 @@ export default function ExperimentalDetail() {
         </div>
       </div>
 
-      {/* Tech Stack */}
-      <div className="glass rounded-xl p-6 neon-border mb-8">
-        <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
-          <Code size={24} />
-          Technologies Used
-        </h2>
-        <div className="flex flex-wrap gap-2">
-          {project.tech.map(tech => (
-            <span key={tech} className="bg-violet/20 text-violet px-4 py-2 rounded-lg text-sm border border-violet/30">
-              {tech}
-            </span>
-          ))}
+      {/* Media Sections: Video first, then Images */}
+      {(project.video || (project.images && project.images.length > 0)) && (
+        <div className="glass rounded-xl p-6 neon-border mb-8">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4">Media</h2>
+          
+          {/* Video */}
+          {project.video && (
+            <div id="video">
+              <h3 className="text-lg font-semibold text-white mb-4">Videos</h3>
+              {/* Loom or local */}
+              {/^https?:\/\/.+loom\.com\/.+/.test(project.video) ? (
+                <div className="relative" style={{ paddingBottom: '56.25%', height: 0 }}>
+                  <iframe
+                    src={`${project.video}${project.video.includes('#') ? '' : '#t=0'}`}
+                    frameBorder="0"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    allowFullScreen
+                    title={`${project.title} Demo`}
+                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                  />
+                </div>
+              ) : (
+                <VideoPlayer 
+                  src={project.video}
+                  poster={project.videoPoster || undefined}
+                  title={`${project.title} Demo`}
+                  className="w-full"
+                />
+              )}
+            </div>
+          )}
+
+          {/* Images */}
+          {project.images && project.images.length > 0 && (
+            <div className="mt-6" id="images">
+              <h3 className="text-lg font-semibold text-white mb-4">Images</h3>
+              <ImageCarousel 
+                images={project.images}
+                altPrefix={`${project.title} screenshot`}
+                className="w-full"
+              />
+            </div>
+          )}
         </div>
-      </div>
+      )}
 
       {/* Highlights */}
       {project.highlights && project.highlights.length > 0 && (
@@ -143,6 +174,21 @@ export default function ExperimentalDetail() {
         </div>
       )}
 
+      {/* Tech Stack */}
+      <div className="glass rounded-xl p-6 neon-border mb-8">
+        <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
+          <Code size={24} />
+          Technologies Used
+        </h2>
+        <div className="flex flex-wrap gap-2">
+          {project.tech.map(tech => (
+            <span key={tech} className="bg-violet/20 text-violet px-4 py-2 rounded-lg text-sm border border-violet/30">
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Details */}
       {(project.contribution || (project as any).details) && (
         <div className="glass rounded-xl p-6 neon-border mb-8">
@@ -152,39 +198,6 @@ export default function ExperimentalDetail() {
           </div>
         </div>
       )}
-
-      {/* Images/Videos Section */}
-      {((project.images && project.images.length > 0) || project.video) && (
-        <div className="glass rounded-xl p-6 neon-border mb-8">
-          <h2 className="text-2xl font-heading font-bold text-white mb-4">Media</h2>
-          
-          {/* Images */}
-          {project.images && project.images.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Screenshots</h3>
-              <ImageCarousel 
-                images={project.images}
-                altPrefix={`${project.title} screenshot`}
-                className="w-full"
-              />
-            </div>
-          )}
-
-          {/* Video */}
-          {project.video && (
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Demo Video</h3>
-              <VideoPlayer 
-                src={project.video}
-                poster={project.videoPoster || undefined}
-                title={`${project.title} Demo`}
-                className="w-full"
-              />
-            </div>
-          )}
-        </div>
-      )}
-
       {/* Related Projects */}
       <div className="glass rounded-xl p-6 neon-border">
         <h2 className="text-2xl font-heading font-bold gradient-text-purple mb-4">More Experimental Projects</h2>
