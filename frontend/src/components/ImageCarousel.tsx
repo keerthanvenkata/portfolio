@@ -1,5 +1,5 @@
 import type React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -36,6 +36,18 @@ export default function ImageCarousel({ images, altPrefix = 'Image', className =
   const closeFullscreen = () => {
     setIsFullscreen(false)
   }
+
+  // Close fullscreen on Escape key
+  useEffect(() => {
+    if (!isFullscreen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsFullscreen(false)
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [isFullscreen])
 
   return (
     <>
