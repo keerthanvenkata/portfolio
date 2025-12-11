@@ -629,7 +629,14 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
           ))
         ) : (
           items.map(pr => (
-            <div key={pr.id} className="glass rounded-xl p-6 neon-border hover:shadow-[0_0_30px_rgba(255,0,128,0.4)] transition-all">
+            <div 
+              key={pr.id} 
+              className="glass rounded-xl p-6 neon-border hover:shadow-[0_0_30px_rgba(255,0,128,0.4)] transition-all cursor-pointer"
+              onClick={() => handleProjectClick(pr.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleProjectClick(pr.id) }}
+            >
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-2xl font-heading font-bold text-white">{pr.title}</h3>
@@ -643,7 +650,7 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
               </div>
               <div className="flex gap-3">
                 <button 
-                  onClick={() => handleProjectClick(pr.id)}
+                  onClick={(e) => { e.stopPropagation(); handleProjectClick(pr.id) }}
                   className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
                 >
                   Quick Preview
@@ -651,6 +658,7 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
                 <Link 
                   to={kind === 'project' ? `/projects/${pr.id}` : `/experimental/${pr.id}`}
                   onMouseEnter={() => (kind === 'experimental' ? prefetchExperimentalDetail() : prefetchProjectDetail())}
+                  onClick={(e) => e.stopPropagation()}
                   className="inline-flex items-center gap-2 text-electric-pink hover:text-magenta border border-electric-pink hover:border-magenta px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,128,0.4)] transform hover:scale-105"
                 >
                   View Details
@@ -660,6 +668,7 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
                     href={pr.link} 
                     target="_blank" 
                     rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
                     className="inline-flex items-center gap-2 text-gray-400 hover:text-white border border-gray-600 hover:border-gray-500 px-4 py-2 rounded-lg transition-colors"
                   >
                     Visit <ExternalLink size={16} />
