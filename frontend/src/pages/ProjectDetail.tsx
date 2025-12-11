@@ -137,33 +137,7 @@ export default function ProjectDetail() {
         </div>
       </div>
 
-      {/* Highlights */}
-      {project.highlights && project.highlights.length > 0 && (
-        <div className="glass rounded-xl p-6 neon-border mb-8">
-          <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
-            <Star size={24} />
-            Key Highlights
-          </h2>
-          <ul className="space-y-3">
-            {project.highlights.map((highlight, index) => (
-              <li key={index} className="flex items-start gap-3 text-gray-300">
-                <span className="text-electric-pink mt-1">•</span>
-                <span>{highlight}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
 
-      {/* Contribution */}
-      {project.contribution && (
-        <div className="glass rounded-xl p-6 neon-border mb-8">
-          <h2 className="text-2xl font-heading font-bold text-white mb-4">My Contribution</h2>
-          <div className="prose prose-invert max-w-none">
-            <p className="text-gray-300 leading-relaxed">{project.contribution}</p>
-          </div>
-        </div>
-      )}
 
       {/* Media Sections: Video first, then Images */}
       {(project.video || project.images.length > 0) && (
@@ -217,6 +191,24 @@ export default function ProjectDetail() {
         </div>
       )}
 
+      {/* Highlights */}
+      {project.highlights && project.highlights.length > 0 && (
+        <div className="glass rounded-xl p-6 neon-border mb-8">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
+            <Star size={24} />
+            Key Highlights
+          </h2>
+          <ul className="space-y-3">
+            {project.highlights.map((highlight, index) => (
+              <li key={index} className="flex items-start gap-3 text-gray-300">
+                <span className="text-electric-pink mt-1">•</span>
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {/* Tech Stack */}
       <div className="glass rounded-xl p-6 neon-border mb-8">
         <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
@@ -231,6 +223,16 @@ export default function ProjectDetail() {
           ))}
         </div>
       </div>
+
+      {/* Contribution */}
+      {project.contribution && (
+        <div className="glass rounded-xl p-6 neon-border mb-8">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4">My Contribution</h2>
+          <div className="prose prose-invert max-w-none">
+            <p className="text-gray-300 leading-relaxed">{project.contribution}</p>
+          </div>
+        </div>
+      )}
 
       {/* Related Projects */}
       {related.length > 0 && (
