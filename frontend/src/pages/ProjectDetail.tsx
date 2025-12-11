@@ -201,12 +201,32 @@ export default function ProjectDetail() {
           {project.video && (
             <div>
               <h3 className="text-lg font-semibold text-white mb-4">Demo Video</h3>
-              <VideoPlayer 
-                src={project.video}
-                poster={project.videoPoster || undefined}
-                title={`${project.title} Demo`}
-                className="w-full"
-              />
+              {/* If Loom embed URL, use iframe; otherwise treat as local media */}
+              {/^https?:\\/\\/.+loom\\.com\\/.+/.test(project.video) ? (
+                <div className="relative" style={{ paddingBottom: '56.25%', height: 0 }}>
+                  <iframe
+                    src={project.video}
+                    frameBorder="0"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    allowFullScreen
+                    title={`${project.title} Demo`}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%'
+                    }}
+                  />
+                </div>
+              ) : (
+                <VideoPlayer 
+                  src={project.video}
+                  poster={project.videoPoster || undefined}
+                  title={`${project.title} Demo`}
+                  className="w-full"
+                />
+              )}
             </div>
           )}
         </div>
