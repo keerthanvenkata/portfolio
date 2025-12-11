@@ -124,6 +124,19 @@ async function generateResume(contentDir, outDir) {
     // Ensure resume output directory exists
     await ensureDir(resumeDestDir)
 
+    // CLEAN: remove previously generated resume PDFs and metadata
+    try {
+      const existing = await fs.readdir(resumeDestDir)
+      await Promise.all(existing.map(async (name) => {
+        const lower = name.toLowerCase()
+        if (lower.endsWith('.pdf') || lower === 'resume.json') {
+          try {
+            await fs.unlink(path.join(resumeDestDir, name))
+          } catch {}
+        }
+      }))
+    } catch {}
+
     // Copy all PDF files from resume directory
     const files = await fs.readdir(resumeDir)
     for (const file of files) {
