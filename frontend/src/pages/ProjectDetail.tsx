@@ -187,8 +187,8 @@ export default function ProjectDetail() {
           
           {/* Images */}
           {project.images.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-white mb-4">Screenshots</h3>
+            <div className="mb-6" id="images">
+              <h3 className="text-lg font-semibold text-white mb-4">Images</h3>
               <ImageCarousel 
                 images={project.images}
                 altPrefix={`${project.title} screenshot`}
@@ -199,13 +199,13 @@ export default function ProjectDetail() {
 
           {/* Video */}
           {project.video && (
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Demo Video</h3>
+            <div id="video">
+              <h3 className="text-lg font-semibold text-white mb-4">Videos</h3>
               {/* If Loom embed URL, use iframe; otherwise treat as local media */}
               {/^https?:\/\/.+loom\.com\/.+/.test(project.video) ? (
                 <div className="relative" style={{ paddingBottom: '56.25%', height: 0 }}>
                   <iframe
-                    src={project.video}
+                    src={`${project.video}${project.video.includes('#') ? '' : '#t=0'}`}
                     frameBorder="0"
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                     allowFullScreen
