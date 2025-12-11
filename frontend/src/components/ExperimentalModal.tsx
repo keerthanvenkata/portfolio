@@ -109,26 +109,41 @@ export default function ExperimentalModal({ isOpen, onClose, projectId, onViewDe
             </div>
           )}
 
-          {/* Images Preview */}
-          {project.images.length > 0 && (
+          {/* Preview: single representative image (video poster preferred) */}
+          {(project.videoPoster || project.images.length > 0) && (
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Preview</h3>
-              <div className="grid grid-cols-2 gap-3">
-                {project.images.slice(0, 2).map((image, index) => (
-                  <div key={index} className="bg-gray-700 rounded-lg overflow-hidden">
-                    <img 
-                      src={`/media/${image}`} 
-                      alt={`${project.title} preview ${index + 1}`}
-                      className="w-full h-32 object-cover"
+              {(() => {
+                const representative = project.videoPoster || project.images[0]
+                const isVideo = Boolean(project.video)
+                if (!representative) return null
+                return (
+                  <button
+                    onClick={handleViewDetails}
+                    className="relative bg-gray-900 rounded-lg overflow-hidden group border border-violet/30 hover:border-electric-pink transition-all duration-300 w-full"
+                    aria-label="Open project details"
+                    title="Open project details"
+                  >
+                    <img
+                      src={`/media/${representative}`}
+                      alt={`${project.title} preview`}
+                      className="w-full h-64 object-cover opacity-95 group-hover:opacity-100 transition-opacity"
+                      loading="lazy"
+                      decoding="async"
                     />
-                  </div>
-                ))}
-                {project.images.length > 2 && (
-                  <div className="bg-gray-700 rounded-lg flex items-center justify-center text-gray-400 text-sm">
-                    +{project.images.length - 2} more
-                  </div>
-                )}
-              </div>
+                    {/* Play overlay if video exists */}
+                    {isVideo && (
+                      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-full bg-black/60 group-hover:bg-black/70 flex items-center justify-center ring-1 ring-white/30">
+                          <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                            <path d="M8 5v14l11-7z"></path>
+                          </svg>
+                        </div>
+                      </div>
+                    )}
+                  </button>
+                )
+              })()}
             </div>
           )}
 
