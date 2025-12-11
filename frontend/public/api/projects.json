@@ -4,7 +4,16 @@
     "title": "QFI Research Capital",
     "role": "Founding Engineer & Consultant",
     "description": "Algorithmic trading platform with mid‑frequency execution, real‑time analytics, risk management, and modular architecture. Built institutional‑grade data and execution pipelines with foundations for portfolio management and future AI‑driven signal generation.",
-    "contribution": "Architected and led the initial build for four months (co‑founder → consultant). Implemented the core backend, real‑time streaming ingestion, Kafka pipelines, and aggregation layers feeding InfluxDB/PostgreSQL. Integrated risk engines and portfolio analytics, and set up service orchestration and observability to support production operations.",
+    "contribution": "Architected and led the initial build for four months (co‑founder → consultant).",
+    "contributionBullets": [
+      "Designed the event‑driven architecture and core trading domain model.",
+      "Implemented real‑time WebSocket ingestion and Kafka producers for market data.",
+      "Built Kafka consumers for ETL aggregation (multi‑interval OHLCV) into InfluxDB.",
+      "Provisioned PostgreSQL for orders/positions/config; Redis for quotes/sessions.",
+      "Integrated Kite Connect OAuth, token lifecycle, and throttled order execution.",
+      "Exposed FastAPI REST endpoints for orders, positions, health, and data control.",
+      "Set up observability (structured logs/metrics) and Dockerized local/staging envs."
+    ],
     "tech": [
       "Python",
       "C++",
@@ -25,12 +34,12 @@
     "videoPoster": null,
     "highlights": [
       "Mid‑frequency algorithmic trading with real‑time analytics and execution.",
-      "Kafka‑based streaming architecture: sub‑second ingestion, processing, and aggregation.",
-      "Risk engines and portfolio analytics; institutional‑grade automation and controls.",
-      "Modular microservices on Docker with resilient pipelines and observability.",
-      "Backtesting and simulation groundwork for strategy validation and tuning.",
-      "Multi‑asset support across equities and derivatives via unified data plane.",
-      "Foundations for AI signal generation and future portfolio management extensions."
+      "Sub‑second Kafka streaming pipelines enabling timely signals and decisions.",
+      "Institutional‑grade automation with risk controls and portfolio analytics.",
+      "Improved reliability and latency through resilient services and observability.",
+      "Backtesting and simulation groundwork for confident strategy validation.",
+      "Multi‑asset capability (equities/derivatives) via a unified data plane.",
+      "Co‑founder leadership: tech vision, mentoring, and early engineering hiring."
     ],
     "relatedProjects": [
       "trading-bot"
@@ -46,7 +55,16 @@
     "title": "Automated Property Appraisal Extraction",
     "role": "SDE Applied AI at Adaequare",
     "description": "Automated PDF report extraction that converts unstructured appraisal PDFs into structured JSON using a dual OCR + LLM pipeline.",
-    "contribution": "Architected and built a modular dual-pipeline (OCR + LLM) system with FastAPI and Streamlit, covering PDF splitting, image preprocessing, layout parsing, OCR, chunked LLM extraction, merging/deduplication, normalization, and API orchestration with centralized logging.",
+    "contribution": "Architected and built a modular dual‑pipeline (OCR + LLM) system end‑to‑end.",
+    "contributionBullets": [
+      "Implemented PDF splitting (Poppler) and image preprocessing (OpenCV).",
+      "Integrated LayoutParser/Detectron2 for page layout and region extraction.",
+      "Built OCR pipeline (Tesseract) with cleaning and deduplication.",
+      "Persisted page‑level artifacts to JSONL for traceability and reprocessing.",
+      "Developed LLM extraction with chunking, prompt templates, and merge/normalize.",
+      "Exposed FastAPI routers to orchestrate OCR/LLM flows; added Streamlit dashboard.",
+      "Centralized logging/config; standardized outputs for downstream analytics."
+    ],
     "tech": [
       "FastAPI",
       "Python",
@@ -69,12 +87,12 @@
     "video": "https://www.loom.com/embed/0c90f480866644fc9677b4d7feaeb4af",
     "videoPoster": "projects/property-appraisal/videoframe.png",
     "highlights": [
-      "Dual-pipeline architecture: independent OCR and LLM components for modularity.",
-      "Automated PDF processing: splitting, preprocessing, layout parsing, OCR text extraction.",
-      "Intelligent LLM extraction: chunking, merging, deduplication, normalization for structured JSON.",
-      "FastAPI REST endpoints orchestrating OCR and LLM workflows; Streamlit dashboard for review/export.",
-      "Intermediate JSONL persistence for traceability and debugging; centralized logs and config.",
-      "Business impact: hours-to-minutes turnaround, reduced manual entry, improved accuracy, production-ready."
+      "Automates 10,000+ appraisal PDFs/year; ~300 hours/month saved; faster customer turnaround.",
+      "Dual‑pipeline architecture (OCR + LLM) with clean separation for maintainability.",
+      "High‑accuracy extraction via preprocessing, layout parsing, and normalization.",
+      "API orchestration (FastAPI) and dashboard (Streamlit) for review and export.",
+      "JSONL artifact trail for traceability, debugging, and repeatable reprocessing.",
+      "Production‑ready design with centralized logging/config and extensible NLP pipeline."
     ],
     "relatedProjects": [
       "etl-pipeline"
