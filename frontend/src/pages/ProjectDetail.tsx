@@ -202,7 +202,7 @@ export default function ProjectDetail() {
             <div>
               <h3 className="text-lg font-semibold text-white mb-4">Demo Video</h3>
               {/* If Loom embed URL, use iframe; otherwise treat as local media */}
-              {/^https?:\\/\\/.+loom\\.com\\/.+/.test(project.video) ? (
+              {/^https?:\/\/.+loom\.com\/.+/.test(project.video) ? (
                 <div className="relative" style={{ paddingBottom: '56.25%', height: 0 }}>
                   <iframe
                     src={project.video}
