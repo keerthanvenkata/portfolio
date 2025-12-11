@@ -1,0 +1,49 @@
+{
+  "id": "tax-roll-pipeline",
+  "title": "Automated Tax Roll Processing Pipeline",
+  "role": "SDE Applied AI at Adaequare",
+  "description": "Enterprise data transformation system automating tax roll data matching across 3,000+ counties. A hybrid AI‑assisted two‑layer matching approach maps diverse county formats to standardized schemas, reducing analyst workload while preserving high accuracy.",
+  "contribution": "Designed and delivered the hybrid AI‑assisted transformation platform end‑to‑end.",
+  "contributionBullets": [
+    "Two‑layer matching: Heuristics (token fuzzy, Jaccard, datatype scoring) + Gemini semantic matching on sampled values.",
+    "Refactor to target‑based architecture (8 phases, 45+ subtasks): multi‑source transformations and dependency tracking.",
+    "Operator‑driven ETL engine: copy, trim, concat, static, arithmetic, and custom functions with full auditability.",
+    "Preview mode (7–50 rows) for rapid QA; seconds vs. minutes for full ETL runs.",
+    "React frontend for job management: uploads/merging, status tracking, target‑based review; localStorage + DB sync.",
+    "Static derivation automation (FIPS/state) with confidence=1.0 and year provenance.",
+    "Similarity score pipeline (0–1) integrated DB → API → UI as an analyst decision signal."
+  ],
+  "tech": [
+    "Python 3.11",
+    "FastAPI",
+    "PostgreSQL (Azure)",
+    "SQLAlchemy",
+    "Pandas",
+    "Google Gemini 1.5 Pro",
+    "React 18",
+    "TypeScript",
+    "Vite",
+    "React Query",
+    "Node.js",
+    "Docker",
+    "OpenAPI"
+  ],
+  "status": "Production",
+  "images": [
+    "projects/tax-roll-pipeline/ss1.png",
+    "projects/tax-roll-pipeline/ss2.png",
+    "projects/tax-roll-pipeline/ss3.png",
+    "projects/tax-roll-pipeline/ss7.png",
+    "projects/tax-roll-pipeline/ss9.png"
+  ],
+  "highlights": [
+    "60% reduction in analyst review time; higher throughput for operations.",
+    "70%+ auto‑acceptance without manual intervention; 95%+ with AI escalation.",
+    "8–12% improvement in Recall@1 vs. baseline matching.",
+    "30% LLM escalation rate via hybrid gating and caching for cost control.",
+    "3,000+ counties supported with historical lookback and county‑aware normalization.",
+    "Production‑ready POC: OpenAPI docs, Docker‑ready, PII masking and sample limiting."
+  ],
+  "featured": false,
+  "kind": "project"
+}

@@ -43,7 +43,7 @@
     "Production‑ready design with centralized logging/config and extensible NLP pipeline."
   ],
   "relatedProjects": [
-    "etl-pipeline"
+    "tax-roll-pipeline"
   ],
   "relatedPosts": [
     "fastapi-practices"
