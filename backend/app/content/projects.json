@@ -29,12 +29,12 @@
     "tech": ["FastAPI", "Python", "Poppler", "OpenCV", "Detectron2", "LayoutParser", "Tesseract", "GPT-4", "Streamlit", "JSONL", "PostgreSQL"],
     "status": "Production",
     "images": [
-      "projects/property-appraisal/ss.jpg",
+      "projects/property-appraisal/arch.jpg",
       "projects/property-appraisal/sample.jpg",
-      "projects/property-appraisal/arch.jpg"
+      "projects/property-appraisal/ss.jpg"
     ],
     "video": "https://www.loom.com/embed/0c90f480866644fc9677b4d7feaeb4af",
-    "videoPoster": "projects/property-appraisal/ss.jpg",
+    "videoPoster": "projects/property-appraisal/videoframe.png",
     "highlights": [
       "Dual-pipeline architecture: independent OCR and LLM components for modularity.",
       "Automated PDF processing: splitting, preprocessing, layout parsing, OCR text extraction.",
