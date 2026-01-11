@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, ExternalLink, Code, User, Star } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Code, User, Star, Users, Mail, Briefcase } from 'lucide-react'
 import { fetchProject, fetchProjects, fetchPosts, type Project, type BlogPost } from '../lib/api'
 import ImageCarousel from '../components/ImageCarousel'
 import VideoPlayer from '../components/VideoPlayer'
@@ -262,6 +262,36 @@ export default function ProjectDetail() {
         </div>
       ) : null}
 
+      {/* Collaboration Section */}
+      {project.collaboration && project.collaboration.seeking && (
+        <div className="glass rounded-xl p-6 neon-border mb-8 bg-gradient-to-br from-violet/20 to-magenta/20 border-2 border-violet/50">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
+            <Users size={24} className="text-electric-pink" />
+            Open to Collaboration
+          </h2>
+          <p className="text-gray-300 mb-4">
+            I'm open to collaboration on this project. If you're interested in contributing to development, technical architecture, business strategy, product management, or sales & marketing, I'd be happy to discuss how we can work together.
+          </p>
+          <div className="mb-4">
+            <p className="text-sm text-gray-400 mb-2">Areas of interest:</p>
+            <div className="flex flex-wrap gap-2">
+              {project.collaboration.types.map((type, index) => (
+                <span key={index} className="bg-electric-pink/20 text-electric-pink px-3 py-1 rounded-full text-sm border border-electric-pink/30">
+                  {type}
+                </span>
+              ))}
+            </div>
+          </div>
+          <Link
+            to={project.collaboration.contact}
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
+          >
+            <Mail size={16} />
+            Email preferred
+          </Link>
+        </div>
+      )}
+
       {/* Related Projects */}
       {related.length > 0 && (
         <div className="glass rounded-xl p-6 neon-border">
@@ -298,6 +328,24 @@ export default function ProjectDetail() {
               </Link>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* Custom Solutions Section */}
+      {project.service && project.service.available && project.service.description && (
+        <div className="glass rounded-xl p-6 neon-border mt-8">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
+            <Briefcase size={24} className="text-electric-pink" />
+            Custom Solutions
+          </h2>
+          <p className="text-gray-300 mb-6">{project.service.description}</p>
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
+          >
+            <Mail size={16} />
+            Contact Me
+          </Link>
         </div>
       )}
     </div>
