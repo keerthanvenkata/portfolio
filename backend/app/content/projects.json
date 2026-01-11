@@ -34,6 +34,15 @@
     ],
     "relatedProjects": ["trading-and-backtesting-bot"],
     "relatedPosts": ["startup-journey"],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
     "featured": true,
     "kind": "project"
   },
@@ -71,6 +80,15 @@
     ],
     "relatedProjects": ["contract-extraction", "tax-roll-pipeline"],
     "relatedPosts": ["fastapi-practices"],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
     "featured": true,
     "kind": "project"
   },
@@ -109,6 +127,15 @@
     ],
     "relatedProjects": ["contract-extraction", "property-appraisal"],
     "relatedPosts": ["etl-pipelines"],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
     "featured": false,
     "kind": "project"
   },
@@ -148,6 +175,15 @@
     ],
     "relatedProjects": ["property-appraisal", "tax-roll-pipeline"],
     "relatedPosts": ["llm-patterns", "fastapi-practices"],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
     "featured": true,
     "kind": "project"
   }
