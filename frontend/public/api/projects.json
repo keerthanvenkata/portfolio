@@ -95,6 +95,7 @@
       "Production‑ready design with centralized logging/config and extensible NLP pipeline."
     ],
     "relatedProjects": [
+      "contract-extraction",
       "tax-roll-pipeline"
     ],
     "relatedPosts": [
@@ -151,9 +152,70 @@
       "Production‑ready POC: OpenAPI docs, Docker‑ready, PII masking and sample limiting."
     ],
     "relatedProjects": [
+      "contract-extraction",
       "property-appraisal"
     ],
+    "relatedPosts": [
+      "etl-pipelines"
+    ],
     "featured": false,
+    "kind": "project"
+  },
+  {
+    "id": "contract-extraction",
+    "title": "Contract Data Extraction Service",
+    "role": "SDE Applied AI at Adaequare",
+    "description": "AI-powered contract intelligence system that extracts structured metadata from various contract types (MSAs, NDAs, service agreements, etc.) into machine-readable JSON. Processes PDF and DOCX files using multimodal LLM extraction with template-based validation and quality scoring.",
+    "contribution": "Architected and built the contract extraction system end-to-end, focusing on LLM integration, prompt engineering, state management, and validation workflows.",
+    "contributionBullets": [
+      "Designed extraction architecture supporting PDF (PyMuPDF) and DOCX (python-docx) formats with multimodal LLM processing.",
+      "Engineered prompt templates with context management, state tracking, and memory optimization for efficient LLM calls.",
+      "Implemented sophisticated validation system comparing extracted values against templates with expected answers, deviation detection, and quality scoring (0-100).",
+      "Built FastAPI REST API with Pydantic models for request/response validation, async processing, and job status tracking.",
+      "Developed field-level validation with match flags (same_as_template, similar_not_exact, different_from_template, flag_for_review, not_found) for automated review workflows.",
+      "Created structured JSON schema (v2.0.0) with validation scoring, status indicators, and detailed notes for each extracted field.",
+      "Optimized LLM context management and token usage through intelligent chunking and state preservation across extraction stages.",
+      "Built CLI interface for single-file and batch processing with parallel execution support.",
+      "Developed Streamlit UI for interactive contract review, validation, and extraction management.",
+      "Deployed on GCP Cloud Run with Docker containers and Cloud SQL for persistence."
+    ],
+    "tech": [
+      "Python 3.10+",
+      "FastAPI",
+      "Pydantic",
+      "Google Gemini 3 Pro",
+      "Google Cloud Vision API",
+      "PyMuPDF",
+      "python-docx",
+      "Streamlit",
+      "Docker",
+      "GCP Cloud Run",
+      "Cloud SQL",
+      "PostgreSQL"
+    ],
+    "status": "Alpha (Beta Testing)",
+    "images": [
+      "projects/contract-extraction/msa_api.png"
+    ],
+    "video": null,
+    "videoPoster": null,
+    "highlights": [
+      "Reduces contract review time from 3-4 hours to 15 minutes on average (some edge cases up to 1 hour); processes 5-10 contracts/month in v1.",
+      "Enables early discrepancy detection by comparing extracted values against templates with deviation flags.",
+      "Multimodal LLM approach (Gemini 2.5 Pro) handles both text and image-based contracts, replacing traditional OCR preprocessing.",
+      "Template-based validation system with expected answers and deviation detection for automated quality assurance.",
+      "Used by Legal, Sales, and Finance teams for contract metadata extraction and CRM automation.",
+      "Production-ready architecture deployed on GCP with Docker containerization and Cloud SQL persistence."
+    ],
+    "relatedProjects": [
+      "property-appraisal",
+      "tax-roll-pipeline"
+    ],
+    "relatedPosts": [
+      "llm-patterns",
+      "fastapi-practices"
+    ],
+    "featured": true,
     "kind": "project"
   },
   {

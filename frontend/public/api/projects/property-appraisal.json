@@ -43,6 +43,7 @@
     "Production‑ready design with centralized logging/config and extensible NLP pipeline."
   ],
   "relatedProjects": [
+    "contract-extraction",
     "tax-roll-pipeline"
   ],
   "relatedPosts": [

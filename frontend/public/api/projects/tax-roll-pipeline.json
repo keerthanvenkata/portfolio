@@ -46,7 +46,11 @@
     "Production‑ready POC: OpenAPI docs, Docker‑ready, PII masking and sample limiting."
   ],
   "relatedProjects": [
+    "contract-extraction",
     "property-appraisal"
+  ],
+  "relatedPosts": [
+    "etl-pipelines"
   ],
   "featured": false,
   "kind": "project"
