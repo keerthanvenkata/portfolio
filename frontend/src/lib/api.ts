@@ -36,6 +36,16 @@ export type Project = {
   kind: 'project' | 'experimental'
   relatedProjects?: string[]
   relatedPosts?: string[]
+  collaboration?: {
+    seeking: boolean
+    types: string[]
+    contact: string
+  }
+  details?: string
+  service?: {
+    available: boolean
+    description: string
+  }
 }
 
 export async function fetchFeaturedPosts() {
