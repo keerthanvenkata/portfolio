@@ -21,6 +21,15 @@
     "Inspired by real-world document extraction needs"
   ],
   "link": "https://github.com/keerthanvenkata/document_data_extraction",
+  "collaboration": {
+    "seeking": false,
+    "types": [],
+    "contact": "/contact"
+  },
+  "service": {
+    "available": true,
+    "description": "This framework can be customized for specific document types and extraction requirements. Available for custom development projects."
+  },
   "relatedProjects": [
     "property-appraisal"
   ],

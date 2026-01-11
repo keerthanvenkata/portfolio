@@ -11,6 +11,15 @@
     "Quick transformations",
     "Batch processing"
   ],
+  "collaboration": {
+    "seeking": false,
+    "types": [],
+    "contact": "/contact"
+  },
+  "service": {
+    "available": false,
+    "description": ""
+  },
   "relatedProjects": [
     "tax-roll-pipeline"
   ],

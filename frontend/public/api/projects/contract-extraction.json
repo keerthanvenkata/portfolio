@@ -53,6 +53,15 @@
     "llm-patterns",
     "fastapi-practices"
   ],
+  "collaboration": {
+    "seeking": false,
+    "types": [],
+    "contact": "/contact"
+  },
+  "service": {
+    "available": false,
+    "description": ""
+  },
   "featured": true,
   "kind": "project"
 }

@@ -16,6 +16,15 @@
     "Backtesting framework",
     "Strategy execution"
   ],
+  "collaboration": {
+    "seeking": false,
+    "types": [],
+    "contact": "/contact"
+  },
+  "service": {
+    "available": false,
+    "description": ""
+  },
   "relatedProjects": [
     "qfi-capital"
   ],

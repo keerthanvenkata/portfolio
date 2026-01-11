@@ -46,6 +46,15 @@
   "relatedPosts": [
     "startup-journey"
   ],
+  "collaboration": {
+    "seeking": false,
+    "types": [],
+    "contact": "/contact"
+  },
+  "service": {
+    "available": false,
+    "description": ""
+  },
   "featured": true,
   "kind": "project"
 }

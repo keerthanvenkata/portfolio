@@ -47,6 +47,15 @@
     "relatedPosts": [
       "startup-journey"
     ],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
     "featured": true,
     "kind": "project"
   },
@@ -101,6 +110,15 @@
     "relatedPosts": [
       "fastapi-practices"
     ],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
     "featured": true,
     "kind": "project"
   },
@@ -158,6 +176,15 @@
     "relatedPosts": [
       "etl-pipelines"
     ],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
     "featured": false,
     "kind": "project"
   },
@@ -216,6 +243,15 @@
       "llm-patterns",
       "fastapi-practices"
     ],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
     "featured": true,
     "kind": "project"
   },
@@ -255,6 +291,10 @@
       ],
       "contact": "/contact"
     },
+    "service": {
+      "available": false,
+      "description": ""
+    },
     "relatedPosts": [
       "startup-journey"
     ],
@@ -285,6 +325,15 @@
       "Inspired by real-world document extraction needs"
     ],
     "link": "https://github.com/keerthanvenkata/document_data_extraction",
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": true,
+      "description": "This framework can be customized for specific document types and extraction requirements. Available for custom development projects."
+    },
     "relatedProjects": [
       "property-appraisal"
     ],
@@ -305,6 +354,15 @@
       "Quick transformations",
       "Batch processing"
     ],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
     "relatedProjects": [
       "tax-roll-pipeline"
     ],
@@ -330,6 +388,15 @@
       "Backtesting framework",
       "Strategy execution"
     ],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
     "relatedProjects": [
       "qfi-capital"
     ],

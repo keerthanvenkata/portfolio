@@ -52,6 +52,15 @@
   "relatedPosts": [
     "etl-pipelines"
   ],
+  "collaboration": {
+    "seeking": false,
+    "types": [],
+    "contact": "/contact"
+  },
+  "service": {
+    "available": false,
+    "description": ""
+  },
   "featured": false,
   "kind": "project"
 }
