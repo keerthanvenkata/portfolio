@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, ExternalLink, Code, Lightbulb, Star, Users, Mail } from 'lucide-react'
-import { fetchProject, type Project } from '../lib/api'
+import { fetchProject, fetchProjects, fetchPosts, type Project, type BlogPost } from '../lib/api'
 import ImageCarousel from '../components/ImageCarousel'
 import VideoPlayer from '../components/VideoPlayer'
 
 export default function ExperimentalDetail() {
   const { id } = useParams<{ id: string }>()
   const [project, setProject] = useState<Project | null>(null)
+  const [related, setRelated] = useState<Project[]>([])
+  const [relatedBlogs, setRelatedBlogs] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -20,10 +22,44 @@ export default function ExperimentalDetail() {
     setLoading(true)
     setError(null)
     fetchProject(id)
-      .then(setProject)
+      .then((p) => {
+        setProject(p)
+        return p
+      })
+      .then(async (p) => {
+        if (!p) return
+        // Related projects: prefer explicit list if provided, otherwise fallback similarity
+        const all = await fetchProjects('all')
+        if (p.relatedProjects && p.relatedProjects.length > 0) {
+          const byId = new Map(all.map(ap => [ap.id, ap]))
+          setRelated(p.relatedProjects.map(rid => byId.get(rid)).filter(Boolean) as Project[])
+        } else {
+          const scored = all
+            .filter(x => x.id !== p.id)
+            .map(x => ({
+              item: x,
+              score: (x.tech || []).reduce((acc, t) => acc + (p.tech.includes(t) ? 1 : 0), 0) + (x.kind === p.kind ? 0.5 : 0)
+            }))
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 3)
+            .map(s => s.item)
+          setRelated(scored)
+        }
+
+        // Related blogs: fetch and filter by ids if provided
+        if (p.relatedPosts && p.relatedPosts.length > 0) {
+          const posts = await fetchPosts()
+          const byId = new Map(posts.map(bp => [bp.id, bp]))
+          setRelatedBlogs(p.relatedPosts.map(pid => byId.get(pid)).filter(Boolean) as BlogPost[])
+        } else {
+          setRelatedBlogs([])
+        }
+      })
       .catch((error) => {
         setError(`Failed to load project: ${error.response?.status === 404 ? 'Project not found' : error.message}`)
         setProject(null)
+        setRelated([])
+        setRelatedBlogs([])
       })
       .finally(() => setLoading(false))
   }, [id])
@@ -161,7 +197,7 @@ export default function ExperimentalDetail() {
         <div className="glass rounded-xl p-6 neon-border mb-8">
           <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
             <Star size={24} />
-            Key Features
+            Key Highlights
           </h2>
           <ul className="space-y-3">
             {project.highlights.map((highlight, index) => (
@@ -176,9 +212,9 @@ export default function ExperimentalDetail() {
 
       {/* Tech Stack */}
       <div className="glass rounded-xl p-6 neon-border mb-8">
-        <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
           <Code size={24} />
-          Technologies Used
+          Tech Stack
         </h2>
         <div className="flex flex-wrap gap-2">
           {project.tech.map(tech => (
@@ -230,17 +266,43 @@ export default function ExperimentalDetail() {
         </div>
       )}
       {/* Related Projects */}
-      <div className="glass rounded-xl p-6 neon-border">
-        <h2 className="text-2xl font-heading font-bold gradient-text-purple mb-4">More Experimental Projects</h2>
-        <p className="text-gray-300 mb-4">Explore other experimental projects and side experiments.</p>
-        <Link 
-          to="/experimental" 
-          className="inline-flex items-center gap-2 text-electric-pink hover:text-magenta transition-colors font-medium"
-        >
-          View All Experimental
-          <ExternalLink size={16} />
-        </Link>
-      </div>
+      {related.length > 0 && (
+        <div className="glass rounded-xl p-6 neon-border">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4">Related Projects</h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            {related.map(r => (
+              <Link key={r.id} to={r.kind === 'project' ? `/projects/${r.id}` : `/experimental/${r.id}`} className="block glass rounded-lg p-4 border border-violet/30 hover:border-electric-pink transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.3)] group">
+                <div className="text-white font-semibold group-hover:text-electric-pink transition-colors">{r.title}</div>
+                <div className="text-gray-400 text-sm mt-1 line-clamp-2">{r.description}</div>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {r.tech.slice(0, 4).map(t => (
+                    <span key={t} className="bg-violet/20 text-violet px-2 py-0.5 rounded text-xs">{t}</span>
+                  ))}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Related Blog Posts */}
+      {relatedBlogs.length > 0 && (
+        <div className="glass rounded-xl p-6 neon-border mt-8">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4">Related Blog Posts</h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            {relatedBlogs.map(b => (
+              <Link key={b.id} to={`/blog/${b.id}`} className="block glass rounded-lg p-4 border border-magenta/30 hover:border-electric-pink transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,0,128,0.3)] group">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs px-2 py-1 bg-electric-pink/20 text-electric-pink rounded">{b.category}</span>
+                  <span className="text-xs text-gray-500">{new Date(b.date).toLocaleDateString()}</span>
+                </div>
+                <div className="text-white font-semibold group-hover:text-electric-pink transition-colors">{b.title}</div>
+                <div className="text-gray-400 text-sm mt-1 line-clamp-2">{b.excerpt}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
