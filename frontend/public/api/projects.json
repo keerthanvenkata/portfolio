@@ -42,7 +42,7 @@
       "Co‑founder leadership: tech vision, mentoring, and early engineering hiring."
     ],
     "relatedProjects": [
-      "trading-bot"
+      "trading-and-backtesting-bot"
     ],
     "relatedPosts": [
       "startup-journey"
@@ -220,18 +220,27 @@
     "kind": "project"
   },
   {
-    "id": "trading-bot",
-    "title": "Weekend Trading Bot",
-    "description": "Scrappy bot built over a weekend to test strategies.",
+    "id": "document-data-extraction",
+    "title": "Document Data Extraction",
+    "description": "Generalized document extraction framework forked from property appraisal extraction. Modular architecture with separate OCR and LLM pipelines for customizable document processing across various applications.",
     "tech": [
       "Python",
-      "Pandas"
+      "FastAPI",
+      "Streamlit",
+      "Tesseract",
+      "LayoutParser",
+      "Detectron2",
+      "Poppler",
+      "LLM"
     ],
-    "details": "Uses technical indicators and simple rules.",
+    "details": "Extensible framework designed to be easily customized for different document types and extraction requirements. Separate OCR and LLM pipelines allow for modular integration of alternative NLP approaches.",
     "highlights": [
-      "Real-time data processing",
-      "Backtesting framework"
+      "Modular OCR and LLM pipelines for flexible document processing",
+      "FastAPI REST endpoints for programmatic access",
+      "Streamlit dashboard for interactive data review and export",
+      "Generalized architecture enabling easy customization for various document types"
     ],
+    "link": "https://github.com/keerthanvenkata/document_data_extraction",
     "images": [],
     "featured": false,
     "kind": "experimental"
@@ -248,6 +257,28 @@
     "highlights": [
       "Quick transformations",
       "Batch processing"
+    ],
+    "images": [],
+    "featured": false,
+    "kind": "experimental"
+  },
+  {
+    "id": "trading-and-backtesting-bot",
+    "title": "Trading and Backtesting Bot",
+    "description": "Algorithmic trading bot with backtesting capabilities for strategy validation and execution.",
+    "tech": [
+      "Python",
+      "PostgreSQL",
+      "InfluxDB",
+      "Docker",
+      "Kafka",
+      "Kite Connect"
+    ],
+    "details": "Trading bot with real-time data processing, strategy backtesting, and execution capabilities.",
+    "highlights": [
+      "Real-time market data processing",
+      "Backtesting framework",
+      "Strategy execution"
     ],
     "images": [],
     "featured": false,

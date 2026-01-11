@@ -1,0 +1,22 @@
+{
+  "id": "trading-and-backtesting-bot",
+  "title": "Trading and Backtesting Bot",
+  "description": "Algorithmic trading bot with backtesting capabilities for strategy validation and execution.",
+  "tech": [
+    "Python",
+    "PostgreSQL",
+    "InfluxDB",
+    "Docker",
+    "Kafka",
+    "Kite Connect"
+  ],
+  "details": "Trading bot with real-time data processing, strategy backtesting, and execution capabilities.",
+  "highlights": [
+    "Real-time market data processing",
+    "Backtesting framework",
+    "Strategy execution"
+  ],
+  "images": [],
+  "featured": false,
+  "kind": "experimental"
+}

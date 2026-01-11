@@ -1,0 +1,26 @@
+{
+  "id": "document-data-extraction",
+  "title": "Document Data Extraction",
+  "description": "Generalized document extraction framework forked from property appraisal extraction. Modular architecture with separate OCR and LLM pipelines for customizable document processing across various applications.",
+  "tech": [
+    "Python",
+    "FastAPI",
+    "Streamlit",
+    "Tesseract",
+    "LayoutParser",
+    "Detectron2",
+    "Poppler",
+    "LLM"
+  ],
+  "details": "Extensible framework designed to be easily customized for different document types and extraction requirements. Separate OCR and LLM pipelines allow for modular integration of alternative NLP approaches.",
+  "highlights": [
+    "Modular OCR and LLM pipelines for flexible document processing",
+    "FastAPI REST endpoints for programmatic access",
+    "Streamlit dashboard for interactive data review and export",
+    "Generalized architecture enabling easy customization for various document types"
+  ],
+  "link": "https://github.com/keerthanvenkata/document_data_extraction",
+  "images": [],
+  "featured": false,
+  "kind": "experimental"
+}

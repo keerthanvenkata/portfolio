@@ -32,7 +32,7 @@
       "Multi‑asset capability (equities/derivatives) via a unified data plane.",
       "Co‑founder leadership: tech vision, mentoring, and early engineering hiring."
     ],
-    "relatedProjects": ["trading-bot"],
+    "relatedProjects": ["trading-and-backtesting-bot"],
     "relatedPosts": ["startup-journey"],
     "featured": true,
     "kind": "project"
