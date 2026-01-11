@@ -10,7 +10,7 @@
     "Kafka",
     "Kite Connect"
   ],
-  "details": "Trading bot with real-time data processing, strategy backtesting, and execution capabilities.",
+  "details": "I built this trading bot primarily to verify quantitative assumptions and get a better understanding of market dynamics. It's not meant for live trading or production use, but rather as a learning tool to test strategies, understand backtesting methodologies, and explore how different market conditions affect trading algorithms. The bot includes real-time data processing, backtesting framework, and execution capabilities to validate theoretical approaches with real market data.",
   "highlights": [
     "Real-time market data processing",
     "Backtesting framework",

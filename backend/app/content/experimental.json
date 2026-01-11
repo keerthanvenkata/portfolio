@@ -61,7 +61,7 @@
     "title": "CLI Tool for Data Cleaning",
     "description": "Utility for quick CSV transformations.",
     "tech": ["Python", "Click"],
-    "details": "Handles repetitive CSV cleaning tasks.",
+    "details": "A utility tool I built for prepping tax roll data. It handles repetitive CSV cleaning tasks that come up during data preparation workflows, including transformations, validations, and batch processing operations needed before data can be fed into larger processing pipelines.",
     "highlights": ["Quick transformations", "Batch processing"],
     "collaboration": {
       "seeking": false,
@@ -82,7 +82,7 @@
     "title": "Trading and Backtesting Bot",
     "description": "Algorithmic trading bot with backtesting capabilities for strategy validation and execution.",
     "tech": ["Python", "PostgreSQL", "InfluxDB", "Docker", "Kafka", "Kite Connect"],
-    "details": "Trading bot with real-time data processing, strategy backtesting, and execution capabilities.",
+    "details": "I built this trading bot primarily to verify quantitative assumptions and get a better understanding of market dynamics. It's not meant for live trading or production use, but rather as a learning tool to test strategies, understand backtesting methodologies, and explore how different market conditions affect trading algorithms. The bot includes real-time data processing, backtesting framework, and execution capabilities to validate theoretical approaches with real market data.",
     "highlights": ["Real-time market data processing", "Backtesting framework", "Strategy execution"],
     "collaboration": {
       "seeking": false,
