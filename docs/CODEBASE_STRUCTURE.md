@@ -140,7 +140,7 @@ Content in markdown format...
       "Mid-frequency algorithmic trading...",
       "Sub-second Kafka streaming pipelines..."
     ],
-    "relatedProjects": ["trading-bot"],
+    "relatedProjects": ["trading-and-backtesting-bot"],
     "relatedPosts": ["startup-journey"],
     "featured": true,
     "kind": "project"
@@ -189,12 +189,12 @@ Content in markdown format...
 ```json
 [
   {
-    "id": "trading-bot",
-    "title": "Weekend Trading Bot",
-    "description": "Scrappy bot built over a weekend...",
-    "tech": ["Python", "Pandas"],
-    "details": "Uses technical indicators...",
-    "highlights": ["Real-time data processing"],
+    "id": "trading-and-backtesting-bot",
+    "title": "Trading and Backtesting Bot",
+    "description": "Algorithmic trading bot with backtesting capabilities...",
+    "tech": ["Python", "PostgreSQL", "InfluxDB", "Docker", "Kafka", "Kite Connect"],
+    "details": "Trading bot with real-time data processing...",
+    "highlights": ["Real-time market data processing", "Backtesting framework"],
     "images": [],
     "featured": false,
     "kind": "experimental"
