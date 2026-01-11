@@ -1,0 +1,43 @@
+{
+  "id": "q-rate",
+  "title": "Q-Rate",
+  "description": "Loyalty and verification system for cafes that eliminates social friction in review collection and reduces fraud risk. Built based on existing loyalty programs, with WhatsApp integration, digital stamp cards, and point-based redemption. Currently in active development with a clear roadmap from verified reviews (V0) to a unified discovery platform (V2).",
+  "tech": [
+    "Python",
+    "FastAPI",
+    "PostgreSQL",
+    "React",
+    "Vite",
+    "TypeScript",
+    "PWA",
+    "WhatsApp Business API",
+    "Docker"
+  ],
+  "details": "I'm building Q-Rate as a loyalty platform for Hyderabad's cafe market, inspired by existing loyalty programs but designed to solve specific pain points I've observed. The system includes customer and staff PWAs, an admin portal for cafe owners, and WhatsApp Business API integration for seamless customer engagement. The goal is to make it easy for staff to enroll customers and manage loyalty points while providing analytics and fraud prevention. This is something I'm actively working on and trying to build into a real product.",
+  "highlights": [
+    "WhatsApp Business API integration for zero-friction customer engagement",
+    "Dual PWA architecture: Separate customer and staff applications",
+    "Digital stamp cards and point-based redemption system",
+    "Admin portal with analytics, loyalty ratio configuration, and staff performance tracking",
+    "Multi-phase roadmap: From verified reviews to unified discovery platform",
+    "Built based on existing loyalty programs with improvements for the cafe market"
+  ],
+  "link": "https://github.com/keerthanvenkata/q-rate",
+  "collaboration": {
+    "seeking": true,
+    "types": [
+      "Development",
+      "Technical Architecture",
+      "Business Strategy",
+      "Product Management",
+      "Sales & Marketing"
+    ],
+    "contact": "/contact"
+  },
+  "relatedPosts": [
+    "startup-journey"
+  ],
+  "images": [],
+  "featured": false,
+  "kind": "experimental"
+}
