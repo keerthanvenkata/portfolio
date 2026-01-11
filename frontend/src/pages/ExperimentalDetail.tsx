@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, ExternalLink, Code, Lightbulb, Star } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Code, Lightbulb, Star, Users, Mail } from 'lucide-react'
 import { fetchProject, type Project } from '../lib/api'
 import ImageCarousel from '../components/ImageCarousel'
 import VideoPlayer from '../components/VideoPlayer'
@@ -190,12 +190,43 @@ export default function ExperimentalDetail() {
       </div>
 
       {/* Details */}
-      {(project.contribution || (project as any).details) && (
+      {(project.contribution || project.details) && (
         <div className="glass rounded-xl p-6 neon-border mb-8">
           <h2 className="text-2xl font-heading font-bold text-white mb-4">Project Details</h2>
           <div className="prose prose-invert max-w-none">
-            <p className="text-gray-300 leading-relaxed">{project.contribution || (project as any).details}</p>
+            <p className="text-gray-300 leading-relaxed">{project.contribution || project.details}</p>
           </div>
+        </div>
+      )}
+
+      {/* Collaboration Section */}
+      {project.collaboration && project.collaboration.seeking && (
+        <div className="glass rounded-xl p-6 neon-border mb-8 bg-gradient-to-br from-violet/20 to-magenta/20 border-2 border-violet/50">
+          <h2 className="text-2xl font-heading font-bold text-white mb-4 flex items-center gap-2">
+            <Users size={24} className="text-electric-pink" />
+            Seeking Collaborators
+          </h2>
+          <p className="text-gray-300 mb-4">
+            I'm actively looking for collaborators to help bring this project to the next level. 
+            Whether you're interested in development, technical architecture, business strategy, product management, or sales & marketing, I'd love to hear from you.
+          </p>
+          <div className="mb-4">
+            <p className="text-sm text-gray-400 mb-2">Areas of interest:</p>
+            <div className="flex flex-wrap gap-2">
+              {project.collaboration.types.map((type, index) => (
+                <span key={index} className="bg-electric-pink/20 text-electric-pink px-3 py-1 rounded-full text-sm border border-electric-pink/30">
+                  {type}
+                </span>
+              ))}
+            </div>
+          </div>
+          <Link
+            to={project.collaboration.contact}
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
+          >
+            <Mail size={16} />
+            {project.collaboration.preferredMethod || 'Get in Touch'}
+          </Link>
         </div>
       )}
       {/* Related Projects */}
