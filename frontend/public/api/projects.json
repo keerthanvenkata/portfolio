@@ -195,6 +195,7 @@
     ],
     "status": "Alpha (Beta Testing)",
     "images": [
+      "projects/contract-extraction/arch.png",
       "projects/contract-extraction/msa_api.png"
     ],
     "video": null,
