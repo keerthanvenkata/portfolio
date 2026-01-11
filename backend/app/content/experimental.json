@@ -1,17 +1,44 @@
 [
   {
+    "id": "q-rate",
+    "title": "Q-Rate",
+    "description": "Loyalty and verification system for cafes that eliminates social friction in review collection and reduces fraud risk. Built based on existing loyalty programs, with WhatsApp integration, digital stamp cards, and point-based redemption. Currently in active development with a clear roadmap from verified reviews (V0) to a unified discovery platform (V2).",
+    "tech": ["Python", "FastAPI", "PostgreSQL", "React", "Vite", "TypeScript", "PWA", "WhatsApp Business API", "Docker"],
+    "details": "I'm building Q-Rate as a loyalty platform for Hyderabad's cafe market, inspired by existing loyalty programs but designed to solve specific pain points I've observed. The system includes customer and staff PWAs, an admin portal for cafe owners, and WhatsApp Business API integration for seamless customer engagement. The goal is to make it easy for staff to enroll customers and manage loyalty points while providing analytics and fraud prevention. This is something I'm actively working on and trying to build into a real product.",
+    "highlights": [
+      "WhatsApp Business API integration for zero-friction customer engagement",
+      "Dual PWA architecture: Separate customer and staff applications",
+      "Digital stamp cards and point-based redemption system",
+      "Admin portal with analytics, loyalty ratio configuration, and staff performance tracking",
+      "Multi-phase roadmap: From verified reviews to unified discovery platform",
+      "Built based on existing loyalty programs with improvements for the cafe market"
+    ],
+    "link": "https://github.com/keerthanvenkata/q-rate",
+    "collaboration": {
+      "seeking": true,
+      "types": ["Development", "Technical Architecture", "Business Strategy", "Product Management", "Sales & Marketing"],
+      "contact": "/contact"
+    },
+    "relatedPosts": ["startup-journey"],
+    "images": [],
+    "featured": false,
+    "kind": "experimental"
+  },
+  {
     "id": "document-data-extraction",
     "title": "Document Data Extraction",
-    "description": "Generalized document extraction framework forked from property appraisal extraction. Modular architecture with separate OCR and LLM pipelines for customizable document processing across various applications.",
+    "description": "Generalized document extraction framework built as an attempt to abstract and generalize the property appraisal extraction project. Inspired by that work, this framework features modular architecture with separate OCR and LLM pipelines for document processing.",
     "tech": ["Python", "FastAPI", "Streamlit", "Tesseract", "LayoutParser", "Detectron2", "Poppler", "LLM"],
-    "details": "Extensible framework designed to be easily customized for different document types and extraction requirements. Separate OCR and LLM pipelines allow for modular integration of alternative NLP approaches.",
+    "details": "After building the property appraisal extraction system, I wanted to see if I could generalize the approach for other document types. This project was my attempt to abstract and generalize that work into a reusable framework. The initial idea was to make it easily customizable for different applications, though I didn't end up focusing heavily on that customization aspect. Instead, I focused more on the core extraction pipelines - separate OCR and LLM modules that can be swapped or extended. It's a learning project that helped me understand how to structure document processing systems.",
     "highlights": [
+      "Built to abstract and generalize the property appraisal extraction project",
       "Modular OCR and LLM pipelines for flexible document processing",
       "FastAPI REST endpoints for programmatic access",
       "Streamlit dashboard for interactive data review and export",
-      "Generalized architecture enabling easy customization for various document types"
+      "Inspired by real-world document extraction needs"
     ],
     "link": "https://github.com/keerthanvenkata/document_data_extraction",
+    "relatedProjects": ["property-appraisal"],
     "images": [],
     "featured": false,
     "kind": "experimental"
@@ -23,6 +50,7 @@
     "tech": ["Python", "Click"],
     "details": "Handles repetitive CSV cleaning tasks.",
     "highlights": ["Quick transformations", "Batch processing"],
+    "relatedProjects": ["tax-roll-pipeline"],
     "images": [],
     "featured": false,
     "kind": "experimental"
@@ -34,6 +62,7 @@
     "tech": ["Python", "PostgreSQL", "InfluxDB", "Docker", "Kafka", "Kite Connect"],
     "details": "Trading bot with real-time data processing, strategy backtesting, and execution capabilities.",
     "highlights": ["Real-time market data processing", "Backtesting framework", "Strategy execution"],
+    "relatedProjects": ["qfi-capital"],
     "images": [],
     "featured": false,
     "kind": "experimental"
