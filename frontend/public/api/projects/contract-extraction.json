@@ -39,7 +39,7 @@
   "highlights": [
     "Reduces contract review time from 3-4 hours to 15 minutes on average (some edge cases up to 1 hour); processes 5-10 contracts/month in v1.",
     "Enables early discrepancy detection by comparing extracted values against templates with deviation flags.",
-    "Multimodal LLM approach (Gemini 2.5 Pro) handles both text and image-based contracts, replacing traditional OCR preprocessing.",
+    "Multimodal LLM approach (Gemini 3 Pro/Flash) handles both text and image-based contracts, replacing traditional OCR preprocessing.",
     "Template-based validation system with expected answers and deviation detection for automated quality assurance.",
     "Used by Legal, Sales, and Finance teams for contract metadata extraction and CRM automation.",
     "Production-ready architecture deployed on GCP with Docker containerization and Cloud SQL persistence."
