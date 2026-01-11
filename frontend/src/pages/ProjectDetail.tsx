@@ -282,12 +282,13 @@ export default function ProjectDetail() {
               ))}
             </div>
           </div>
+          <p className="text-sm text-gray-400 mb-4">Email preferred for initial contact.</p>
           <Link
             to={project.collaboration.contact}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
           >
             <Mail size={16} />
-            Email preferred
+            Contact Me
           </Link>
         </div>
       )}
