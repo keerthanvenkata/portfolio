@@ -158,7 +158,8 @@
       "Deployed on GCP Cloud Run with Docker containers and Cloud SQL for persistence."
     ],
     "tech": ["Python 3.10+", "FastAPI", "Pydantic", "Google Gemini 3 Pro", "Google Cloud Vision API","PyMuPDF", "python-docx", "Streamlit", "Docker", "GCP Cloud Run", "Cloud SQL", "PostgreSQL"],
-    "status": "Alpha (Beta Testing)",
+    "link": "https://github.com/keerthanvenkata/msa_extractor",
+    "status": "Production",
     "images": [
       "projects/contract-extraction/arch.png",
       "projects/contract-extraction/msa_api.png"

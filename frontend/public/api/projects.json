@@ -220,7 +220,8 @@
       "Cloud SQL",
       "PostgreSQL"
     ],
-    "status": "Alpha (Beta Testing)",
+    "link": "https://github.com/keerthanvenkata/msa_extractor",
+    "status": "Production",
     "images": [
       "projects/contract-extraction/arch.png",
       "projects/contract-extraction/msa_api.png"
