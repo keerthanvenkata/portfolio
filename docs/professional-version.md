@@ -116,6 +116,7 @@ Portrait & imagery:
 - Logo/portrait: ship dedicated bright-mode assets or recolor existing ones?
 - Optional “presentation” landing auto-opening bright mode for recruiters?
 - Analytics: do we log theme preference/toggle usage?
+- Should we use a theme like Material Design md3?
 
 **Decided**: 
 - Universal sections (Projects, Experimental, About, Resume, Contact) remain the same across themes.
