@@ -257,6 +257,51 @@
     "kind": "project"
   },
   {
+    "id": "semantic-topic-mapper",
+    "title": "Semantic Topic Mapper",
+    "role": "Author & Maintainer",
+    "description": "Python tool that extracts topic hierarchies, cross-references, and entity relationships from complex documents. Enables structured navigation and semantic understanding of document content through intelligent topic extraction and relationship mapping.",
+    "contribution": "Architected and built an end-to-end semantic document analysis system for hierarchical topic extraction.",
+    "contributionBullets": [
+      "Designed semantic analysis pipeline for extracting topic hierarchies from unstructured documents.",
+      "Implemented entity relationship extraction and cross-reference mapping.",
+      "Built hierarchical topic organization system for structured navigation.",
+      "Developed document parsing and semantic understanding components.",
+      "Created APIs for topic extraction, relationship queries, and navigation services."
+    ],
+    "tech": [
+      "Python"
+    ],
+    "link": "https://github.com/keerthanvenkata/semantic-topic-mapper",
+    "status": "Active",
+    "images": [
+      "projects/semantic-topic-mapper/infographic.png",
+      "projects/semantic-topic-mapper/arch_diagram.png"
+    ],
+    "video": null,
+    "videoPoster": null,
+    "highlights": [
+      "Extracts meaningful topic hierarchies from complex, unstructured documents.",
+      "Maps entity relationships and cross-references for comprehensive semantic understanding.",
+      "Enables structured navigation through document hierarchies.",
+      "Supports scalable document analysis workflows.",
+      "MIT licensed for open collaboration and extension."
+    ],
+    "relatedProjects": [],
+    "relatedPosts": [],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
+    "featured": false,
+    "kind": "project"
+  },
+  {
     "id": "q-rate",
     "title": "Q-Rate",
     "description": "Loyalty and verification system for cafes that eliminates social friction in review collection and reduces fraud risk. Built based on existing loyalty programs, with WhatsApp integration, digital stamp cards, and point-based redemption. Currently in active development with a clear roadmap from verified reviews (V0) to a unified discovery platform (V2).",

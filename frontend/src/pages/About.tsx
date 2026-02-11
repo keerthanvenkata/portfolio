@@ -12,7 +12,6 @@ const TECH_STACK: TechItem[] = [
   { name: 'C++', logo: '/tech-logos/cpp.svg', url: 'https://isocpp.org' },
   { name: 'JavaScript', logo: '/tech-logos/javascript.svg', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
   { name: 'TypeScript', logo: '/tech-logos/typescript.svg', url: 'https://www.typescriptlang.org' },
-  { name: 'SQL', url: 'https://en.wikipedia.org/wiki/SQL' },
   // Web & frontend
   { name: 'HTML5', logo: '/tech-logos/html5.svg', url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
   { name: 'CSS3', logo: '/tech-logos/css3.svg', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
@@ -24,21 +23,23 @@ const TECH_STACK: TechItem[] = [
   { name: 'GraphQL', logo: '/tech-logos/graphql.svg', url: 'https://graphql.org' },
   // Data & databases
   { name: 'PostgreSQL', logo: '/tech-logos/postgresql.svg', url: 'https://www.postgresql.org' },
+  { name: 'MySQL', logo: '/tech-logos/mysql.svg', url: 'https://www.mysql.com' },
   { name: 'MongoDB', logo: '/tech-logos/mongodb.svg', url: 'https://www.mongodb.com' },
   { name: 'Redis', logo: '/tech-logos/redis.svg', url: 'https://redis.io' },
   { name: 'InfluxDB', logo: '/tech-logos/influxdb.svg', url: 'https://www.influxdata.com' },
+  { name: 'SQLAlchemy', logo: '/tech-logos/sqlalchemy.svg', url: 'https://www.sqlalchemy.org' },
   // ML & data science
   { name: 'PyTorch', logo: '/tech-logos/pytorch.svg', url: 'https://pytorch.org' },
-  { name: 'Scikit-learn', url: 'https://scikit-learn.org' },
-  { name: 'NLTK', url: 'https://www.nltk.org' },
+  { name: 'Scikit-learn', logo: '/tech-logos/scikit-learn.svg', url: 'https://scikit-learn.org' },
   { name: 'OpenCV', logo: '/tech-logos/opencv.svg', url: 'https://opencv.org' },
   { name: 'Jupyter', logo: '/tech-logos/jupyter.svg', url: 'https://jupyter.org' },
   { name: 'Anaconda', logo: '/tech-logos/anaconda.svg', url: 'https://www.anaconda.com' },
   // AI / agents
-  { name: 'LangGraph', url: 'https://langchain.com/langgraph' },
-  { name: 'Vertex AI', url: 'https://cloud.google.com/vertex-ai' },
-  { name: 'Gemini', url: 'https://ai.google.dev/gemini' },
+  { name: 'LangGraph', logo: '/tech-logos/langgraph.svg', url: 'https://langchain.com/langgraph' },
+  { name: 'Vertex AI', logo: '/tech-logos/vertexai.svg', url: 'https://cloud.google.com/vertex-ai' },
+  { name: 'Gemini', logo: '/tech-logos/gemini.svg', url: 'https://ai.google.dev/gemini' },
   { name: 'Google Agents SDK', url: 'https://ai.google.dev' },
+  { name: 'vLLM', logo: '/tech-logos/vllm.svg', url: 'https://docs.vllm.ai' },
   // Cloud & infra
   { name: 'GCP', logo: '/tech-logos/gcp.svg', url: 'https://cloud.google.com' },
   { name: 'AWS', logo: '/tech-logos/aws.svg', url: 'https://aws.amazon.com' },
@@ -47,8 +48,8 @@ const TECH_STACK: TechItem[] = [
   { name: 'Kubernetes', logo: '/tech-logos/kubernetes.svg', url: 'https://kubernetes.io' },
   { name: 'Kafka', logo: '/tech-logos/kafka.svg', url: 'https://kafka.apache.org' },
   // Orchestration & automation
-  { name: 'Prefect', url: 'https://www.prefect.io' },
-  { name: 'n8n', url: 'https://n8n.io' },
+  { name: 'Apache Airflow', logo: '/tech-logos/apache-airflow.svg', url: 'https://airflow.apache.org' },
+  { name: 'n8n', logo: '/tech-logos/n8n.svg', url: 'https://n8n.io' },
   { name: 'Streamlit', logo: '/tech-logos/streamlit.svg', url: 'https://streamlit.io' },
   // Version control & collaboration
   { name: 'Git', logo: '/tech-logos/git.svg', url: 'https://git-scm.com' },
