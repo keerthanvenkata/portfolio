@@ -64,6 +64,7 @@ async function generatePosts(contentDir, outDir) {
       excerpt: String(meta.excerpt || ''),
       category: String(meta.category || ''),
       date: parseDate(meta.date).toISOString().slice(0, 10),
+      author: String(meta.author || 'Keerthan Venkata'),
       featured: Boolean(meta.featured || false),
       content_html,
     }

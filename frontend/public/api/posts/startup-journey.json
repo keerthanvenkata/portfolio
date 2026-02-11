@@ -4,6 +4,7 @@
   "excerpt": "Reflections on co-founding QFI Capital while working full-time.",
   "category": "Entrepreneurship",
   "date": "2024-12-10",
+  "author": "Keerthan Venkata",
   "featured": true,
   "content_html": "<p>Co-founding QFI Research Capital while working full-time at Adaequare taught me more about entrepreneurship than any book or course ever could.</p>\n<h2>The Reality Check</h2>\n<p>It's late nights after your day job, weekends spent debugging, and constant context switching between two demanding roles.</p>\n<h2>What I Learned</h2>\n<h3>Time Management is Critical</h3>\n<p>Ruthless prioritization. Mornings for architecture and system design, evenings for implementation, weekends for deep work.</p>\n<h3>Choose Your Co-founders Wisely</h3>\n<p>Divide responsibilities clearly and trust each other to execute.</p>\n<h3>Technical Debt vs Speed</h3>\n<p>Done is better than perfect, but know when to invest in quality.</p>\n<h2>The Platform</h2>\n<p>Microservices with Kafka, PostgreSQL + InfluxDB, and real-time risk engines.</p>\n<h2>Key Takeaway</h2>\n<p>Entrepreneurship while employed is possible, but it requires sacrifice, discipline, and a burning desire to build something meaningful.</p>\n"
 }
