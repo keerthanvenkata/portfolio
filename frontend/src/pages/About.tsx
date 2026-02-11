@@ -1,8 +1,7 @@
 import Timeline from '../components/Timeline'
 import GitHubContributions from '../components/GitHubContributions'
 
-// Section title options: "Tech stack" | "Technologies & tools" | "Technologies I use" | "Stack" | "Tools & technologies"
-const TECH_SECTION_TITLE = 'Tech stack'
+const TECH_SECTION_TITLE = 'Technology and Tools'
 
 type TechItem = { name: string; logo?: string; url?: string }
 
