@@ -82,19 +82,14 @@ export default function AboutPage() {
       <section className="mt-12 pt-12 border-t border-violet/30">
         <h2 className="text-2xl font-heading font-bold gradient-text-purple mb-6">{TECH_SECTION_TITLE}</h2>
         <p className="text-gray-400 mb-6">Languages, frameworks, and platforms I use or have experience with.</p>
-        <div className="flex flex-wrap gap-6 items-center">
+        <div className="flex flex-wrap gap-2 items-center">
           {TECH_STACK.map(({ name, logo, url }) => {
-            const content = (
-              <>
-                {logo ? (
-                  <img src={logo} alt={name} className="h-8 w-8 object-contain flex-shrink-0" />
-                ) : (
-                  <span className="flex h-8 w-8 items-center justify-center rounded bg-violet/20 text-violet text-sm font-semibold flex-shrink-0">
-                    {name.slice(0, 1)}
-                  </span>
-                )}
-                <span className="text-gray-300 font-medium">{name}</span>
-              </>
+            const icon = logo ? (
+              <img src={logo} alt={name} className="h-7 w-7 object-contain" />
+            ) : (
+              <span className="flex h-7 w-7 items-center justify-center rounded bg-violet/20 text-violet text-xs font-semibold">
+                {name.slice(0, 1)}
+              </span>
             )
             return url ? (
               <a
@@ -102,18 +97,14 @@ export default function AboutPage() {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/5 border border-violet/20 hover:border-violet/50 hover:bg-white/10 transition-colors"
-                title={`${name} (opens in new tab)`}
-              >
-                {content}
-              </a>
-            ) : (
-              <div
-                key={name}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/5 border border-violet/20"
+                className="flex items-center justify-center p-2 rounded-lg bg-white/5 border border-violet/20 hover:border-violet/50 hover:bg-white/10 transition-colors"
                 title={name}
               >
-                {content}
+                {icon}
+              </a>
+            ) : (
+              <div key={name} className="flex items-center justify-center p-2 rounded-lg bg-white/5 border border-violet/20" title={name}>
+                {icon}
               </div>
             )
           })}
