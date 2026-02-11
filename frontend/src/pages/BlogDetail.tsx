@@ -119,9 +119,9 @@ export default function BlogDetail() {
         {/* Article Content */}
         <div 
           className="prose prose-invert prose-lg max-w-none font-body blog-content
-            prose-headings:text-white prose-headings:font-bold prose-headings:tracking-tight
-            prose-h1:text-4xl prose-h1:mb-6 prose-h1:mt-12 prose-h1:leading-tight prose-h1:font-bold
-            prose-h2:text-3xl prose-h2:mb-6 prose-h2:mt-12 prose-h2:leading-tight prose-h2:font-bold prose-h2:text-violet prose-h2:pb-3 prose-h2:border-b prose-h2:border-violet/30
+            prose-headings:text-white prose-headings:font-bold prose-headings:tracking-normal
+            prose-h1:text-4xl prose-h1:mb-6 prose-h1:mt-12 prose-h1:leading-snug prose-h1:font-bold
+            prose-h2:text-3xl prose-h2:mb-6 prose-h2:mt-12 prose-h2:leading-snug prose-h2:font-bold prose-h2:text-violet prose-h2:pb-3 prose-h2:border-b prose-h2:border-violet/30
             prose-h3:text-2xl prose-h3:mb-4 prose-h3:mt-8 prose-h3:font-semibold prose-h3:text-violet
             prose-h4:text-xl prose-h4:mb-3 prose-h4:mt-6 prose-h4:font-semibold prose-h4:text-gray-200
             prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6 prose-p:text-lg prose-p:font-body
@@ -163,22 +163,26 @@ export default function BlogDetail() {
           
           .blog-content h2 {
             font-size: 1.875rem !important;
-            font-weight: 700 !important;
+            font-weight: 600 !important;
             color: #7F00FF !important;
             margin-top: 3rem !important;
             margin-bottom: 1.5rem !important;
             padding-bottom: 0.75rem !important;
             border-bottom: 2px solid rgba(127, 0, 255, 0.3) !important;
-            line-height: 1.25 !important;
-            letter-spacing: -0.025em !important;
+            line-height: 1.3 !important;
+            letter-spacing: normal !important;
           }
           
           .blog-content h3 {
             color: #7F00FF !important;
+            font-weight: 600 !important;
+            letter-spacing: normal !important;
           }
           
           .blog-content h4 {
             color: #E5E7EB !important;
+            font-weight: 600 !important;
+            letter-spacing: normal !important;
           }
         `}</style>
       </article>

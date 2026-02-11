@@ -521,9 +521,12 @@ function HomePage() {
                     className="block p-4 rounded-lg bg-black/30 border border-magenta/30 hover:border-electric-pink transition-all duration-300 group"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs px-2 py-1 bg-electric-pink/20 text-electric-pink rounded">
-                        {p.category}
-                      </span>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-xs px-2 py-1 bg-electric-pink/20 text-electric-pink rounded">
+                          {p.category}
+                        </span>
+                        {p.author && <span className="text-xs text-gray-400">{p.author}</span>}
+                      </div>
                       <span className="text-xs text-gray-500">{new Date(p.date).toLocaleDateString()}</span>
                     </div>
                     <h4 className="font-heading font-semibold text-white mb-2 group-hover:text-electric-pink transition-colors">
@@ -770,7 +773,10 @@ function BlogPage() {
           posts.map(p => (
             <div key={p.id} className="glass p-6 rounded-xl neon-border hover:shadow-[0_0_30px_rgba(255,0,128,0.4)] transition-all">
               <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
-                <span className={`px-3 py-1 rounded-full text-sm bg-electric-pink/20 text-electric-pink border border-electric-pink/30`}>{p.category}</span>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className={`px-3 py-1 rounded-full text-sm bg-electric-pink/20 text-electric-pink border border-electric-pink/30`}>{p.category}</span>
+                  {p.author && <span className="text-gray-400 text-sm">{p.author}</span>}
+                </div>
                 <span className="text-gray-500 text-sm">{new Date(p.date).toLocaleDateString()}</span>
               </div>
               <h3 className="text-xl font-heading font-bold text-white mb-2">{p.title}</h3>
