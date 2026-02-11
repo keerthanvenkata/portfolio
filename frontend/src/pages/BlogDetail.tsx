@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Calendar, Clock } from 'lucide-react'
+import { Calendar, Clock, User } from 'lucide-react'
 import { fetchPost, fetchPosts, type BlogPost } from '../lib/api'
 
 export default function BlogDetail() {
@@ -99,6 +99,12 @@ export default function BlogDetail() {
               <Clock size={16} className="text-violet" />
               {readingTime} min read
             </span>
+            {post.author && (
+              <span className="text-gray-400 text-sm flex items-center gap-2">
+                <User size={16} className="text-violet" />
+                {post.author}
+              </span>
+            )}
           </div>
           
           <h1 className="text-5xl md:text-6xl font-heading font-bold text-white mb-6 leading-tight tracking-tight">
@@ -136,13 +142,14 @@ export default function BlogDetail() {
             font-family: 'Inter', sans-serif !important;
           }
           
+          /* Subheadings use body font; main title stays in header with font-heading */
           .blog-content h1,
           .blog-content h2,
           .blog-content h3,
           .blog-content h4,
           .blog-content h5,
           .blog-content h6 {
-            font-family: 'Orbitron', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
           }
           
           .blog-content p,

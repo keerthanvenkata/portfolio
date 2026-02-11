@@ -13,6 +13,7 @@ export type BlogPost = {
   excerpt: string
   category: string
   date: string
+  author?: string
   featured?: boolean
   content_html?: string
 }
