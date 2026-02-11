@@ -392,6 +392,22 @@ function HomePage() {
             >
               SDE Applied AI & Entrepreneur
             </motion.p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="flex justify-center lg:justify-start"
+            >
+              <Link
+                to="/life"
+                className="group/life inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-light text-gray-400 bg-black/30 backdrop-blur-sm border border-violet/20 hover:border-amber-400/40 hover:text-amber-200/90 hover:shadow-[0_0_20px_rgba(251,191,36,0.15)] transition-all duration-300 cursor-pointer"
+                style={{ letterSpacing: '0.02em' }}
+              >
+                <span className="border-b border-transparent group-hover/life:border-amber-400/50 group-hover/life:transition-all group-hover/life:duration-300">
+                  elsewhere →
+                </span>
+              </Link>
+            </motion.div>
             <motion.p 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
