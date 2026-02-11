@@ -23,9 +23,11 @@ portfolio/
 │       │   ├── projects.json     # Professional projects
 │       │   ├── experimental.json # Hobby/experimental projects
 │       │   ├── timeline.json     # Career/education timeline
+│       │   ├── tech-stack.json   # Technology and tools (About page)
 │       │   ├── social.json       # Social links config
 │       │   ├── resume/           # Resume PDFs + metadata
 │       │   └── media/            # Images, videos, diagrams
+│       │   # (planned: life/ or life.json for Life section)
 │       ├── models.py             # Pydantic models (FastAPI)
 │       ├── services/
 │       │   └── content_loader.py # Content loading logic
@@ -70,10 +72,11 @@ portfolio/
 ### Generator Script (`generate-content.mjs`)
 
 **Key Functions:**
-- `generatePosts()`: Parses markdown with frontmatter, converts to HTML
+- `generatePosts()`: Parses markdown with frontmatter, converts to HTML (supports optional `author` in frontmatter)
 - `generateProjects()`: Combines `projects.json` + `experimental.json`
 - `generateResume()`: Copies PDFs and creates latest symlink
 - `generateTimeline()`: Copies timeline JSON
+- `generateTechStack()`: Copies tech-stack.json for About page
 - `generateSocial()`: Copies social config
 
 **Pattern**: Each generator reads from `backend/app/content/` and writes to `frontend/public/api/`
@@ -106,6 +109,9 @@ Content in markdown format...
 - `category`: One of: Tech, Career, Entrepreneurship, Tutorial
 - `date`: YYYY-MM-DD format
 - `featured`: Boolean (optional, defaults to false)
+
+**Optional Fields:**
+- `author`: Author name (defaults to "Keerthan Venkata" if omitted)
 
 **Generated Output:**
 - `/api/posts.json`: Array of all posts
@@ -336,7 +342,8 @@ App.tsx
 │   │   └── BlogModal (Quick Preview)
 │   ├── BlogDetail
 │   ├── AboutPage
-│   │   └── Timeline
+│   │   └── Timeline (+ Tech stack)
+│   ├── LifePage (planned: /life with in-page sections #music, #travel, #food, #thoughts)
 │   ├── ResumePage
 │   │   └── PDFViewer
 │   └── ContactPage

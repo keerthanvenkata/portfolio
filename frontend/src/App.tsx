@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, BookOpen, Music, Coffee, Lightbulb, Heart, Home } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { Link, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { fetchFeaturedPosts, fetchPosts, fetchProjects, fetchResume, type BlogPost, type Project, type ResumeData } from './lib/api'
 import { useEffect, Suspense, lazy } from 'react'
 import ProjectModal from './components/ProjectModal'
@@ -32,7 +32,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
     { name: 'Experimental', id: 'experimental', icon: Lightbulb },
     { name: 'Blog', id: 'blog', icon: BookOpen },
     { name: 'Resume', id: 'resume', icon: ExternalLink },
-    { name: 'Outside Code', id: 'outside', icon: Heart },
+    { name: 'Life', id: 'life', icon: Heart },
     { name: 'Contact', id: 'contact', icon: Mail },
   ]
   
@@ -895,7 +895,7 @@ function ResumePage() {
   )
 }
 
-function OutsidePage() {
+function LifePage() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-12 space-y-8">
       <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 p-8 rounded-xl border border-purple-500/30">
@@ -990,8 +990,8 @@ export default function App() {
       setCurrent('about')
     } else if (path === '/contact') {
       setCurrent('contact')
-    } else if (path === '/outside') {
-      setCurrent('outside')
+    } else if (path === '/life') {
+      setCurrent('life')
     } else {
       setCurrent('home')
     }
@@ -1006,7 +1006,7 @@ export default function App() {
       experimental: "Experimental - Keerthan's Page",
       blog: "Blog - Keerthan's Page",
       resume: "Resume - Keerthan's Page",
-      outside: "Outside Code - Keerthan's Page",
+      life: "Life - Keerthan's Page",
       contact: "Contact - Keerthan's Page",
     }
     
@@ -1037,7 +1037,7 @@ export default function App() {
   }, [])
 
   const title = {
-    home: 'Home', about: 'About Me', projects: 'Featured Projects', experimental: 'Experimental & Hobby Projects', blog: 'Blog', resume: 'Resume', outside: 'Outside Code', contact: "Let's Connect"
+    home: 'Home', about: 'About Me', projects: 'Featured Projects', experimental: 'Experimental & Hobby Projects', blog: 'Blog', resume: 'Resume', life: 'Life', contact: "Let's Connect"
   }[current] ?? 'Home'
 
   return (
@@ -1097,7 +1097,8 @@ export default function App() {
               <Route path="/resume" element={<ResumePage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              <Route path="/outside" element={<OutsidePage />} />
+              <Route path="/life" element={<LifePage />} />
+              <Route path="/outside" element={<Navigate to="/life" replace />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>

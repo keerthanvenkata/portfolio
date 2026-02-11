@@ -32,12 +32,17 @@ The portfolio website embodies a **futuristic, cyberpunk-inspired aesthetic** wi
 
 - **Purpose**: Same content, different skin—clean, high-contrast light UI for recruiters, investors, and resume links.
 - **Tone**: Still Keerthan’s voice (informal, friendly), but expressed through warm neutrals, charcoal accents, and measured color pops.
-- **Access**: Dark remains default; bright mode will be opt-in via toggle + URL parameter (see `docs/professional_version.md`).
+- **Access**: Dark remains default; bright mode will be opt-in via toggle + URL parameter (see `docs/professional-version.md`).
 - **Design Pillars**:
   - Matte off-white canvas (`#F5F3EF`) with charcoal typography.
   - Reuse accent colors sparingly (violet/magenta for dividers, CTA outlines).
   - Subtle embossing/glass for cards instead of neon glows.
   - Maintain identical layout, spacing, and content hierarchy to avoid regressions when flipping themes.
+
+### Life Section (Planned)
+
+- **Purpose**: A separate "room" with its own theme (e.g. Golden Hour / warm analog). Same typography, layout system, and motion as the rest of the site; different palette, texture, and optionally softer shapes. Theme toggle does not appear on the Life page.
+- **Reference**: `docs/life-section-plan.md` for structure (one route `/life`, in-page sections Music / Travel / Food / Thoughts) and implementation approach (`data-section="life"`, CSS tokens).
 
 ### Color Story
 
@@ -937,7 +942,7 @@ backgroundImage: {
   - Usage: Homepage, projects page, resume page
 
 - **Max Width (Medium)**: `max-w-4xl` / `56rem` / `896px`
-  - Usage: Blog page, "Outside Code" page, detail pages
+  - Usage: Blog page, Life page, detail pages
 
 - **Max Width (Small)**: `max-w-3xl` / `48rem` / `768px`
   - Usage: Contact page, centered content

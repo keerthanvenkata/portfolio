@@ -4,11 +4,12 @@ Single reference for architecture, UX, and roadmap decisions so anyone can ramp 
 
 ## 1. Product Story
 
-- **Site role**: Dual-purpose portfolio — "My Space" (dark neon personal lab) for friends/makers with travel, stories, playlists, and random content; "Professional Mode" (bright parchment) for recruiters/VCs with clean, formal presentation.
+- **Site role**: Portfolio with two presentation modes (dark cyberpunk / light professional) showing the **same content** in both, plus a separate **Life** section with its own theme and tone.
 - **Personas**:
-  - *My Space* (dark mode): Personal lab, informal, creative space — travel stories, music playlists, journal entries, random thoughts, lifestyle content.
-  - *Professional Mode* (bright mode): Recruiter/VC-facing, formal, clean — technical deep-dives, professional insights, career highlights.
-- **North Star**: One codebase, two skins, mostly shared content with theme-filtered sections (Blog, Outside Code subsections, future personal sections).
+  - *Dark mode* (default): Neon cyberpunk dev lab — same content as light, different skin.
+  - *Light/Professional mode*: Parchment, recruiter-friendly — same content as dark, different skin.
+  - *Life*: Personal, creative "room" — music, travel, food, thoughts; own theme (e.g. Golden Hour); no theme toggle on that page.
+- **North Star**: One codebase; dark and light share content (no theme-based filtering). Life is a distinct section with its own route (`/life`), in-page sections, and atmosphere. See `docs/life-section-plan.md`.
 
 ## 2. Architecture Snapshot
 
@@ -28,13 +29,12 @@ Single reference for architecture, UX, and roadmap decisions so anyone can ramp 
 
 ## 4. Component Inventory
 
-- **Layout**: Fixed sidebar (hover/pin), global header/footer, mobile hamburger overlay, theme toggle (top-right + sidebar bottom).
+- **Layout**: Fixed sidebar (hover/pin), global header/footer, mobile hamburger overlay, theme toggle (top-right + sidebar bottom). Theme toggle hidden on Life page.
 - **Hero**: Two-column layout with portrait slot (desktop). Portrait assets live in `public/media/portrait/`; drop-shadow stack documented in `style-guide`.
 - **Content Modules**: Featured projects, blog summaries, experimental cards, quick links, timeline, modals (`ProjectModal`, `ExperimentalModal`, `BlogModal`).
 - **Sections**:
-  - **Universal** (both themes): Home, About, Projects, Experimental, Resume, Contact
-  - **Theme-filtered**: Blog (posts with `theme` param), Outside Code (subsections with `theme` param)
-  - **Future personal sections** (dark default, configurable): Travel, Stories/Journal, Playlists, Reading List, Photography
+  - **Universal** (both themes, same content): Home, About, Projects, Experimental, Blog, Resume, Contact
+  - **Life** (separate): One route `/life` with in-page sections (Music, Travel, Food, Thoughts). Own theme; no theme toggle. Blog-for-life / personal content lives here. See `docs/life-section-plan.md`.
 - **Utilities**: `Modal` base component, `ImageCarousel`, `VideoPlayer`, `PDFViewer`, `GitHubContributions`.
 - **Docs Reference**:
   - Visual language → `docs/style-guide.md`

@@ -79,15 +79,13 @@ Quick workflow
   excerpt: One-liner summary
   date: 2025-01-28
   featured: true
-  theme: both
+  author: Your Name
   ---
 
   Your markdown content here. Code blocks, images, etc.
   ```
-- **Theme Parameter**: Add `theme: "dark" | "bright" | "both"` to frontmatter:
-  - `"dark"`: Personal stories, travel journal, lifestyle content (visible only in dark "My Space" mode)
-  - `"bright"`: Technical deep-dives, professional insights (visible only in bright "Professional Mode")
-  - `"both"`: General posts visible in both themes (default if omitted)
+- **Author**: Optional. Defaults to "Keerthan Venkata" if omitted. Set `author: "Other Name"` for guest or client posts.
+- **Content**: Dark and light (professional) modes show the same blog content; there is no theme-based filtering of posts. Life-related or personal essays can live in the Life section instead (see Life Section below).
 - The generator renders HTML and emits `posts.json` and per-post JSON.
 
 ## Timeline (Career + Education)
@@ -138,24 +136,13 @@ Quick workflow
 - Logo files live in `frontend/public/tech-logos/` (add SVGs there; reference as `/tech-logos/filename.svg`). Omit `logo` to show the first letter.
 - Build copies this file to `frontend/public/api/tech-stack.json`; the About page loads it from the API.
 
-## Outside Code Section
+## Life Section (planned)
 
-- Edit `backend/app/content/outside-code.json` (or similar structure).
-- Each subsection (Music, Food, Travel, etc.) can have a `theme` parameter:
-  ```json
-  {
-    "id": "music",
-    "title": "Music",
-    "theme": "dark",
-    "content": "..."
-  }
-  ```
-- **Theme Parameter**: `"dark" | "bright" | "both"`:
-  - `"dark"`: Personal content (default for lifestyle sections)
-  - `"bright"`: Professional content (rare for Outside Code)
-  - `"both"`: Visible in both themes
-- Current subsections: Music, Food (both default to `"dark"` but configurable).
-- Future subsections (Travel, Playlists, etc.) default to `"dark"` but easily configurable in codebase.
+- **Name**: **Life** is a single top-level nav item and a distinct area of the site.
+- **Structure**: One route `/life` with in-page sections and smooth scroll. **Sections not final** — candidates include Music (with **Spotify playlists**; integration UX TBD — collapsible, mini-player, or tiles→player, etc.), Travel, Food, Thoughts; more may be added. Sticky mini-nav for section jumps. No sub-routes in the main nav. See `docs/life-section-plan.md` for discussion.
+- **Content source**: TBD (e.g. `backend/app/content/life.json` or per-section files).
+- **Theme**: Life has its own visual theme; **exact style TBD** (e.g. Golden Hour, film nostalgia, or other). The site-wide dark/light toggle does **not** appear on the Life page. Implement via e.g. `body[data-section="life"]` with its own CSS tokens when style is decided; keep typography, layout system, and motion consistent so it feels like the same person, different mood.
+- **Blog for Life**: Life-focused or personal blog-style content lives inside Life (e.g. Thoughts subsection); no need for a separate theme toggle for "life" vs "professional" posts in the main blog.
 
 ## Media (Images, Diagrams, Videos)
 
@@ -166,7 +153,7 @@ Quick workflow
   ├── projects/{project-id}/diagrams/*
   ├── projects/{project-id}/videos/*
   ├── blog/{post-id}/*
-  ├── outside-code/{section-id}/*
+  ├── life/{section-id}/*
   ├── screenshots/*
   ├── diagrams/*
   └── videos/*
@@ -254,8 +241,8 @@ Quick workflow
 
 - This static pipeline mirrors the future API schema. When moving to FastAPI hosting, you can serve the same shapes dynamically without changing the frontend.
 
-## Bright / Professional Mode Content Notes
+## Dark / Light (Professional) Mode Content Notes
 
-- Theme toggle (dark default, bright optional) will not duplicate data—keep YAML/JSON identical so both skins read from the same source.
-- If you add recruiter-facing copy or CTAs, gate via theme flags inside the frontend instead of branching content files.
-- Document any bright-mode-specific assets (e.g., alternate logos, toned-down illustrations) in `docs/professional_version.md`.
+- **Same content in both modes**: Dark (cyberpunk) and light (professional) themes show the same content—no theme-based filtering of blog posts or sections. Keep a single source of truth in YAML/JSON.
+- **Life is separate**: The Life section is a distinct "room" with its own theme and no theme toggle; see Life Section above and `docs/life-section-plan.md`.
+- Document any bright-mode-specific assets in `docs/professional-version.md`.

@@ -82,34 +82,14 @@ Portrait & imagery:
 
 ## 8. Content Strategy
 
-**Core Principle**: Both themes ("My Space" dark mode + "Professional Mode" bright mode) will mostly share the same content. Only specific sections have theme filtering.
+**Core Principle**: Dark and light (Professional) themes show the **same content** everywhere. No theme-based filtering of blog posts or sections. The **Life** section is a separate area with its own theme and no theme toggle on that page.
 
-**Universal Sections** (visible in both themes):
-- Home, About, Projects, Experimental, Resume, Contact
-- These sections show identical content; only visual presentation (theme, typography, animations) changes.
+**Sections (same content in both themes)**:
+- Home, About, Projects, Experimental, Blog, Resume, Contact
+- Identical content in dark and light; only visual presentation (tokens, typography, animations) changes.
 
-**Theme-Filtered Sections**:
-
-1. **Blog Posts**: Add `theme` parameter (`"dark" | "bright" | "both"`):
-   - `"dark"`: Personal stories, travel journal, random thoughts, lifestyle content (visible only in dark "My Space" mode)
-   - `"bright"`: Technical deep-dives, professional insights, career updates (visible only in bright "Professional Mode")
-   - `"both"`: General posts visible in both themes (default)
-
-2. **Outside Code Section**: Subsections (Music, Food, etc.) have `theme` parameter:
-   - Each subsection can be `"dark" | "bright" | "both"`
-   - Current: Music and Food (both personal, default to `"dark"` but configurable)
-   - Future subsections (Travel, Playlists, etc.) default to `"dark"` but easily configurable to `"both"` or `"bright"` via codebase config
-
-**Future Personal-Only Sections** (dark mode default, configurable):
-- **Travel**: Stories, photos, journal entries (personal space)
-- **Stories/Journal**: Micro-blog style entries (personal space)
-- **Playlists**: Music curation (could merge with Music in Outside Code or be separate)
-- **Reading List**: Books/articles (personal space)
-- **Photography**: Visual portfolio (personal space)
-
-**Configuration Pattern**: All personal sections default to `theme: "dark"` but can be easily configured in codebase to also appear in bright mode (`theme: "both"`) if desired. This keeps flexibility without maintenance overhead.
-
-**Implementation Note**: Start with same content for universal sections, add theme filtering for Blog and Outside Code subsections. Keep architecture flexible for future section additions with theme params.
+**Life section** (separate):
+- One route `/life` with in-page sections (Music, Travel, Food, Thoughts). Has its own visual theme (e.g. Golden Hour); theme toggle does not appear on Life. Life-focused or personal blog-style content lives inside Life (e.g. Thoughts). See `docs/life-section-plan.md`.
 
 ## 9. Open Questions
 
@@ -119,9 +99,9 @@ Portrait & imagery:
 - Should we use a theme like Material Design md3?
 
 **Decided**: 
-- Universal sections (Projects, Experimental, About, Resume, Contact) remain the same across themes.
-- Only Blog and Outside Code subsections have theme filtering.
-- Future personal sections (Travel, Stories, Playlists, Reading List, Photography) default to dark mode but are configurable.
+- Dark and light themes share the same content (no theme filtering).
+- Life is a separate section with its own route and theme; no theme toggle on Life.
+- See `docs/life-section-plan.md` for Life structure and theme approach.
 
 Document remaining answers before implementation to keep alignment tight.
 
