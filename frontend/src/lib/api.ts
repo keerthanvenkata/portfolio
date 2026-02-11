@@ -116,6 +116,18 @@ export async function fetchSocial() {
   return data
 }
 
+export type TechStackItem = { name: string; logo?: string; url?: string }
+
+export type TechStackData = {
+  sectionTitle: string
+  items: TechStackItem[]
+}
+
+export async function fetchTechStack() {
+  const { data } = await api.get<TechStackData>(`/api/tech-stack.json${v}`)
+  return data
+}
+
 export type ResumeVersion = {
   version: string
   filename: string

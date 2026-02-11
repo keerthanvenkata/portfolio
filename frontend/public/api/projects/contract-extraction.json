@@ -2,19 +2,20 @@
   "id": "contract-extraction",
   "title": "Contract Data Extraction Service",
   "role": "SDE Applied AI at Adaequare",
-  "description": "AI-powered contract intelligence system that extracts structured metadata from various contract types (MSAs, NDAs, service agreements, etc.) into machine-readable JSON. Processes PDF and DOCX files using multimodal LLM extraction with template-based validation and quality scoring.",
-  "contribution": "Architected and built the contract extraction system end-to-end, focusing on LLM integration, prompt engineering, state management, and validation workflows.",
+  "description": "AI-powered contract intelligence system that extracts structured metadata from various contract types (MSAs, NDAs, service agreements, etc.) into machine-readable JSON. Processes PDF and DOCX using multimodal LLM extraction with template-based validation and quality scoring. This production system became the foundation for domain-specific extraction services—later adapted into a streamlined event flyer extraction pipeline.",
+  "contribution": "Architected and built the contract extraction system end-to-end, establishing the patterns and validation workflows that became the template for extraction services across domains.",
   "contributionBullets": [
-    "Designed extraction architecture supporting PDF (PyMuPDF) and DOCX (python-docx) formats with multimodal LLM processing.",
+    "Designed extraction architecture supporting PDF (PyMuPDF) and DOCX (python-docx) with multimodal LLM processing.",
     "Engineered prompt templates with context management, state tracking, and memory optimization for efficient LLM calls.",
-    "Implemented sophisticated validation system comparing extracted values against templates with expected answers, deviation detection, and quality scoring (0-100).",
+    "Implemented validation comparing extracted values to templates with expected answers, deviation detection, and quality scoring (0-100).",
     "Built FastAPI REST API with Pydantic models for request/response validation, async processing, and job status tracking.",
-    "Developed field-level validation with match flags (same_as_template, similar_not_exact, different_from_template, flag_for_review, not_found) for automated review workflows.",
-    "Created structured JSON schema (v2.0.0) with validation scoring, status indicators, and detailed notes for each extracted field.",
-    "Optimized LLM context management and token usage through intelligent chunking and state preservation across extraction stages.",
-    "Built CLI interface for single-file and batch processing with parallel execution support.",
+    "Developed field-level validation with match flags (same_as_template, similar_not_exact, different_from_template, flag_for_review, not_found) for automated review.",
+    "Created structured JSON schema (v2.0.0) with validation scoring, status indicators, and detailed notes per field.",
+    "Optimized LLM context and token usage via chunking and state preservation across extraction stages.",
+    "Built CLI for single-file and batch processing with parallel execution.",
     "Developed Streamlit UI for interactive contract review, validation, and extraction management.",
-    "Deployed on GCP Cloud Run with Docker containers and Cloud SQL for persistence."
+    "Deployed on GCP Cloud Run with Docker and Cloud SQL for persistence.",
+    "Established reusable extraction framework that enabled rapid adaptation for event flyer processing (event-flyer-extractor)."
   ],
   "tech": [
     "Python 3.10+",
@@ -44,15 +45,18 @@
     "Multimodal LLM approach (Gemini 3 Pro/Flash) handles both text and image-based contracts, replacing traditional OCR preprocessing.",
     "Template-based validation system with expected answers and deviation detection for automated quality assurance.",
     "Used by Legal, Sales, and Finance teams for contract metadata extraction and CRM automation.",
-    "Production-ready architecture deployed on GCP with Docker containerization and Cloud SQL persistence."
+    "Production-ready architecture deployed on GCP with Docker containerization and Cloud SQL persistence.",
+    "Reusable foundation: patterns adapted for domain-specific services (e.g. event flyer extractor)."
   ],
   "relatedProjects": [
     "property-appraisal",
-    "tax-roll-pipeline"
+    "tax-roll-pipeline",
+    "event-flyer-extractor"
   ],
   "relatedPosts": [
     "llm-patterns",
-    "fastapi-practices"
+    "fastapi-practices",
+    "contract-intelligence-takeaways"
   ],
   "collaboration": {
     "seeking": false,

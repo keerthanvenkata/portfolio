@@ -143,19 +143,20 @@
     "id": "contract-extraction",
     "title": "Contract Data Extraction Service",
     "role": "SDE Applied AI at Adaequare",
-    "description": "AI-powered contract intelligence system that extracts structured metadata from various contract types (MSAs, NDAs, service agreements, etc.) into machine-readable JSON. Processes PDF and DOCX files using multimodal LLM extraction with template-based validation and quality scoring.",
-    "contribution": "Architected and built the contract extraction system end-to-end, focusing on LLM integration, prompt engineering, state management, and validation workflows.",
+    "description": "AI-powered contract intelligence system that extracts structured metadata from various contract types (MSAs, NDAs, service agreements, etc.) into machine-readable JSON. Processes PDF and DOCX using multimodal LLM extraction with template-based validation and quality scoring. This production system became the foundation for domain-specific extraction services—later adapted into a streamlined event flyer extraction pipeline.",
+    "contribution": "Architected and built the contract extraction system end-to-end, establishing the patterns and validation workflows that became the template for extraction services across domains.",
     "contributionBullets": [
-      "Designed extraction architecture supporting PDF (PyMuPDF) and DOCX (python-docx) formats with multimodal LLM processing.",
+      "Designed extraction architecture supporting PDF (PyMuPDF) and DOCX (python-docx) with multimodal LLM processing.",
       "Engineered prompt templates with context management, state tracking, and memory optimization for efficient LLM calls.",
-      "Implemented sophisticated validation system comparing extracted values against templates with expected answers, deviation detection, and quality scoring (0-100).",
+      "Implemented validation comparing extracted values to templates with expected answers, deviation detection, and quality scoring (0-100).",
       "Built FastAPI REST API with Pydantic models for request/response validation, async processing, and job status tracking.",
-      "Developed field-level validation with match flags (same_as_template, similar_not_exact, different_from_template, flag_for_review, not_found) for automated review workflows.",
-      "Created structured JSON schema (v2.0.0) with validation scoring, status indicators, and detailed notes for each extracted field.",
-      "Optimized LLM context management and token usage through intelligent chunking and state preservation across extraction stages.",
-      "Built CLI interface for single-file and batch processing with parallel execution support.",
+      "Developed field-level validation with match flags (same_as_template, similar_not_exact, different_from_template, flag_for_review, not_found) for automated review.",
+      "Created structured JSON schema (v2.0.0) with validation scoring, status indicators, and detailed notes per field.",
+      "Optimized LLM context and token usage via chunking and state preservation across extraction stages.",
+      "Built CLI for single-file and batch processing with parallel execution.",
       "Developed Streamlit UI for interactive contract review, validation, and extraction management.",
-      "Deployed on GCP Cloud Run with Docker containers and Cloud SQL for persistence."
+      "Deployed on GCP Cloud Run with Docker and Cloud SQL for persistence.",
+      "Established reusable extraction framework that enabled rapid adaptation for event flyer processing (event-flyer-extractor)."
     ],
     "tech": ["Python 3.10+", "FastAPI", "Pydantic", "Google Gemini 3 Pro", "Google Cloud Vision API","PyMuPDF", "python-docx", "Streamlit", "Docker", "GCP Cloud Run", "Cloud SQL", "PostgreSQL"],
     "link": "https://github.com/keerthanvenkata/msa_extractor",
@@ -172,10 +173,11 @@
       "Multimodal LLM approach (Gemini 3 Pro/Flash) handles both text and image-based contracts, replacing traditional OCR preprocessing.",
       "Template-based validation system with expected answers and deviation detection for automated quality assurance.",
       "Used by Legal, Sales, and Finance teams for contract metadata extraction and CRM automation.",
-      "Production-ready architecture deployed on GCP with Docker containerization and Cloud SQL persistence."
+      "Production-ready architecture deployed on GCP with Docker containerization and Cloud SQL persistence.",
+      "Reusable foundation: patterns adapted for domain-specific services (e.g. event flyer extractor)."
     ],
-    "relatedProjects": ["property-appraisal", "tax-roll-pipeline"],
-    "relatedPosts": ["llm-patterns", "fastapi-practices"],
+    "relatedProjects": ["property-appraisal", "tax-roll-pipeline", "event-flyer-extractor"],
+    "relatedPosts": ["llm-patterns", "fastapi-practices", "contract-intelligence-takeaways"],
     "collaboration": {
       "seeking": false,
       "types": [],
@@ -201,7 +203,7 @@
       "Developed document parsing and semantic understanding components.",
       "Created APIs for topic extraction, relationship queries, and navigation services."
     ],
-    "tech": ["Python"],
+    "tech": ["Python", "FastAPI", "Google Gemini", "Markdown", "Pydantic"],
     "link": "https://github.com/keerthanvenkata/semantic-topic-mapper",
     "status": "Active",
     "images": [
@@ -217,8 +219,8 @@
       "Supports scalable document analysis workflows.",
       "MIT licensed for open collaboration and extension."
     ],
-    "relatedProjects": [],
-    "relatedPosts": [],
+    "relatedProjects": ["document-data-extraction", "contract-extraction"],
+    "relatedPosts": ["contract-intelligence-takeaways"],
     "collaboration": {
       "seeking": false,
       "types": [],
@@ -229,6 +231,57 @@
       "description": ""
     },
     "featured": false,
+    "kind": "project"
+  },
+  {
+    "id": "event-flyer-extractor",
+    "title": "Event Flyer Extraction System",
+    "role": "Author & Maintainer",
+    "description": "Production-ready AI system that extracts structured event metadata from flyer images using Gemini Vision. Processes JPG/PNG to extract 11 event fields (name, date, venue, organizer, etc.) with validation and human-in-the-loop review. Built as a streamlined, domain-specific adaptation of the Contract Data Extraction Service.",
+    "contribution": "Architected and deployed a production-optimized extraction system that adapts proven patterns from enterprise contract extraction into a cost-effective event intelligence platform.",
+    "contributionBullets": [
+      "Adapted template-based validation from contract extraction for event-specific metadata (11 core fields).",
+      "Implemented Gemini Vision-based extraction (Flash for cost efficiency while keeping accuracy on image content).",
+      "Built two-tier validation: Python datatype checks plus LLM-based quality assessment with 13 confidence flags.",
+      "Designed SQLite-based job tracking for simplicity and zero-ops (inspired by contract extraction DB patterns).",
+      "Created external prompt management so non-technical users can iterate on extraction rules without code changes.",
+      "Developed Streamlit UI for human review and approval workflows, aligned with contract extraction review interface.",
+      "Integrated Google Drive polling (cron) for automated batch ingestion from client sources.",
+      "Built JSONL export for downstream integration (Google Sheets, booking platforms).",
+      "Centralized logging and configuration patterns from contract extraction.",
+      "Deployed with minimal infrastructure: local scripts plus optional FastAPI, scaled for ~1,000 images/month."
+    ],
+    "tech": ["Python 3.11", "Gemini 2.0 Flash", "FastAPI", "Streamlit", "SQLite", "Google Drive API", "JSONL", "Docker"],
+    "link": "https://github.com/keerthanvenkata/event-flyer-extractor",
+    "status": "Production",
+    "images": [
+      "projects/event-flyer-extractor/infographic-1.png",
+      "projects/event-flyer-extractor/infographic-2.png",
+      "projects/event-flyer-extractor/review-ui.png",
+      "projects/event-flyer-extractor/uml.svg"
+    ],
+    "video": null,
+    "videoPoster": null,
+    "highlights": [
+      "Processes ~1,000 event flyer images/month with 90%+ auto-approval via intelligent validation.",
+      "Reduces manual data entry from ~5 mins/event to under 2 mins (review-only workflow).",
+      "Domain-specific adaptation of enterprise contract extraction patterns; proves architectural reusability.",
+      "13-flag validation prioritizes edge cases for human review.",
+      "Production-ready with Google Drive integration, JSONL export, and Streamlit dashboard.",
+      "Pragmatic design: simple, reliable, easy to iterate—minimal infrastructure can match enterprise effectiveness."
+    ],
+    "relatedProjects": ["contract-extraction"],
+    "relatedPosts": ["llm-patterns", "contract-intelligence-takeaways"],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
+    "featured": true,
     "kind": "project"
   }
 ]

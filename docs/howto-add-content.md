@@ -122,6 +122,22 @@ Quick workflow
   ```
 - GitHub contributions chart uses `github_username`.
 
+## Technology and Tools (tech stack)
+
+- **Source of truth:** `backend/app/content/tech-stack.json`
+- Structure:
+  ```json
+  {
+    "sectionTitle": "Technology and Tools",
+    "items": [
+      { "name": "Python", "logo": "/tech-logos/python.svg", "url": "https://www.python.org" },
+      { "name": "Cursor", "url": "https://cursor.com" }
+    ]
+  }
+  ```
+- Logo files live in `frontend/public/tech-logos/` (add SVGs there; reference as `/tech-logos/filename.svg`). Omit `logo` to show the first letter.
+- Build copies this file to `frontend/public/api/tech-stack.json`; the About page loads it from the API.
+
 ## Outside Code Section
 
 - Edit `backend/app/content/outside-code.json` (or similar structure).

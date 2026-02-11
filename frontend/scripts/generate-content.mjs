@@ -178,6 +178,12 @@ async function generateSocial(contentDir, outDir) {
   await writeJson(path.join(outDir, 'social.json'), social)
 }
 
+async function generateTechStack(contentDir, outDir) {
+  const src = path.join(contentDir, 'tech-stack.json')
+  const data = await readJsonIfExists(src)
+  if (data) await writeJson(path.join(outDir, 'tech-stack.json'), data)
+}
+
 async function generate() {
   const repoRoot = path.resolve(__dirname, '..')
   const contentDir = path.resolve(__dirname, '../../backend/app/content')
@@ -189,6 +195,7 @@ async function generate() {
   await generateResume(contentDir, publicApiDir)
   await generateTimeline(contentDir, publicApiDir)
   await generateSocial(contentDir, publicApiDir)
+  await generateTechStack(contentDir, publicApiDir)
 
   // Copy media directory
   const mediaSrc = path.join(contentDir, 'media')

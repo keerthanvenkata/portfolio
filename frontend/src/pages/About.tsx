@@ -1,72 +1,20 @@
+import { useState, useEffect } from 'react'
 import Timeline from '../components/Timeline'
 import GitHubContributions from '../components/GitHubContributions'
-
-const TECH_SECTION_TITLE = 'Technology and Tools'
-
-type TechItem = { name: string; logo?: string; url?: string }
-
-// Logos live in public/tech-logos/ (normalized filenames). Items without logo show initial letter.
-const TECH_STACK: TechItem[] = [
-  // Languages
-  { name: 'Python', logo: '/tech-logos/python.svg', url: 'https://www.python.org' },
-  { name: 'C++', logo: '/tech-logos/cpp.svg', url: 'https://isocpp.org' },
-  { name: 'JavaScript', logo: '/tech-logos/javascript.svg', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
-  { name: 'TypeScript', logo: '/tech-logos/typescript.svg', url: 'https://www.typescriptlang.org' },
-  // Web & frontend
-  { name: 'HTML5', logo: '/tech-logos/html5.svg', url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
-  { name: 'CSS3', logo: '/tech-logos/css3.svg', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
-  { name: 'React', logo: '/tech-logos/react.svg', url: 'https://react.dev' },
-  { name: 'Vite', logo: '/tech-logos/vite.svg', url: 'https://vitejs.dev' },
-  { name: 'Node.js', logo: '/tech-logos/nodejs.svg', url: 'https://nodejs.org' },
-  // Backend & APIs
-  { name: 'FastAPI', logo: '/tech-logos/fastapi.svg', url: 'https://fastapi.tiangolo.com' },
-  { name: 'GraphQL', logo: '/tech-logos/graphql.svg', url: 'https://graphql.org' },
-  // Data & databases
-  { name: 'PostgreSQL', logo: '/tech-logos/postgresql.svg', url: 'https://www.postgresql.org' },
-  { name: 'MySQL', logo: '/tech-logos/mysql.svg', url: 'https://www.mysql.com' },
-  { name: 'MongoDB', logo: '/tech-logos/mongodb.svg', url: 'https://www.mongodb.com' },
-  { name: 'Redis', logo: '/tech-logos/redis.svg', url: 'https://redis.io' },
-  { name: 'InfluxDB', logo: '/tech-logos/influxdb.svg', url: 'https://www.influxdata.com' },
-  { name: 'SQLAlchemy', logo: '/tech-logos/sqlalchemy.svg', url: 'https://www.sqlalchemy.org' },
-  // ML & data science
-  { name: 'PyTorch', logo: '/tech-logos/pytorch.svg', url: 'https://pytorch.org' },
-  { name: 'Scikit-learn', logo: '/tech-logos/scikit-learn.svg', url: 'https://scikit-learn.org' },
-  { name: 'OpenCV', logo: '/tech-logos/opencv.svg', url: 'https://opencv.org' },
-  { name: 'Jupyter', logo: '/tech-logos/jupyter.svg', url: 'https://jupyter.org' },
-  { name: 'Anaconda', logo: '/tech-logos/anaconda.svg', url: 'https://www.anaconda.com' },
-  // AI / agents
-  { name: 'LangGraph', logo: '/tech-logos/langgraph.svg', url: 'https://langchain.com/langgraph' },
-  { name: 'Vertex AI', logo: '/tech-logos/vertexai.svg', url: 'https://cloud.google.com/vertex-ai' },
-  { name: 'Gemini', logo: '/tech-logos/gemini.svg', url: 'https://ai.google.dev/gemini' },
-  { name: 'Google Agents SDK', url: 'https://ai.google.dev' },
-  { name: 'vLLM', logo: '/tech-logos/vllm.svg', url: 'https://docs.vllm.ai' },
-  // Cloud & infra
-  { name: 'GCP', logo: '/tech-logos/gcp.svg', url: 'https://cloud.google.com' },
-  { name: 'AWS', logo: '/tech-logos/aws.svg', url: 'https://aws.amazon.com' },
-  { name: 'Vercel', logo: '/tech-logos/vercel.svg', url: 'https://vercel.com' },
-  { name: 'Docker', logo: '/tech-logos/docker.svg', url: 'https://www.docker.com' },
-  { name: 'Kubernetes', logo: '/tech-logos/kubernetes.svg', url: 'https://kubernetes.io' },
-  { name: 'Kafka', logo: '/tech-logos/kafka.svg', url: 'https://kafka.apache.org' },
-  // Orchestration & automation
-  { name: 'Apache Airflow', logo: '/tech-logos/apache-airflow.svg', url: 'https://airflow.apache.org' },
-  { name: 'n8n', logo: '/tech-logos/n8n.svg', url: 'https://n8n.io' },
-  { name: 'Streamlit', logo: '/tech-logos/streamlit.svg', url: 'https://streamlit.io' },
-  // Version control & collaboration
-  { name: 'Git', logo: '/tech-logos/git.svg', url: 'https://git-scm.com' },
-  { name: 'GitHub', logo: '/tech-logos/github.svg', url: 'https://github.com' },
-  { name: 'Jira', logo: '/tech-logos/jira.svg', url: 'https://www.atlassian.com/software/jira' },
-  { name: 'Trello', logo: '/tech-logos/trello.svg', url: 'https://trello.com' },
-  // Documentation & design
-  { name: 'LaTeX', logo: '/tech-logos/latex.svg', url: 'https://www.latex-project.org' },
-  { name: 'UML', logo: '/tech-logos/uml.svg', url: 'https://www.omg.org/spec/UML' },
-  // OS & editors
-  { name: 'Linux', logo: '/tech-logos/linux.svg', url: 'https://www.linux.org' },
-  { name: 'Windows', logo: '/tech-logos/windows.svg', url: 'https://www.microsoft.com/windows' },
-  { name: 'VS Code', logo: '/tech-logos/vscode.svg', url: 'https://code.visualstudio.com' },
-  { name: 'Cursor', url: 'https://cursor.com' },
-]
+import { fetchTechStack, type TechStackData } from '../lib/api'
 
 export default function AboutPage() {
+  const [techStack, setTechStack] = useState<TechStackData | null>(null)
+
+  useEffect(() => {
+    fetchTechStack()
+      .then(setTechStack)
+      .catch(() => setTechStack(null))
+  }, [])
+
+  const sectionTitle = techStack?.sectionTitle ?? 'Technology and Tools'
+  const items = techStack?.items ?? []
+
   return (
     <div className="max-w-4xl mx-auto px-6 py-12">
       <div className="mb-8">
@@ -81,10 +29,10 @@ export default function AboutPage() {
       </div>
 
       <section className="mt-12 pt-12 border-t border-violet/30">
-        <h2 className="text-2xl font-heading font-bold gradient-text-purple mb-6">{TECH_SECTION_TITLE}</h2>
+        <h2 className="text-2xl font-heading font-bold gradient-text-purple mb-6">{sectionTitle}</h2>
         <p className="text-gray-400 mb-6">Languages, frameworks, and platforms I use or have experience with.</p>
         <div className="flex flex-wrap gap-2 items-center">
-          {TECH_STACK.map(({ name, logo, url }) => {
+          {items.map(({ name, logo, url }) => {
             const icon = logo ? (
               <img src={logo} alt={name} className="h-7 w-7 object-contain" />
             ) : (

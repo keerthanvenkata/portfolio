@@ -12,7 +12,11 @@
     "Created APIs for topic extraction, relationship queries, and navigation services."
   ],
   "tech": [
-    "Python"
+    "Python",
+    "FastAPI",
+    "Google Gemini",
+    "Markdown",
+    "Pydantic"
   ],
   "link": "https://github.com/keerthanvenkata/semantic-topic-mapper",
   "status": "Active",
@@ -29,8 +33,13 @@
     "Supports scalable document analysis workflows.",
     "MIT licensed for open collaboration and extension."
   ],
-  "relatedProjects": [],
-  "relatedPosts": [],
+  "relatedProjects": [
+    "document-data-extraction",
+    "contract-extraction"
+  ],
+  "relatedPosts": [
+    "contract-intelligence-takeaways"
+  ],
   "collaboration": {
     "seeking": false,
     "types": [],
