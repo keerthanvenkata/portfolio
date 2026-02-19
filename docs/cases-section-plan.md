@@ -12,7 +12,25 @@
 
 ---
 
-## 2. Depth: Light Cases Page + Blog for Expansion
+## 2. Case fields reference (for editing `backend/app/content/cases.json`)
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| **id** | string | Yes | Unique slug (URL-safe), e.g. `"bookmystall"`, `"adaequare-cotality"`. |
+| **company** | string | Yes | Display name (e.g. `"BookMyStall.in"`, `"Adaequare"`). |
+| **client** | string \| null | No | If set (e.g. `"Cotality"`), UI shows “Work at [company] for client [client]”. Omit or `null` if N/A. |
+| **person** | object | Yes | `{ "name": "Full Name", "role": "Founder", "company": "BookMyStall.in" }`. `company` inside person is optional. |
+| **logo** | string | No | Path under media, e.g. `"cases/bookmystall.svg"`. Resolved as `/media/cases/bookmystall.svg`. Put files in `backend/app/content/media/cases/`. |
+| **link** | string | No | Single URL (LinkedIn, company site, etc.). |
+| **quote** | string | Yes | Testimonial or impact line (one or two sentences). |
+| **projectIds** | string[] | No | Related project ids, e.g. `["event-flyer-extractor"]`. Modal shows “View project” per id (links to `/projects/:id`). |
+| **relatedPosts** | string[] | No | Blog post ids, e.g. `["startup-journey"]`. Modal shows “Read more” links to `/blog/:id`. |
+
+**Convention:** Edit only `backend/app/content/cases.json`. Run the generator (`node frontend/scripts/generate-content.mjs`) to produce `frontend/public/api/cases.json`. Media under `backend/app/content/media/cases/` is copied to `frontend/public/media/cases/` by the same script.
+
+---
+
+## 3. Depth: Light Cases Page + Blog for Expansion
 
 **Recommendation:**
 
@@ -85,7 +103,7 @@ Optional later:
 
 ---
 
-## 4. UX Summary
+## 5. UX Summary
 
 | Element           | Location        | Behavior |
 |------------------|-----------------|----------|
@@ -108,7 +126,7 @@ Optional later:
 
 ---
 
-## 6. Open Points
+## 7. Open Points
 
 - **Nav order**: Cases between Projects and Experimental, or after Projects before Experimental? (Current proposal: Projects → Cases → Experimental.)
 - **Adaequare**: One case with **Cotality as client** (attribution: “Work at Adaequare for client Cotality”); one big + one medium project. Placeholder quote until manager approves; add blog post and `relatedPosts` when ready.

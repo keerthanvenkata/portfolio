@@ -109,6 +109,12 @@ async function generateProjects(contentDir, outDir) {
   }
 }
 
+async function generateCases(contentDir, outDir) {
+  const casesFile = path.join(contentDir, 'cases.json')
+  const cases = await readJsonIfExists(casesFile)
+  await writeJson(path.join(outDir, 'cases.json'), Array.isArray(cases) ? cases : [])
+}
+
 async function generateResume(contentDir, outDir) {
   const resumeDir = path.join(contentDir, 'resume')
   const resumeJsonPath = path.join(resumeDir, 'resume.json')
@@ -192,6 +198,7 @@ async function generate() {
   await ensureDir(publicApiDir)
   await generatePosts(contentDir, publicApiDir)
   await generateProjects(contentDir, publicApiDir)
+  await generateCases(contentDir, publicApiDir)
   await generateResume(contentDir, publicApiDir)
   await generateTimeline(contentDir, publicApiDir)
   await generateSocial(contentDir, publicApiDir)
