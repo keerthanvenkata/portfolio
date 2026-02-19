@@ -1,5 +1,68 @@
 [
   {
+    "id": "property-appraisal",
+    "title": "Automated Property Appraisal Extraction",
+    "role": "SDE Applied AI at Adaequare",
+    "description": "Automated PDF report extraction that converts unstructured appraisal PDFs into structured JSON using a dual OCR + LLM pipeline.",
+    "contribution": "Architected and built a modular dual‑pipeline (OCR + LLM) system end‑to‑end.",
+    "contributionBullets": [
+      "Implemented PDF splitting (Poppler) and image preprocessing (OpenCV).",
+      "Integrated LayoutParser/Detectron2 for page layout and region extraction.",
+      "Built OCR pipeline (Tesseract) with cleaning and deduplication.",
+      "Persisted page‑level artifacts to JSONL for traceability and reprocessing.",
+      "Developed LLM extraction with chunking, prompt templates, and merge/normalize.",
+      "Exposed FastAPI routers to orchestrate OCR/LLM flows; added Streamlit dashboard.",
+      "Centralized logging/config; standardized outputs for downstream analytics."
+    ],
+    "tech": [
+      "FastAPI",
+      "Python",
+      "Poppler",
+      "OpenCV",
+      "Detectron2",
+      "LayoutParser",
+      "Tesseract",
+      "GPT-4",
+      "Streamlit",
+      "JSONL",
+      "PostgreSQL"
+    ],
+    "status": "Production",
+    "images": [
+      "projects/property-appraisal/arch.jpg",
+      "projects/property-appraisal/sample.jpg",
+      "projects/property-appraisal/ss.jpg"
+    ],
+    "video": "https://www.loom.com/embed/0c90f480866644fc9677b4d7feaeb4af",
+    "videoPoster": "projects/property-appraisal/videoframe.png",
+    "highlights": [
+      "Automates 10,000+ appraisal PDFs/year; ~300 hours/month saved; faster customer turnaround.",
+      "Dual‑pipeline architecture (OCR + LLM) with clean separation for maintainability.",
+      "High‑accuracy extraction via preprocessing, layout parsing, and normalization.",
+      "API orchestration (FastAPI) and dashboard (Streamlit) for review and export.",
+      "JSONL artifact trail for traceability, debugging, and repeatable reprocessing.",
+      "Production‑ready design with centralized logging/config and extensible NLP pipeline."
+    ],
+    "relatedProjects": [
+      "contract-extraction",
+      "tax-roll-pipeline"
+    ],
+    "relatedPosts": [
+      "fastapi-practices"
+    ],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
+    "featured": true,
+    "kind": "project"
+  },
+  {
     "id": "qfi-capital",
     "title": "QFI Research Capital",
     "role": "Founding Engineer & Consultant",
@@ -60,55 +123,57 @@
     "kind": "project"
   },
   {
-    "id": "property-appraisal",
-    "title": "Automated Property Appraisal Extraction",
-    "role": "SDE Applied AI at Adaequare",
-    "description": "Automated PDF report extraction that converts unstructured appraisal PDFs into structured JSON using a dual OCR + LLM pipeline.",
-    "contribution": "Architected and built a modular dual‑pipeline (OCR + LLM) system end‑to‑end.",
+    "id": "event-flyer-extractor",
+    "title": "Event Flyer Extraction System",
+    "role": "AI & Technical Consultant (BookMyStall.in)",
+    "description": "Production-ready AI system that extracts structured event metadata from flyer images using Gemini Vision. Processes JPG/PNG to extract 11 event fields (name, date, venue, organizer, etc.) with validation and human-in-the-loop review. Built as a streamlined, domain-specific adaptation of the Contract Data Extraction Service.",
+    "contribution": "Architected and deployed a production-optimized extraction system that adapts proven patterns from enterprise contract extraction into a cost-effective event intelligence platform.",
     "contributionBullets": [
-      "Implemented PDF splitting (Poppler) and image preprocessing (OpenCV).",
-      "Integrated LayoutParser/Detectron2 for page layout and region extraction.",
-      "Built OCR pipeline (Tesseract) with cleaning and deduplication.",
-      "Persisted page‑level artifacts to JSONL for traceability and reprocessing.",
-      "Developed LLM extraction with chunking, prompt templates, and merge/normalize.",
-      "Exposed FastAPI routers to orchestrate OCR/LLM flows; added Streamlit dashboard.",
-      "Centralized logging/config; standardized outputs for downstream analytics."
+      "Adapted template-based validation from contract extraction for event-specific metadata (11 core fields).",
+      "Implemented Gemini Vision-based extraction (Flash for cost efficiency while keeping accuracy on image content).",
+      "Built two-tier validation: Python datatype checks plus LLM-based quality assessment with 13 confidence flags.",
+      "Designed SQLite-based job tracking for simplicity and zero-ops (inspired by contract extraction DB patterns).",
+      "Created external prompt management so non-technical users can iterate on extraction rules without code changes.",
+      "Developed Streamlit UI for human review and approval workflows, aligned with contract extraction review interface.",
+      "Integrated Google Drive polling (cron) for automated batch ingestion from client sources.",
+      "Built JSONL export for downstream integration (Google Sheets, booking platforms).",
+      "Centralized logging and configuration patterns from contract extraction.",
+      "Deployed with minimal infrastructure: local scripts plus optional FastAPI, scaled for ~1,000 images/month."
     ],
     "tech": [
+      "Python 3.11",
+      "Gemini 2.0 Flash",
       "FastAPI",
-      "Python",
-      "Poppler",
-      "OpenCV",
-      "Detectron2",
-      "LayoutParser",
-      "Tesseract",
-      "GPT-4",
       "Streamlit",
+      "SQLite",
+      "Google Drive API",
       "JSONL",
-      "PostgreSQL"
+      "Docker"
     ],
+    "link": "https://github.com/keerthanvenkata/event-flyer-extractor",
     "status": "Production",
     "images": [
-      "projects/property-appraisal/arch.jpg",
-      "projects/property-appraisal/sample.jpg",
-      "projects/property-appraisal/ss.jpg"
+      "projects/event-flyer-extractor/infographic-1.png",
+      "projects/event-flyer-extractor/infographic-2.png",
+      "projects/event-flyer-extractor/review-ui.png",
+      "projects/event-flyer-extractor/uml.svg"
     ],
-    "video": "https://www.loom.com/embed/0c90f480866644fc9677b4d7feaeb4af",
-    "videoPoster": "projects/property-appraisal/videoframe.png",
+    "video": null,
+    "videoPoster": null,
     "highlights": [
-      "Automates 10,000+ appraisal PDFs/year; ~300 hours/month saved; faster customer turnaround.",
-      "Dual‑pipeline architecture (OCR + LLM) with clean separation for maintainability.",
-      "High‑accuracy extraction via preprocessing, layout parsing, and normalization.",
-      "API orchestration (FastAPI) and dashboard (Streamlit) for review and export.",
-      "JSONL artifact trail for traceability, debugging, and repeatable reprocessing.",
-      "Production‑ready design with centralized logging/config and extensible NLP pipeline."
+      "Processes ~1,000 event flyer images/month with 90%+ auto-approval via intelligent validation.",
+      "Reduces manual data entry from ~5 mins/event to under 2 mins (review-only workflow).",
+      "Domain-specific adaptation of enterprise contract extraction patterns; proves architectural reusability.",
+      "13-flag validation prioritizes edge cases for human review.",
+      "Production-ready with Google Drive integration, JSONL export, and Streamlit dashboard.",
+      "Pragmatic design: simple, reliable, easy to iterate—minimal infrastructure can match enterprise effectiveness."
     ],
     "relatedProjects": [
-      "contract-extraction",
-      "tax-roll-pipeline"
+      "contract-extraction"
     ],
     "relatedPosts": [
-      "fastapi-practices"
+      "llm-patterns",
+      "contract-intelligence-takeaways"
     ],
     "collaboration": {
       "seeking": false,
@@ -189,6 +254,60 @@
     "kind": "project"
   },
   {
+    "id": "semantic-topic-mapper",
+    "title": "Semantic Topic Mapper",
+    "role": "Author & Maintainer",
+    "description": "Python tool that extracts topic hierarchies, cross-references, and entity relationships from complex documents. Enables structured navigation and semantic understanding of document content through intelligent topic extraction and relationship mapping.",
+    "contribution": "Architected and built an end-to-end semantic document analysis system for hierarchical topic extraction.",
+    "contributionBullets": [
+      "Designed semantic analysis pipeline for extracting topic hierarchies from unstructured documents.",
+      "Implemented entity relationship extraction and cross-reference mapping.",
+      "Built hierarchical topic organization system for structured navigation.",
+      "Developed document parsing and semantic understanding components.",
+      "Created APIs for topic extraction, relationship queries, and navigation services."
+    ],
+    "tech": [
+      "Python",
+      "FastAPI",
+      "Google Gemini",
+      "Markdown",
+      "Pydantic"
+    ],
+    "link": "https://github.com/keerthanvenkata/semantic-topic-mapper",
+    "status": "Active",
+    "images": [
+      "projects/semantic-topic-mapper/infographic.png",
+      "projects/semantic-topic-mapper/arch_diagram.png"
+    ],
+    "video": null,
+    "videoPoster": null,
+    "highlights": [
+      "Extracts meaningful topic hierarchies from complex, unstructured documents.",
+      "Maps entity relationships and cross-references for comprehensive semantic understanding.",
+      "Enables structured navigation through document hierarchies.",
+      "Supports scalable document analysis workflows.",
+      "MIT licensed for open collaboration and extension."
+    ],
+    "relatedProjects": [
+      "document-data-extraction",
+      "contract-extraction"
+    ],
+    "relatedPosts": [
+      "contract-intelligence-takeaways"
+    ],
+    "collaboration": {
+      "seeking": false,
+      "types": [],
+      "contact": "/contact"
+    },
+    "service": {
+      "available": false,
+      "description": ""
+    },
+    "featured": false,
+    "kind": "project"
+  },
+  {
     "id": "contract-extraction",
     "title": "Contract Data Extraction Service",
     "role": "SDE Applied AI at Adaequare",
@@ -246,125 +365,6 @@
     "relatedPosts": [
       "llm-patterns",
       "fastapi-practices",
-      "contract-intelligence-takeaways"
-    ],
-    "collaboration": {
-      "seeking": false,
-      "types": [],
-      "contact": "/contact"
-    },
-    "service": {
-      "available": false,
-      "description": ""
-    },
-    "featured": true,
-    "kind": "project"
-  },
-  {
-    "id": "semantic-topic-mapper",
-    "title": "Semantic Topic Mapper",
-    "role": "Author & Maintainer",
-    "description": "Python tool that extracts topic hierarchies, cross-references, and entity relationships from complex documents. Enables structured navigation and semantic understanding of document content through intelligent topic extraction and relationship mapping.",
-    "contribution": "Architected and built an end-to-end semantic document analysis system for hierarchical topic extraction.",
-    "contributionBullets": [
-      "Designed semantic analysis pipeline for extracting topic hierarchies from unstructured documents.",
-      "Implemented entity relationship extraction and cross-reference mapping.",
-      "Built hierarchical topic organization system for structured navigation.",
-      "Developed document parsing and semantic understanding components.",
-      "Created APIs for topic extraction, relationship queries, and navigation services."
-    ],
-    "tech": [
-      "Python",
-      "FastAPI",
-      "Google Gemini",
-      "Markdown",
-      "Pydantic"
-    ],
-    "link": "https://github.com/keerthanvenkata/semantic-topic-mapper",
-    "status": "Active",
-    "images": [
-      "projects/semantic-topic-mapper/infographic.png",
-      "projects/semantic-topic-mapper/arch_diagram.png"
-    ],
-    "video": null,
-    "videoPoster": null,
-    "highlights": [
-      "Extracts meaningful topic hierarchies from complex, unstructured documents.",
-      "Maps entity relationships and cross-references for comprehensive semantic understanding.",
-      "Enables structured navigation through document hierarchies.",
-      "Supports scalable document analysis workflows.",
-      "MIT licensed for open collaboration and extension."
-    ],
-    "relatedProjects": [
-      "document-data-extraction",
-      "contract-extraction"
-    ],
-    "relatedPosts": [
-      "contract-intelligence-takeaways"
-    ],
-    "collaboration": {
-      "seeking": false,
-      "types": [],
-      "contact": "/contact"
-    },
-    "service": {
-      "available": false,
-      "description": ""
-    },
-    "featured": false,
-    "kind": "project"
-  },
-  {
-    "id": "event-flyer-extractor",
-    "title": "Event Flyer Extraction System",
-    "role": "AI & Technical Consultant (BookMyStall.in)",
-    "description": "Production-ready AI system that extracts structured event metadata from flyer images using Gemini Vision. Processes JPG/PNG to extract 11 event fields (name, date, venue, organizer, etc.) with validation and human-in-the-loop review. Built as a streamlined, domain-specific adaptation of the Contract Data Extraction Service.",
-    "contribution": "Architected and deployed a production-optimized extraction system that adapts proven patterns from enterprise contract extraction into a cost-effective event intelligence platform.",
-    "contributionBullets": [
-      "Adapted template-based validation from contract extraction for event-specific metadata (11 core fields).",
-      "Implemented Gemini Vision-based extraction (Flash for cost efficiency while keeping accuracy on image content).",
-      "Built two-tier validation: Python datatype checks plus LLM-based quality assessment with 13 confidence flags.",
-      "Designed SQLite-based job tracking for simplicity and zero-ops (inspired by contract extraction DB patterns).",
-      "Created external prompt management so non-technical users can iterate on extraction rules without code changes.",
-      "Developed Streamlit UI for human review and approval workflows, aligned with contract extraction review interface.",
-      "Integrated Google Drive polling (cron) for automated batch ingestion from client sources.",
-      "Built JSONL export for downstream integration (Google Sheets, booking platforms).",
-      "Centralized logging and configuration patterns from contract extraction.",
-      "Deployed with minimal infrastructure: local scripts plus optional FastAPI, scaled for ~1,000 images/month."
-    ],
-    "tech": [
-      "Python 3.11",
-      "Gemini 2.0 Flash",
-      "FastAPI",
-      "Streamlit",
-      "SQLite",
-      "Google Drive API",
-      "JSONL",
-      "Docker"
-    ],
-    "link": "https://github.com/keerthanvenkata/event-flyer-extractor",
-    "status": "Production",
-    "images": [
-      "projects/event-flyer-extractor/infographic-1.png",
-      "projects/event-flyer-extractor/infographic-2.png",
-      "projects/event-flyer-extractor/review-ui.png",
-      "projects/event-flyer-extractor/uml.svg"
-    ],
-    "video": null,
-    "videoPoster": null,
-    "highlights": [
-      "Processes ~1,000 event flyer images/month with 90%+ auto-approval via intelligent validation.",
-      "Reduces manual data entry from ~5 mins/event to under 2 mins (review-only workflow).",
-      "Domain-specific adaptation of enterprise contract extraction patterns; proves architectural reusability.",
-      "13-flag validation prioritizes edge cases for human review.",
-      "Production-ready with Google Drive integration, JSONL export, and Streamlit dashboard.",
-      "Pragmatic design: simple, reliable, easy to iterate—minimal infrastructure can match enterprise effectiveness."
-    ],
-    "relatedProjects": [
-      "contract-extraction"
-    ],
-    "relatedPosts": [
-      "llm-patterns",
       "contract-intelligence-takeaways"
     ],
     "collaboration": {
