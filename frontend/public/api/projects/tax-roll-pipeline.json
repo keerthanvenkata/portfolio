@@ -30,7 +30,7 @@
     "Docker",
     "OpenAPI"
   ],
-  "status": "Production",
+  "status": "Demo",
   "images": [
     "projects/tax-roll-pipeline/ss1.png",
     "projects/tax-roll-pipeline/ss2.png",

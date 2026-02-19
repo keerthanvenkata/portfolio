@@ -1,7 +1,7 @@
 {
   "id": "event-flyer-extractor",
   "title": "Event Flyer Extraction System",
-  "role": "Author & Maintainer",
+  "role": "AI & Technical Consultant (BookMyStall.in)",
   "description": "Production-ready AI system that extracts structured event metadata from flyer images using Gemini Vision. Processes JPG/PNG to extract 11 event fields (name, date, venue, organizer, etc.) with validation and human-in-the-loop review. Built as a streamlined, domain-specific adaptation of the Contract Data Extraction Service.",
   "contribution": "Architected and deployed a production-optimized extraction system that adapts proven patterns from enterprise contract extraction into a cost-effective event intelligence platform.",
   "contributionBullets": [
