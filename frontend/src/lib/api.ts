@@ -18,6 +18,27 @@ export type BlogPost = {
   content_html?: string
 }
 
+export type Case = {
+  id: string
+  company: string
+  client?: string | null
+  person: { name: string; role: string; company?: string }
+  logo?: string
+  link?: string
+  quote: string
+  projectIds?: string[]
+  relatedPosts?: string[]
+}
+
+export async function fetchCases() {
+  try {
+    const { data } = await api.get<Case[]>(`/api/cases.json${v}`)
+    return data ?? []
+  } catch {
+    return []
+  }
+}
+
 export type Project = {
   id: string
   title: string

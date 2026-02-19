@@ -1,12 +1,13 @@
 import { useState, useRef } from 'react'
-import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, BookOpen, Music, Coffee, Lightbulb, Heart, Home } from 'lucide-react'
+import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, BookOpen, Music, Coffee, Lightbulb, Heart, Home, MessageCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Link, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { fetchFeaturedPosts, fetchPosts, fetchProjects, fetchResume, type BlogPost, type Project, type ResumeData } from './lib/api'
+import { fetchFeaturedPosts, fetchPosts, fetchProjects, fetchResume, fetchCases, type BlogPost, type Project, type ResumeData, type Case } from './lib/api'
 import { useEffect, Suspense, lazy } from 'react'
 import ProjectModal from './components/ProjectModal'
 import BlogModal from './components/BlogModal'
 import ExperimentalModal from './components/ExperimentalModal'
+import CaseModal from './components/CaseModal'
 import LoadingSpinner from './components/LoadingSpinner'
 
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
@@ -29,6 +30,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
     { name: 'Home', id: 'home', icon: Home },
     { name: 'About', id: 'about', icon: Briefcase },
     { name: 'Projects', id: 'projects', icon: Code },
+    { name: 'Cases', id: 'cases', icon: MessageCircle },
     { name: 'Experimental', id: 'experimental', icon: Lightbulb },
     { name: 'Blog', id: 'blog', icon: BookOpen },
     { name: 'Resume', id: 'resume', icon: ExternalLink },
@@ -721,6 +723,105 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
   )
 }
 
+function CasesPage() {
+  const [cases, setCases] = useState<Case[]>([])
+  const [selectedCase, setSelectedCase] = useState<Case | null>(null)
+  const [showModal, setShowModal] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(true)
+    fetchCases()
+      .then(setCases)
+      .catch(() => setCases([]))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const handleCaseClick = (c: Case) => {
+    setSelectedCase(c)
+    setShowModal(true)
+  }
+
+  return (
+    <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="mb-8">
+        <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-violet via-magenta to-electric-pink bg-clip-text text-transparent text-glow-purple mb-2">
+          Cases
+        </h1>
+        <p className="text-gray-400">
+          Client testimonials and impact stories from projects I've worked on.
+        </p>
+      </div>
+
+      {loading ? (
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className="glass rounded-xl p-6 neon-border">
+              <div className="animate-pulse space-y-4">
+                <div className="h-6 bg-violet/20 rounded w-1/3" />
+                <div className="h-4 bg-violet/20 rounded w-2/3" />
+                <div className="h-4 bg-violet/20 rounded w-1/2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : cases.length === 0 ? (
+        <div className="glass rounded-xl p-12 neon-border text-center">
+          <p className="text-gray-300 text-lg mb-2">Coming soon</p>
+          <p className="text-gray-500 text-sm">
+            Client testimonials and impact stories will appear here as they're added.
+          </p>
+        </div>
+      ) : (
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
+          {cases.map((c) => (
+            <button
+              key={c.id}
+              type="button"
+              onClick={() => handleCaseClick(c)}
+              className="glass rounded-xl p-6 neon-border hover:shadow-[0_0_30px_rgba(255,0,128,0.4)] transition-all cursor-pointer text-left border border-violet/30 hover:border-electric-pink"
+            >
+              <div className="flex items-start gap-4 mb-4">
+                {c.logo && (
+                  <img
+                    src={c.logo.startsWith('/') ? c.logo : `/media/${c.logo}`}
+                    alt=""
+                    className="w-12 h-12 object-contain flex-shrink-0"
+                  />
+                )}
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-xl font-heading font-bold text-white">
+                    {c.company}
+                    {c.client ? ` · ${c.client}` : ''}
+                  </h3>
+                  <p className="text-violet text-sm mt-0.5">
+                    {c.person.name}{c.person.role ? ` · ${c.person.role}` : ''}
+                  </p>
+                </div>
+              </div>
+              <p className="text-gray-300 line-clamp-3">"{c.quote}"</p>
+              {c.link && (
+                <span className="inline-flex items-center gap-1 text-electric-pink text-sm mt-3">
+                  <ExternalLink size={14} />
+                  Visit
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {selectedCase && (
+        <CaseModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          caseData={selectedCase}
+        />
+      )}
+    </div>
+  )
+}
+
 function BlogPage() {
   const [category, setCategory] = useState<string>('all')
   const [posts, setPosts] = useState<BlogPost[]>([])
@@ -998,6 +1099,8 @@ export default function App() {
       setCurrent('projects')
     } else if (path === '/blog' || path.startsWith('/blog/')) {
       setCurrent('blog')
+    } else if (path === '/cases') {
+      setCurrent('cases')
     } else if (path === '/experimental' || path.startsWith('/experimental/')) {
       setCurrent('experimental')
     } else if (path === '/resume') {
@@ -1019,6 +1122,7 @@ export default function App() {
       home: "Keerthan's Page",
       about: "About - Keerthan's Page",
       projects: "Projects - Keerthan's Page",
+      cases: "Cases - Keerthan's Page",
       experimental: "Experimental - Keerthan's Page",
       blog: "Blog - Keerthan's Page",
       resume: "Resume - Keerthan's Page",
@@ -1053,7 +1157,7 @@ export default function App() {
   }, [])
 
   const title = {
-    home: 'Home', about: 'About Me', projects: 'Featured Projects', experimental: 'Experimental & Hobby Projects', blog: 'Blog', resume: 'Resume', life: 'Life', contact: "Let's Connect"
+    home: 'Home', about: 'About Me', projects: 'Featured Projects', cases: 'Cases', experimental: 'Experimental & Hobby Projects', blog: 'Blog', resume: 'Resume', life: 'Life', contact: "Let's Connect"
   }[current] ?? 'Home'
 
   return (
@@ -1106,6 +1210,7 @@ export default function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/projects/:id" element={<ProjectDetail />} />
               <Route path="/projects" element={<ProjectsPage kind="project" />} />
+              <Route path="/cases" element={<CasesPage />} />
               <Route path="/experimental/:id" element={<ExperimentalDetail />} />
               <Route path="/experimental" element={<ProjectsPage kind="experimental" />} />
               <Route path="/blog/:id" element={<BlogDetail />} />
