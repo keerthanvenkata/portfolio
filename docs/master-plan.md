@@ -31,9 +31,9 @@ Single reference for architecture, UX, and roadmap decisions so anyone can ramp 
 
 - **Layout**: Fixed sidebar (hover/pin), global header/footer, mobile hamburger overlay, theme toggle (top-right + sidebar bottom). Theme toggle hidden on Life page.
 - **Hero**: Two-column layout with portrait slot (desktop). Portrait assets live in `public/media/portrait/`; drop-shadow stack documented in `style-guide`.
-- **Content Modules**: Featured projects, blog summaries, experimental cards, quick links, timeline, modals (`ProjectModal`, `ExperimentalModal`, `BlogModal`).
+- **Content Modules**: Featured projects, blog summaries, **cases** (client testimonials), experimental cards, quick links, timeline, modals (`ProjectModal`, `CaseModal`, `ExperimentalModal`, `BlogModal`).
 - **Sections**:
-  - **Universal** (both themes, same content): Home, About, Projects, Experimental, Blog, Resume, Contact
+  - **Universal** (both themes, same content): Home, About, Projects, **Cases**, Experimental, Blog, Resume, Contact
   - **Life** (separate): One route `/life` with in-page sections (Music, Travel, Food, Thoughts). Own theme; no theme toggle. Blog-for-life / personal content lives here. See `docs/life-section-plan.md`.
 - **Utilities**: `Modal` base component, `ImageCarousel`, `VideoPlayer`, `PDFViewer`, `GitHubContributions`.
 - **Docs Reference**:

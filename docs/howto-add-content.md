@@ -67,6 +67,15 @@ Quick workflow
 - Edit `backend/app/content/experimental.json`.
 - Same structure as projects; ensure `"kind": "experimental"`.
 
+## Cases (Client testimonials)
+
+- Edit `backend/app/content/cases.json` (array of case objects).
+- Build copies it to `frontend/public/api/cases.json`; the Cases page and `CaseModal` read from there.
+- **Required:** `id`, `company`, `person` (`name`, `role`, optional `company`), `quote`.
+- **Optional:** `client` (for “Work at X for client Y”), `logo`, `link`, `projectIds`, `relatedPosts`.
+- Put case logos in `backend/app/content/media/cases/` (e.g. `bookmystall.svg`); reference as `"logo": "cases/bookmystall.svg"`.
+- Full field reference and examples: `docs/cases-section-plan.md`.
+
 ## Blog Posts
 
 - Create Markdown files under `backend/app/content/posts/`.
@@ -152,6 +161,7 @@ Quick workflow
   ├── projects/{project-id}/screenshots/*
   ├── projects/{project-id}/diagrams/*
   ├── projects/{project-id}/videos/*
+  ├── cases/                    # Case logos (e.g. bookmystall.svg)
   ├── blog/{post-id}/*
   ├── life/{section-id}/*
   ├── screenshots/*

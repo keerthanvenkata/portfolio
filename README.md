@@ -31,6 +31,7 @@ All content is in `backend/app/content/`:
 - Blog posts: `posts/*.md` with YAML frontmatter.
 - Projects: `projects.json` (supports `featured`, `images`, `video`, `videoPoster`, etc.).
 - Experimental: `experimental.json`.
+- Cases: `cases.json` (client testimonials; optional logos in `media/cases/`).
 - Timeline: `timeline.json` (About page).
 - Social: `social.json`.
 - Media: `media/**` (images/videos placed here).
@@ -115,6 +116,7 @@ Source of truth for content lives in `backend/app/content/` and is compiled into
 - Blog posts (Markdown): `backend/app/content/posts/*.md`
 - Projects: `backend/app/content/projects.json`
 - Experimental: `backend/app/content/experimental.json`
+- Cases: `backend/app/content/cases.json` (client testimonials; see `docs/cases-section-plan.md`)
 - Timeline: `backend/app/content/timeline.json`
 - Social/config: `backend/app/content/social.json`
 - Resume PDFs + metadata: `backend/app/content/resume/*`
@@ -129,6 +131,7 @@ Frontend reads from these static endpoints (e.g. `/api/posts.json`). This mirror
 
 See details:
 - `docs/howto-add-content.md` — add/update content & assets
+- `docs/cases-section-plan.md` — Cases section plan & field reference
 - `docs/style-guide.md` — full visual language + neon palette
 - `docs/professional_version.md` — bright-mode concept & requirements
 - `docs/MASTER_PLAN.md` — architecture + UX roadmap

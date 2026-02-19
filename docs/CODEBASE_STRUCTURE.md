@@ -22,11 +22,12 @@ portfolio/
 │       │   ├── posts/            # Blog markdown files
 │       │   ├── projects.json     # Professional projects
 │       │   ├── experimental.json # Hobby/experimental projects
+│       │   ├── cases.json        # Client testimonials / case studies
 │       │   ├── timeline.json     # Career/education timeline
 │       │   ├── tech-stack.json   # Technology and tools (About page)
 │       │   ├── social.json       # Social links config
 │       │   ├── resume/           # Resume PDFs + metadata
-│       │   └── media/            # Images, videos, diagrams
+│       │   └── media/            # Images, videos, diagrams (includes cases/)
 │       │   # (planned: life/ or life.json for Life section)
 │       ├── models.py             # Pydantic models (FastAPI)
 │       ├── services/
@@ -38,12 +39,13 @@ portfolio/
 └── frontend/
     ├── public/
     │   └── api/                  # ⭐ GENERATED STATIC JSON
-    │       ├── posts.json
-    │       ├── posts/
-    │       ├── projects.json
-    │       ├── projects/
-    │       ├── timeline.json
-    │       └── social.json
+│       ├── posts.json
+│       ├── posts/
+│       ├── projects.json
+│       ├── projects/
+│       ├── cases.json
+│       ├── timeline.json
+│       └── social.json
     ├── scripts/
     │   └── generate-content.mjs  # ⭐ CONTENT GENERATOR
     └── src/
@@ -63,6 +65,7 @@ portfolio/
 2. **Content Processing**:
    - Blog posts: Markdown → HTML → JSON
    - Projects: JSON → Combined + Individual files
+   - Cases: JSON → Copied as array to `cases.json`
    - Timeline: JSON → Copied as-is
    - Resume: PDFs copied + `resume-latest.pdf` created
    - Media: Directory copied recursively
@@ -74,6 +77,7 @@ portfolio/
 **Key Functions:**
 - `generatePosts()`: Parses markdown with frontmatter, converts to HTML (supports optional `author` in frontmatter)
 - `generateProjects()`: Combines `projects.json` + `experimental.json`
+- `generateCases()`: Reads `cases.json`, writes to `api/cases.json`
 - `generateResume()`: Copies PDFs and creates latest symlink
 - `generateTimeline()`: Copies timeline JSON
 - `generateTechStack()`: Copies tech-stack.json for About page
@@ -181,7 +185,31 @@ Content in markdown format...
 
 ---
 
-### 3. Experimental Projects (`backend/app/content/experimental.json`)
+### 3. Cases (`backend/app/content/cases.json`)
+
+**Format**: JSON array of client testimonial / case study entries.
+
+**Required Fields:**
+- `id`: Unique slug (e.g. `"bookmystall"`, `"adaequare-cotality"`)
+- `company`: Display name (e.g. `"BookMyStall.in"`, `"Adaequare"`)
+- `person`: `{ "name": "Full Name", "role": "Role", "company": "Optional Company" }`
+- `quote`: Testimonial or impact line
+
+**Optional Fields:**
+- `client`: When set (e.g. `"Cotality"`), UI shows "Work at [company] for client [client]"
+- `logo`: Path under media (e.g. `"cases/bookmystall.svg"`); files in `backend/app/content/media/cases/`
+- `link`: Single URL (LinkedIn or company site)
+- `projectIds`: Array of project IDs → "View project" links in modal
+- `relatedPosts`: Array of blog post IDs → "Read more" links in modal
+
+**Generated Output:**
+- `/api/cases.json`: Array of all cases
+
+**Display:** Cases page (`/cases`) with card grid; clicking a card opens `CaseModal` (quote, person, link, project/blog links). Full field reference and examples: `docs/cases-section-plan.md`.
+
+---
+
+### 4. Experimental Projects (`backend/app/content/experimental.json`)
 
 **Format**: Same as projects, but `kind: "experimental"`
 
@@ -210,7 +238,7 @@ Content in markdown format...
 
 ---
 
-### 4. Timeline (`backend/app/content/timeline.json`)
+### 5. Timeline (`backend/app/content/timeline.json`)
 
 **Format**: JSON array of career/education items
 
@@ -263,7 +291,7 @@ Content in markdown format...
 
 ---
 
-### 5. Resume (`backend/app/content/resume/`)
+### 6. Resume (`backend/app/content/resume/`)
 
 **Structure:**
 ```
@@ -309,7 +337,7 @@ resume/
 
 ---
 
-### 6. Social Config (`backend/app/content/social.json`)
+### 7. Social Config (`backend/app/content/social.json`)
 
 ```json
 {
@@ -337,6 +365,8 @@ App.tsx
 │   ├── ProjectsPage
 │   │   └── ProjectModal (Quick Preview)
 │   ├── ProjectDetail (Full Page)
+│   ├── CasesPage
+│   │   └── CaseModal (Case quote, person, links)
 │   ├── ExperimentalDetail
 │   ├── BlogPage
 │   │   └── BlogModal (Quick Preview)
@@ -355,7 +385,7 @@ App.tsx
 1. **API Client** (`lib/api.ts`):
    - Uses axios with base URL from `VITE_API_BASE` env var
    - Defaults to empty string (static files)
-   - Functions: `fetchPosts()`, `fetchProjects()`, `fetchTimeline()`, etc.
+   - Functions: `fetchPosts()`, `fetchProjects()`, `fetchCases()`, `fetchTimeline()`, etc.
 
 2. **Component Data Fetching**:
    - Components use `useEffect` to fetch data on mount
@@ -402,6 +432,7 @@ App.tsx
    - Blog: Edit `backend/app/content/posts/*.md`
    - Projects: Edit `backend/app/content/projects.json`
    - Experimental: Edit `backend/app/content/experimental.json`
+   - Cases: Edit `backend/app/content/cases.json`
    - Timeline: Edit `backend/app/content/timeline.json`
    - Resume: Add PDF + update `resume.json`
 
@@ -434,6 +465,7 @@ backend/app/content/media/
 │   └── property-appraisal/
 │       ├── arch.jpg
 │       └── ss.jpg
+├── cases/              # Case logos (e.g. bookmystall.svg)
 ├── blog/
 ├── diagrams/
 ├── screenshots/
@@ -519,17 +551,27 @@ backend/app/content/media/
 # Run: cd frontend && npm run build
 ```
 
+### Update Cases
+```bash
+# Edit: backend/app/content/cases.json
+# Add/update case objects (id, company, person, quote, optional: client, logo, link, projectIds, relatedPosts)
+# Put logos in backend/app/content/media/cases/
+# Run: cd frontend && npm run build
+# See docs/cases-section-plan.md for full field reference
+```
+
 ---
 
 ## 📚 Related Documentation
 
 - `docs/howto-add-content.md`: Step-by-step content addition guide
+- `docs/cases-section-plan.md`: Cases section plan and field reference
 - `docs/architecture-and-performance.md`: Performance optimizations
 - `docs/vercel-deploy.md`: Deployment guide
 - `docs/style-guide.md`: Design system and styling
 
 ---
 
-**Last Updated**: 2025-01-28
+**Last Updated**: 2025-02-19
 **Maintained By**: Venkata Keerthan Nimmala
 

@@ -31,4 +31,5 @@ Short, high-signal backlog for this portfolio. Keep tasks grouped by theme; stri
 - [x] Responsive sidebar hover/pin logic refinements.
 - [x] Portrait slot redesign + PNG transparency guidance.
 - [x] Documentation refresh (README, style guide, master plan, professional mode spec).
+- [x] Cases section: page (/cases), modal, backend cases.json + generator (generateCases), docs (cases-section-plan, CODEBASE_STRUCTURE, howto-add-content, master-plan).
 

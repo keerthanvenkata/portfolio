@@ -1,6 +1,6 @@
 # Cases Section — Plan
 
-**Status**: Planning. Two cases initially (BookMyStall.in; Adaequare + Cotality with attribution). Content for Adaequare pending manager approval. Section should be future-proof as more cases are added.
+**Status**: Implemented. Cases page, modal, backend `cases.json`, and generator are in place. Two cases initially (BookMyStall.in; Adaequare + Cotality with attribution). Content for Adaequare pending manager approval. Add entries to `backend/app/content/cases.json` and run the generator to populate the page.
 
 ---
 
@@ -115,14 +115,14 @@ Optional later:
 
 ---
 
-## 5. Implementation Checklist (When Ready)
+## 6. Implementation Checklist
 
-- [ ] Add `backend/app/content/cases.json` with the above schema (BookMyStall + Adaequare placeholders).
-- [ ] Add Cases to nav and route `/cases` in `frontend/src/App.tsx`.
-- [ ] Add generator step in `frontend/scripts/generate-content.mjs`: read `cases.json`, optionally copy case logos to `frontend/public/media/cases/`, emit `frontend/public/api/cases.json`.
-- [ ] Add `Case` type and `fetchCases()` in `frontend/src/lib/api.ts`.
-- [ ] Build Cases page: same theme (glass, violet/magenta, borders), cards with logo, short quote, person, link. **Modal** on card click: full quote, person, link(s), “View project” (if `projectIds`), “Read more” (if `relatedPosts`). Reuse existing modal pattern (e.g. Experimental modal) for consistency.
-- [ ] No case-detail route; modal only.
+- [x] Add `backend/app/content/cases.json` with the above schema (empty array until first entries added).
+- [x] Add Cases to nav and route `/cases` in `frontend/src/App.tsx`.
+- [x] Add generator step in `frontend/scripts/generate-content.mjs`: read `cases.json`, emit `frontend/public/api/cases.json`. Case logos go in `backend/app/content/media/cases/` and are copied with the rest of media.
+- [x] Add `Case` type and `fetchCases()` in `frontend/src/lib/api.ts`.
+- [x] Build Cases page: same theme (glass, violet/magenta, borders), cards with logo, short quote, person, link. **Modal** on card click: full quote, person, link(s), “View project” (if `projectIds`), “Read more” (if `relatedPosts`). Reuse existing modal pattern (CaseModal).
+- [x] No case-detail route; modal only.
 
 ---
 
