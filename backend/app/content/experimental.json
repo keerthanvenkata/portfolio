@@ -57,33 +57,17 @@
     "kind": "experimental"
   },
   {
-    "id": "cli-tool",
-    "title": "CLI Tool for Data Cleaning",
-    "description": "Utility for quick CSV transformations.",
-    "tech": ["Python", "Click"],
-    "details": "A utility tool I built for prepping tax roll data. It handles repetitive CSV cleaning tasks that come up during data preparation workflows, including transformations, validations, and batch processing operations needed before data can be fed into larger processing pipelines.",
-    "highlights": ["Quick transformations", "Batch processing"],
-    "collaboration": {
-      "seeking": false,
-      "types": [],
-      "contact": "/contact"
-    },
-    "service": {
-      "available": false,
-      "description": ""
-    },
-    "relatedProjects": ["tax-roll-pipeline"],
-    "images": [],
-    "featured": false,
-    "kind": "experimental"
-  },
-  {
     "id": "trading-and-backtesting-bot",
     "title": "Trading and Backtesting Bot",
-    "description": "Algorithmic trading bot with backtesting capabilities for strategy validation and execution.",
+    "description": "Internal experimental tool used while building QFI Research Capital. Backtesting and strategy-validation sandbox aligned with the same data and execution stack (Kafka, InfluxDB, Kite Connect) that informed the main platform. No public link—internal R&D only.",
     "tech": ["Python", "PostgreSQL", "InfluxDB", "Docker", "Kafka", "Kite Connect"],
-    "details": "I built this trading bot primarily to verify quantitative assumptions and get a better understanding of market dynamics. It's not meant for live trading or production use, but rather as a learning tool to test strategies, understand backtesting methodologies, and explore how different market conditions affect trading algorithms. The bot includes real-time data processing, backtesting framework, and execution capabilities to validate theoretical approaches with real market data.",
-    "highlights": ["Real-time market data processing", "Backtesting framework", "Strategy execution"],
+    "details": "While working on QFI we built this bot as an internal sandbox to verify quantitative assumptions, test strategies, and validate backtesting methodologies before and alongside the main platform. It shares the same event-driven ideas and stack: real-time market data via Kafka, OHLCV aggregation into InfluxDB, and execution via Kite Connect. The goal was to run experiments and understand market dynamics without affecting production, and to inform design decisions for the institutional platform. That’s why it stays unlinked—it was internal tooling, not a shipped product.",
+    "highlights": [
+      "Internal R&D tool used during QFI Research Capital; no public deployment or link",
+      "Backtesting and simulation for strategy validation, aligned with QFI’s production stack",
+      "Same data plane: Kafka, InfluxDB, PostgreSQL, Kite Connect",
+      "Real-time market data processing and execution sandbox for quantitative experiments"
+    ],
     "collaboration": {
       "seeking": false,
       "types": [],
