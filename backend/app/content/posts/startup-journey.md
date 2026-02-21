@@ -2,34 +2,39 @@
 id: startup-journey
 category: Entrepreneurship
 title: Building a Startup While Working
-excerpt: Reflections on co-founding QFI Capital while working full-time.
+excerpt: Reflections on co-founding QFI Capital while working full-time—burnout, passion, time management, staying grounded, and when to ship vs when to invest in quality.
 date: 2024-12-10
 featured: true
 ---
 
-Co-founding QFI Research Capital while working full-time at Adaequare taught me more about entrepreneurship than any book or course ever could.
+Co-founding QFI Research Capital while working full-time at Adaequare taught me more about entrepreneurship than any book or course. It was messy, exhausting, and one of the most formative stretches of my career. Here’s what stuck.
 
 ## The Reality Check
 
-It's late nights after your day job, weekends spent debugging, and constant context switching between two demanding roles.
+It’s late nights after your day job, weekends spent on architecture and debugging, and constant context switching between two demanding roles. There were days I burnt out—no way around it when you’re carrying two full-time loads. What got me through: building something I was genuinely passionate about, so the hard days felt meaningful, and managing time properly so I didn’t run myself into the ground. Your employer deserves your best during work hours; the startup gets the edges. That only works if you’re honest with both sides and if you protect time for deep work instead of filling every gap with meetings.
 
 ## What I Learned
 
 ### Time Management is Critical
-Ruthless prioritization. Mornings for architecture and system design, evenings for implementation, weekends for deep work.
+
+I had to be ruthless about when and where I did what. Mornings (before work) were for system design and architecture—when my head was clearest. Evenings were for implementation and code review. Weekends were for the heavy lifting: integration, testing, and the kind of focus that doesn’t survive a 9–5 interrupt. Blocking time and saying no to non-essentials was the only way to make progress and avoid burning out. Manage time properly; otherwise the passion isn’t enough.
 
 ### Choose Your Co-founders Wisely
-Divide responsibilities clearly and trust each other to execute.
+
+We divided responsibilities clearly: who owned trading logic, who owned infra and data, who talked to early users. Trust was non-negotiable—we couldn’t second-guess each other when we were already stretched thin. Regular syncs (even short ones) kept us aligned so small misalignments didn’t become big ones.
 
 ### Technical Debt vs Speed
-Done is better than perfect, but know when to invest in quality.
+
+Done is better than perfect when you’re validating an idea, but “done” doesn’t mean unmaintainable. We shipped an MVP with a clear path to refactor: event-driven core, clear boundaries between services, and observability from day one. When we hit scale or stability issues, we had a codebase we could fix instead of one we had to rewrite. The lesson: know when to move fast and when to invest in quality. If the next milestone depends on reliability or scale, slow down and build it right.
+
+### Stay Grounded
+
+I second-guessed myself more than once—whether I could actually handle the responsibility, the deadlines, the weight of building something real. The antidote wasn’t fake confidence; it was staying grounded. Moonshot dreams are fine; the work and the attitude have to be grounded. Show up, do the next concrete thing, and don’t let the big vision turn into anxiety. Grounded work, day after day, is what makes the moonshot possible.
 
 ## The Platform
 
-Microservices with Kafka, PostgreSQL + InfluxDB, and real-time risk engines.
+QFI was (and is) a mid-frequency algorithmic trading platform: microservices, Kafka for market data and events, PostgreSQL and InfluxDB for orders and time-series, and real-time risk and analytics. Building that while employed meant every component had to earn its place—no “nice to have” features until the core was solid.
 
 ## Key Takeaway
 
-Entrepreneurship while employed is possible, but it requires sacrifice, discipline, and a burning desire to build something meaningful.
-
-
+Entrepreneurship while employed is possible, but it requires sacrifice, discipline, and a clear agreement with yourself and your co-founders about what you’re optimizing for. Build something you’re passionate about so the hard days are worth it; manage time properly so you don’t burn out. Keep the dreams big and the work grounded. For me it was worth it: the platform went live, we learned what we couldn’t have learned from a side project alone, and I carried those lessons into every role since.
