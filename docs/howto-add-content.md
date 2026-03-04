@@ -145,6 +145,32 @@ Quick workflow
 - Logo files live in `frontend/public/tech-logos/` (add SVGs there; reference as `/tech-logos/filename.svg`). Omit `logo` to show the first letter.
 - Build copies this file to `frontend/public/api/tech-stack.json`; the About page loads it from the API.
 
+## Launchpad (products & offerings)
+
+- **Source of truth:** `backend/app/content/launchpad.json`
+- Structure:
+  ```json
+  [
+    {
+      "id": "q-rate",
+      "title": "Q-Rate",
+      "oneLiner": "Loyalty and verified reviews for cafes, built to reduce friction and fraud.",
+      "url": "https://q-rate.tinkernlabs.com",
+      "status": "In development"
+    }
+  ]
+  ```
+- Fields:
+  - `id`: Unique slug for the tile (also useful to reference from projects/cases via `launchpadUrl`).
+  - `title`: Short name for the product or offering.
+  - `oneLiner`: One-line description shown on the tile.
+  - `url`: External URL for that product (tile opens in a new tab with `rel="noopener noreferrer"`).
+  - `status` (optional): Status badge text such as `"Live"`, `"Beta"`, `"In development"`.
+  - `image` (optional, future): Path under `media/` if you want a per-tile thumbnail.
+- Build copies this file to `frontend/public/api/launchpad.json`; the home page `Launchpad` section reads from that endpoint and:
+  - Shows a "Launchpad grid coming soon" card when the array is empty.
+  - Renders one tile per Launchpad item when entries exist.
+
 ## Life Section (planned)
 
 - **Name**: **Life** is a single top-level nav item and a distinct area of the site.

@@ -26,6 +26,7 @@ portfolio/
 │       │   ├── timeline.json     # Career/education timeline
 │       │   ├── tech-stack.json   # Technology and tools (About page)
 │       │   ├── social.json       # Social links config
+│       │   ├── launchpad.json    # Launchpad tiles (products & offerings)
 │       │   ├── resume/           # Resume PDFs + metadata
 │       │   └── media/            # Images, videos, diagrams (includes cases/)
 │       │   # (planned: life/ or life.json for Life section)
@@ -350,6 +351,40 @@ resume/
 ```
 
 **Usage**: Currently used for reference; social links are hardcoded in `App.tsx` sidebar.
+
+---
+
+### 8. Launchpad (`backend/app/content/launchpad.json`)
+
+**Format**: JSON array of Launchpad tiles for products/offerings.
+
+```json
+[
+  {
+    "id": "q-rate",
+    "title": "Q-Rate",
+    "oneLiner": "Loyalty and verified reviews for cafes, built to reduce friction and fraud.",
+    "url": "https://q-rate.tinkernlabs.com",
+    "status": "In development"
+  }
+]
+```
+
+**Fields:**
+- `id` (string, required): Unique slug (also useful to link from projects/cases via `launchpadUrl`).
+- `title` (string, required): Tile title.
+- `oneLiner` (string, required): Short, high-impact description.
+- `url` (string, required): External URL for the product/offering. Tiles always open in a new tab with `rel="noopener noreferrer"`.
+- `status` (string, optional): Badge text such as `"Live"`, `"Beta"`, `"In development"`.
+- `image` (string, optional, future): Path under `/media/` if you want per-tile thumbnails.
+
+**Generated Output:**
+- `/api/launchpad.json`: Array of all Launchpad tiles.
+
+**Display:**
+- Home page `Launchpad` section:
+  - If the array is empty, shows a glass/neon "Launchpad grid coming soon" placeholder.
+  - Otherwise renders one tile per item with title + one-liner and a rocket/Studio badge header.
 
 ---
 
