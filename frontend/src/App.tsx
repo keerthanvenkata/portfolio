@@ -10,6 +10,7 @@ import ExperimentalModal from './components/ExperimentalModal'
 import CaseModal from './components/CaseModal'
 import LoadingSpinner from './components/LoadingSpinner'
 import StudioBadge from './components/StudioBadge'
+import { Analytics } from '@vercel/analytics/react'
 
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const BlogDetail = lazy(() => import('./pages/BlogDetail'))
@@ -1422,6 +1423,7 @@ export default function App() {
           </div>
         </footer>
       </div>
+      <Analytics />
     </div>
   )
 }
