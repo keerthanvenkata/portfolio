@@ -151,6 +151,20 @@ export async function fetchTechStack() {
   return data
 }
 
+export type LaunchpadItem = {
+  id: string
+  title: string
+  oneLiner: string
+  url: string
+  image?: string
+  status?: string
+}
+
+export async function fetchLaunchpad() {
+  const { data } = await api.get<LaunchpadItem[]>(`/api/launchpad.json${v}`)
+  return Array.isArray(data) ? data : []
+}
+
 export type ResumeVersion = {
   version: string
   filename: string

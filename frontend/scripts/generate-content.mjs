@@ -190,6 +190,12 @@ async function generateTechStack(contentDir, outDir) {
   if (data) await writeJson(path.join(outDir, 'tech-stack.json'), data)
 }
 
+async function generateLaunchpad(contentDir, outDir) {
+  const src = path.join(contentDir, 'launchpad.json')
+  const items = await readJsonIfExists(src)
+  await writeJson(path.join(outDir, 'launchpad.json'), Array.isArray(items) ? items : [])
+}
+
 async function generate() {
   const repoRoot = path.resolve(__dirname, '..')
   const contentDir = path.resolve(__dirname, '../../backend/app/content')
@@ -203,6 +209,7 @@ async function generate() {
   await generateTimeline(contentDir, publicApiDir)
   await generateSocial(contentDir, publicApiDir)
   await generateTechStack(contentDir, publicApiDir)
+  await generateLaunchpad(contentDir, publicApiDir)
 
   // Copy media directory
   const mediaSrc = path.join(contentDir, 'media')
