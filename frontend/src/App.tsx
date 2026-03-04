@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, BookOpen, Music, Coffee, Lightbulb, Heart, Home, MessageCircle, Rocket } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Link, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { usePostHog } from '@posthog/react'
 import { fetchFeaturedPosts, fetchPosts, fetchProjects, fetchResume, fetchCases, fetchLaunchpad, type BlogPost, type Project, type ResumeData, type Case, type LaunchpadItem } from './lib/api'
 import { useEffect, Suspense, lazy } from 'react'
 import ProjectModal from './components/ProjectModal'
@@ -1255,7 +1256,15 @@ export default function App() {
   const [current, setCurrent] = useState('home')
   const [mobile, setMobile] = useState(false)
   const location = useLocation()
-  
+  const posthog = usePostHog()
+
+  // PostHog: capture SPA pageviews on route change
+  useEffect(() => {
+    if (posthog && location.pathname) {
+      posthog.capture('$pageview', { path: location.pathname })
+    }
+  }, [posthog, location.pathname])
+
   // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobile) {

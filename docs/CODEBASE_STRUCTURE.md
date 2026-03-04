@@ -435,17 +435,21 @@ App.tsx
 
 ### Data Flow
 
-1. **API Client** (`lib/api.ts`):
+1. **Environment variables (Vite)**:
+   - Client-side env vars must be prefixed with `VITE_` (e.g. `VITE_API_BASE`, `VITE_BUILD_ID`).
+   - **PostHog**: `VITE_PUBLIC_POSTHOG_TOKEN` and `VITE_PUBLIC_POSTHOG_HOST` in `frontend/.env.local` (or in hosting env). If token is missing, PostHog is not initialized. See `docs/analytics.md`.
+
+2. **API Client** (`lib/api.ts`):
    - Uses axios with base URL from `VITE_API_BASE` env var
    - Defaults to empty string (static files)
    - Functions: `fetchPosts()`, `fetchProjects()`, `fetchCases()`, `fetchTimeline()`, etc.
 
-2. **Component Data Fetching**:
+3. **Component Data Fetching**:
    - Components use `useEffect` to fetch data on mount
    - Loading states handled with skeletons/spinners
    - Error states with fallback UI
 
-3. **Modal vs Detail Pages**:
+4. **Modal vs Detail Pages**:
    - **Modals**: Quick preview (3 highlights, 1 image, truncated text)
    - **Detail Pages**: Full content (all highlights, tech stack, media carousel, videos)
 

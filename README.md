@@ -18,7 +18,9 @@ npm install
 npm run prebuild   # generates public/api and copies media
 npm run dev
 ```
-Frontend: `http://127.0.0.1:5173`.
+Frontend: `http://localhost:5173`.
+
+Optional: for analytics (PostHog), add `frontend/.env.local` with `VITE_PUBLIC_POSTHOG_TOKEN` and `VITE_PUBLIC_POSTHOG_HOST`. See [Analytics (PostHog)](docs/analytics.md).
 
 Or run both from the repo root:
 ```
@@ -133,6 +135,7 @@ Frontend reads from these static endpoints (e.g. `/api/posts.json`). This mirror
 
 See details:
 - `docs/howto-add-content.md` — add/update content & assets
+- `docs/analytics.md` — PostHog setup, `.env.local`, and deployment
 - `docs/cases-section-plan.md` — Cases section plan & field reference
 - `docs/style-guide.md` — full visual language + neon palette
 - `docs/professional_version.md` — bright-mode concept & requirements
