@@ -1,4 +1,4 @@
-# Keerthan.dev Monorepo
+# Portfolio Monorepo (Keerthan Venkata · TinKern Labs)
 
 FastAPI backend (content as files) + React/Vite/Tailwind frontend. The backend folder contains the canonical content (Markdown/JSON/media). The frontend build step reads and emits static JSON and copies media for deployment.
 
@@ -97,16 +97,16 @@ Project root for Vercel: `frontend`
 
 Cache busting and headers are configured so content updates reflect immediately after deploy.
 
-# Keerthan.dev — Portfolio
+# Portfolio — Keerthan Venkata · TinKern Labs
 
-Personal playground + professional profile for Keerthan Venkata Nimmala. The dark “neon lab” is the default experience for storytelling, experiments, travel shorts, and long-form blogs; a future bright/professional mode will share the same content but present a clean recruiter/VC-ready skin that can be deep linked from resumes.
+Personal playground + professional profile for Keerthan Venkata (Venkata Keerthan Nimmala). The dark “neon lab” is the default experience for storytelling, experiments, travel shorts, and long-form blogs; a future bright/professional mode will share the same content but present a clean recruiter/VC-ready skin that can be deep linked from resumes.
 
-## Tech Stack
+## Tech Stack & Hosting
 
 - Frontend: React 18, Vite, TypeScript, Tailwind CSS, Framer Motion
 - Content pipeline: Node (generate-content.mjs) → static JSON/assets
 - Backend (future-ready): FastAPI skeleton + content directory
-- Hosting: Vercel (static frontend for now)
+- Hosting: Vercel (static frontend for now), primary URL: `https://keerthan.tinkernlabs.com`
 - Theme plan: Dark neon default, bright “professional version” toggle (URL param + UI switch, see `docs/professional_version.md`)
 
 ## Architecture (Backend-First Content)
@@ -119,6 +119,7 @@ Source of truth for content lives in `backend/app/content/` and is compiled into
 - Cases: `backend/app/content/cases.json` (client testimonials; see `docs/cases-section-plan.md`)
 - Timeline: `backend/app/content/timeline.json`
 - Social/config: `backend/app/content/social.json`
+- Launchpad tiles: `backend/app/content/launchpad.json`
 - Resume PDFs + metadata: `backend/app/content/resume/*`
 - Media (images, videos): `backend/app/content/media/**`
 

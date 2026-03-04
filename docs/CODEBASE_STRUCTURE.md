@@ -346,7 +346,7 @@ resume/
   "linkedin_url": "https://www.linkedin.com/in/venkata-keerthan/",
   "github_url": "https://github.com/keerthanvenkata",
   "email": "keerthanvenkata@gmail.com",
-  "website": "https://keerthan.dev"
+  "website": "https://keerthan.tinkernlabs.com"
 }
 ```
 
