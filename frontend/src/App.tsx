@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, BookOpen, Music, Coffee, Lightbulb, Heart, Home, MessageCircle, Rocket } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Link, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { fetchFeaturedPosts, fetchPosts, fetchProjects, fetchResume, fetchCases, type BlogPost, type Project, type ResumeData, type Case } from './lib/api'
+import { fetchFeaturedPosts, fetchPosts, fetchProjects, fetchResume, fetchCases, fetchLaunchpad, type BlogPost, type Project, type ResumeData, type Case, type LaunchpadItem } from './lib/api'
 import { useEffect, Suspense, lazy } from 'react'
 import ProjectModal from './components/ProjectModal'
 import BlogModal from './components/BlogModal'
@@ -350,6 +350,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
 function HomePage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [projects, setProjects] = useState<Project[]>([])
+  const [launchpadItems, setLaunchpadItems] = useState<LaunchpadItem[]>([])
   
   // Portrait image configuration - easily change the filename here
   // Available images: 
@@ -362,6 +363,7 @@ function HomePage() {
   useEffect(() => { 
     fetchFeaturedPosts().then(setPosts).catch(() => setPosts([]))
     fetchProjects('project', true).then(setProjects).catch(() => setProjects([]))
+    fetchLaunchpad().then(setLaunchpadItems).catch(() => setLaunchpadItems([]))
   }, [])
 
   return (
@@ -592,23 +594,56 @@ function HomePage() {
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            <div className="glass rounded-xl p-6 neon-border flex flex-col justify-between">
-              <div className="flex items-center gap-3 mb-3">
-                <Rocket
-                  size={24}
-                  className="text-electric-pink"
-                />
-                <StudioBadge />
+            {launchpadItems.length === 0 ? (
+              <div className="glass rounded-xl p-6 neon-border flex flex-col justify-between">
+                <div className="flex items-center gap-3 mb-3">
+                  <Rocket
+                    size={24}
+                    className="text-electric-pink"
+                  />
+                  <StudioBadge />
+                </div>
+                <div>
+                  <h3 className="text-lg font-heading font-semibold text-white mb-1">
+                    Launchpad grid coming soon
+                  </h3>
+                  <p className="text-sm text-gray-400">
+                    This section will host tiles for individual products and offerings as they roll out from TinKern Labs.
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-heading font-semibold text-white mb-1">
-                  Launchpad grid coming soon
-                </h3>
-                <p className="text-sm text-gray-400">
-                  This section will host tiles for individual products and offerings as they roll out from TinKern Labs.
-                </p>
-              </div>
-            </div>
+            ) : (
+              launchpadItems.map(item => (
+                <a
+                  key={item.id}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass rounded-xl p-6 neon-border hover:shadow-[0_0_30px_rgba(255,0,128,0.4)] transition-all duration-300 group flex flex-col justify-between"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <Rocket
+                      size={24}
+                      className="text-electric-pink group-hover:scale-110 transition-transform"
+                    />
+                    <StudioBadge />
+                    {item.status && (
+                      <span className="text-xs px-2 py-1 rounded-full bg-electric-pink/20 text-electric-pink border border-electric-pink/30">
+                        {item.status}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-heading font-semibold text-white mb-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-gray-400">
+                      {item.oneLiner}
+                    </p>
+                  </div>
+                </a>
+              ))
+            )}
           </div>
         </motion.section>
 
