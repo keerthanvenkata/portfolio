@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, ExternalLink, Code, User, Star, Users, Mail, Briefcase } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Code, User, Star, Users, Mail, Briefcase, Rocket } from 'lucide-react'
 import { fetchProject, fetchProjects, fetchPosts, type Project, type BlogPost } from '../lib/api'
 import ImageCarousel from '../components/ImageCarousel'
 import VideoPlayer from '../components/VideoPlayer'
@@ -139,17 +139,30 @@ export default function ProjectDetail() {
 
             <p className="text-xl text-gray-300 mb-6">{project.description}</p>
 
-            {project.link && (
-              <a 
-                href={project.link} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
-              >
-                <ExternalLink size={16} />
-                Visit Project
-              </a>
-            )}
+            <div className="flex flex-wrap gap-3">
+              {project.link && (
+                <a 
+                  href={project.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-violet to-magenta hover:from-electric-pink hover:to-magenta text-white px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,0,255,0.5)] transform hover:scale-105"
+                >
+                  <ExternalLink size={16} />
+                  Visit Project
+                </a>
+              )}
+              {project.launchpadUrl && (
+                <a
+                  href={project.launchpadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 border border-electric-pink text-electric-pink hover:text-magenta hover:border-magenta px-6 py-3 rounded-lg transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,128,0.4)] transform hover:scale-105"
+                >
+                  <Rocket size={16} />
+                  View on Launchpad
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { ExternalLink, User, BookOpen, Code } from 'lucide-react'
+import { ExternalLink, User, BookOpen, Code, Rocket } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Modal from './Modal'
 import type { Case } from '../lib/api'
@@ -53,6 +53,17 @@ export default function CaseModal({ isOpen, onClose, caseData }: CaseModalProps)
               >
                 <ExternalLink size={16} />
                 Visit
+              </a>
+            )}
+            {caseData.launchpadUrl && (
+              <a
+                href={caseData.launchpadUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-electric-pink hover:text-magenta border border-electric-pink hover:border-magenta px-4 py-2 rounded-lg transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,128,0.4)] transform hover:scale-105"
+              >
+                <Rocket size={16} />
+                View in Launchpad
               </a>
             )}
             {caseData.projectIds && caseData.projectIds.length > 0 && (
