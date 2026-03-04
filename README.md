@@ -94,6 +94,7 @@ Project root for Vercel: `frontend`
 - Build Command: `npm run build`
 - Output: `dist`
 - The prebuild step emits `public/api/*` and copies `public/media/*`.
+- The same content pipeline also generates `public/sitemap.xml` and `public/robots.txt` so search engines can index routes (`/`, sections, posts, projects, experimental, cases, etc.) correctly.
 
 Cache busting and headers are configured so content updates reflect immediately after deploy.
 
@@ -222,6 +223,8 @@ frontend/
 3) Deploy on Vercel (frontend only)
 
 Full guide: docs/howto-add-content.md
+
+For SEO and indexing details (titles, JSON-LD, sitemap, robots), see `docs/seo.md`.
 
 ---
 
