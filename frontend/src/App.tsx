@@ -1210,7 +1210,7 @@ export default function App() {
     }
   }, [location.pathname])
 
-  // Update page title
+  // Update page title for top-level sections
   useEffect(() => {
     const titles: Record<string, string> = {
       home: 'Keerthan Venkata · TinKern Labs',
@@ -1223,17 +1223,19 @@ export default function App() {
       life: 'Life · Keerthan Venkata',
       contact: 'Contact · Keerthan Venkata',
     }
-    
-    // Handle detail pages
-    if (location.pathname.startsWith('/blog/')) {
-      document.title = 'Blog · Keerthan Venkata'
-    } else if (location.pathname.startsWith('/projects/')) {
-      document.title = 'Projects · Keerthan Venkata'
-    } else if (location.pathname.startsWith('/experimental/')) {
-      document.title = 'Experimental · Keerthan Venkata'
-    } else {
-      document.title = titles[current] || 'Keerthan Venkata · TinKern Labs'
+
+    const path = location.pathname
+
+    // For detail routes, let the detail pages set a more specific title
+    if (
+      path.startsWith('/blog/') ||
+      path.startsWith('/projects/') ||
+      path.startsWith('/experimental/')
+    ) {
+      return
     }
+
+    document.title = titles[current] || 'Keerthan Venkata · TinKern Labs'
   }, [current, location.pathname])
 
   // Idle prefetch of likely-next routes (About, Contact, Detail routes)
