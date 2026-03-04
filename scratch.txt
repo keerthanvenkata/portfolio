@@ -1,0 +1,99 @@
+================================================================================
+CODE REVIEW & EXECUTION SIMULATION
+================================================================================
+Date: 2026-03-04
+Test Case: Home launchpad + studio badge + launchpad links
+Command: Navigate via browser to "/", "/projects", "/experimental", "/cases"
+
+================================================================================
+INITIAL STATE
+================================================================================
+ENVIRONMENT:
+- Frontend: React/Vite app served from "frontend"
+- Data: Static JSON under "frontend/public/api"
+
+FILE SYSTEM:
+- Hero + featured content: "frontend/src/App.tsx" (HomePage, ProjectsPage, CasesPage)
+- Types/API: "frontend/src/lib/api.ts"
+- Content JSON: "backend/app/content/projects.json", "backend/app/content/experimental.json"
+
+================================================================================
+EXECUTION FLOW - STEP BY STEP
+================================================================================
+
+STEP 1: HomePage hero text
+--------------------------------------------------------------------------------
+OBJECT STATE:
+- HomePage mounted
+
+EXECUTION:
+- Hero h1 renders name.
+- Role line renders new title string.
+- Bio paragraph renders:
+  - Line 1: systems that think/tools that scale.
+  - Line 2: TinKern Labs line in neon/pink span with link.
+
+NEXT: LAUNCHPAD section render.
+
+STEP 2: HomePage LAUNCHPAD section
+--------------------------------------------------------------------------------
+EXECUTION:
+- HomePage JSX renders new "LAUNCHPAD" section below featured cards, above quick links.
+- Tile list currently single anchor tile:
+  - href = "https://labs.tinkernlabs.com"
+  - target = "_blank", rel = "noopener noreferrer"
+  - Copy indicates "Coming Soon" for studio projects.
+
+EXPECTED STATE:
+- Grid layout matches dark/neon aesthetic.
+- Entire tile is clickable external link.
+
+STEP 3: ProjectsPage / Experimental ProjectsPage list items
+--------------------------------------------------------------------------------
+OBJECT STATE:
+- ProjectsPage(kind="project"|"experimental") fetched "Project[]" via fetchProjects.
+
+EXECUTION:
+- When mapping items to cards:
+  - If pr.id is "q-rate" or "event-flyer-extractor", StudioBadge component is rendered near title.
+
+EXPECTED STATE:
+- Badge appears with cyan glow on those cards only.
+- No behavior change for click/keyboard interactions.
+
+STEP 4: ProjectDetail / ExperimentalDetail launchpad link
+--------------------------------------------------------------------------------
+OBJECT STATE:
+- Detail page loaded via fetchProject(id).
+- Project type optionally has launchpadUrl string.
+
+EXECUTION:
+- If project.launchpadUrl is truthy:
+  - Detail header renders additional "View on Launchpad" external link with rel="noopener noreferrer".
+
+EXPECTED STATE:
+- For now, no existing projects set launchpadUrl, so UI remains unchanged.
+- Future: when a launchpadUrl is added in content JSON, button appears without code changes.
+
+STEP 5: CasesPage + CaseModal launchpad link
+--------------------------------------------------------------------------------
+OBJECT STATE:
+- Cases fetched via fetchCases() into Case[].
+
+EXECUTION:
+- If caseData.launchpadUrl exists in CaseModal:
+  - Render "View in Launchpad" external link alongside project/blog links.
+
+EXPECTED STATE:
+- With current content (no launchpadUrl), modals remain unchanged.
+- Future entries with launchpadUrl gain an extra CTA.
+
+================================================================================
+ISSUES IDENTIFIED
+================================================================================
+- None anticipated in control flow; new props/fields are optional and guarded.
+
+================================================================================
+END OF SIMULATION
+================================================================================
+
