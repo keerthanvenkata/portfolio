@@ -30,6 +30,13 @@ export default function BlogDetail() {
     }
   }, [id])
 
+  // Set document title to the blog post title when loaded
+  useEffect(() => {
+    if (post?.title) {
+      document.title = post.title
+    }
+  }, [post?.title])
+
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto px-6 py-12">

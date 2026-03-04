@@ -64,6 +64,13 @@ export default function ProjectDetail() {
       .finally(() => setLoading(false))
   }, [id])
 
+  // Set document title to the project title when loaded
+  useEffect(() => {
+    if (project?.title) {
+      document.title = project.title
+    }
+  }, [project?.title])
+
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto px-6 py-12">
