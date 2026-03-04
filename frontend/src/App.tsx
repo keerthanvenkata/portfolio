@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, BookOpen, Music, Coffee, Lightbulb, Heart, Home, MessageCircle } from 'lucide-react'
+import { Menu, X, Github, Linkedin, Mail, ExternalLink, Code, Briefcase, BookOpen, Music, Coffee, Lightbulb, Heart, Home, MessageCircle, Rocket } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Link, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { fetchFeaturedPosts, fetchPosts, fetchProjects, fetchResume, fetchCases, type BlogPost, type Project, type ResumeData, type Case } from './lib/api'
@@ -9,6 +9,7 @@ import BlogModal from './components/BlogModal'
 import ExperimentalModal from './components/ExperimentalModal'
 import CaseModal from './components/CaseModal'
 import LoadingSpinner from './components/LoadingSpinner'
+import StudioBadge from './components/StudioBadge'
 
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const BlogDetail = lazy(() => import('./pages/BlogDetail'))
@@ -392,7 +393,7 @@ function HomePage() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-xl sm:text-2xl md:text-4xl font-heading font-semibold text-violet"
             >
-              SDE Applied AI & Entrepreneur
+              Software Engineer - Core AI | Builder, TinKern Labs.
             </motion.p>
             <motion.div
               initial={{ opacity: 0 }}
@@ -416,8 +417,19 @@ function HomePage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-lg sm:text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto lg:mx-0 leading-relaxed px-2 sm:px-0"
             >
-              Building scalable systems, AI solutions, and entrepreneurial ventures.
-              <span className="block mt-2 text-electric-pink text-glow-pink">Ready for new challenges and impactful projects.</span>
+              Building systems that think and tools that scale. Currently architecting core AI infrastructure and modernizing product workflows.
+              <span className="block mt-2 text-electric-pink text-glow-pink">
+                Tinkering and indie hacking at{' '}
+                <a
+                  href="https://labs.tinkernlabs.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline decoration-electric-pink/70 hover:text-magenta transition-colors"
+                >
+                  TinKern Labs
+                </a>
+                .
+              </span>
             </motion.p>
             
             {/* CTA Buttons */}
@@ -494,9 +506,14 @@ function HomePage() {
                     className="block p-4 rounded-lg bg-black/30 border border-violet/30 hover:border-electric-pink transition-all duration-300 group"
                   >
                     <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-heading font-semibold text-white group-hover:text-electric-pink transition-colors">
-                        {pr.title}
-                      </h4>
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-heading font-semibold text-white group-hover:text-electric-pink transition-colors">
+                          {pr.title}
+                        </h4>
+                        {(pr.id === 'q-rate' || pr.id === 'event-flyer-extractor') && (
+                          <StudioBadge />
+                        )}
+                      </div>
                       {pr.status && (
                         <span className="bg-neon-green/20 text-neon-green px-2 py-1 rounded text-xs font-medium">
                           {pr.status}
@@ -557,6 +574,43 @@ function HomePage() {
             </motion.div>
           )}
         </div>
+
+        {/* Launchpad Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.45 }}
+          className="mt-16 mb-12"
+          aria-labelledby="launchpad-heading"
+        >
+          <div className="flex items-center justify-between mb-6">
+            <h2
+              id="launchpad-heading"
+              className="text-2xl font-heading font-bold bg-gradient-to-r from-violet via-magenta to-electric-pink bg-clip-text text-transparent text-glow-purple"
+            >
+              Launchpad
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="glass rounded-xl p-6 neon-border flex flex-col justify-between">
+              <div className="flex items-center gap-3 mb-3">
+                <Rocket
+                  size={24}
+                  className="text-electric-pink"
+                />
+                <StudioBadge />
+              </div>
+              <div>
+                <h3 className="text-lg font-heading font-semibold text-white mb-1">
+                  Launchpad grid coming soon
+                </h3>
+                <p className="text-sm text-gray-400">
+                  This section will host tiles for individual products and offerings as they roll out from TinKern Labs.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.section>
 
         {/* Quick Links Section */}
         <motion.div
@@ -660,7 +714,12 @@ function ProjectsPage({ kind }: { kind: 'project' | 'experimental' }) {
             >
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-2xl font-heading font-bold text-white">{pr.title}</h3>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="text-2xl font-heading font-bold text-white">{pr.title}</h3>
+                    {(pr.id === 'q-rate' || pr.id === 'event-flyer-extractor') && (
+                      <StudioBadge />
+                    )}
+                  </div>
                   {pr.role && <p className="text-violet mt-1">{pr.role}</p>}
                 </div>
                 {pr.status && <span className="bg-neon-green/20 text-neon-green px-3 py-1 rounded-full text-sm border border-neon-green/30">{pr.status}</span>}
@@ -1119,26 +1178,26 @@ export default function App() {
   // Update page title
   useEffect(() => {
     const titles: Record<string, string> = {
-      home: "Keerthan's Page",
-      about: "About - Keerthan's Page",
-      projects: "Projects - Keerthan's Page",
-      cases: "Cases - Keerthan's Page",
-      experimental: "Experimental - Keerthan's Page",
-      blog: "Blog - Keerthan's Page",
-      resume: "Resume - Keerthan's Page",
-      life: "Life - Keerthan's Page",
-      contact: "Contact - Keerthan's Page",
+      home: 'Keerthan Venkata · TinKern Labs',
+      about: 'About · Keerthan Venkata',
+      projects: 'Projects · Keerthan Venkata',
+      cases: 'Cases · Keerthan Venkata',
+      experimental: 'Experimental · Keerthan Venkata',
+      blog: 'Blog · Keerthan Venkata',
+      resume: 'Resume · Keerthan Venkata',
+      life: 'Life · Keerthan Venkata',
+      contact: 'Contact · Keerthan Venkata',
     }
     
     // Handle detail pages
     if (location.pathname.startsWith('/blog/')) {
-      document.title = "Blog - Keerthan's Page"
+      document.title = 'Blog · Keerthan Venkata'
     } else if (location.pathname.startsWith('/projects/')) {
-      document.title = "Projects - Keerthan's Page"
+      document.title = 'Projects · Keerthan Venkata'
     } else if (location.pathname.startsWith('/experimental/')) {
-      document.title = "Experimental - Keerthan's Page"
+      document.title = 'Experimental · Keerthan Venkata'
     } else {
-      document.title = titles[current] || "Keerthan's Page"
+      document.title = titles[current] || 'Keerthan Venkata · TinKern Labs'
     }
   }, [current, location.pathname])
 
@@ -1226,8 +1285,8 @@ export default function App() {
         </main>
         <footer className="bg-black/30 backdrop-blur-sm py-6 px-6 relative z-10 transition-all duration-300">
           <div className="max-w-6xl mx-auto text-center">
-            <p className="text-gray-400 text-sm">© 2025 Venkata Keerthan Nimmala</p>
-            <p className="text-gray-500 text-xs mt-1">Ready for new opportunities • Open to collaboration</p>
+            <p className="text-gray-400 text-sm">© 2026 Venkata Keerthan Nimmala | Built at TinKern Labs.</p>
+            <p className="text-gray-500 text-xs mt-1">Systems that think. Tools that scale.</p>
           </div>
         </footer>
       </div>
