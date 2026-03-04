@@ -212,7 +212,7 @@ async function generateSitemapAndRobots(publicApiDir, repoRoot) {
   }
 
   // Top-level static routes
-  const staticRoutes = ['/', '/projects', '/experimental', '/blog', '/cases', '/resume', '/about', '/contact', '/life']
+  const staticRoutes = ['/', '/projects', '/experimental', '/blog', '/cases', '/resume', '/about', '/contact', '/life', '/launchpad']
   staticRoutes.forEach(route => addUrl(route))
 
   // Blog posts
