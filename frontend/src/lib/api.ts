@@ -28,6 +28,7 @@ export type Case = {
   quote: string
   projectIds?: string[]
   relatedPosts?: string[]
+  launchpadUrl?: string
 }
 
 export async function fetchCases() {
@@ -68,6 +69,7 @@ export type Project = {
     available: boolean
     description: string
   }
+  launchpadUrl?: string
 }
 
 export async function fetchFeaturedPosts() {
