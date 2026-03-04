@@ -33,6 +33,7 @@ function Sidebar({ current, onNavigate, isMobile = false }: { current: string, o
     { name: 'Projects', id: 'projects', icon: Code },
     { name: 'Cases', id: 'cases', icon: MessageCircle },
     { name: 'Experimental', id: 'experimental', icon: Lightbulb },
+    { name: 'Launchpad', id: 'launchpad', icon: Rocket },
     { name: 'Blog', id: 'blog', icon: BookOpen },
     { name: 'Resume', id: 'resume', icon: ExternalLink },
     { name: 'Life', id: 'life', icon: Heart },
@@ -585,22 +586,25 @@ function HomePage() {
           className="mt-16 mb-12"
           aria-labelledby="launchpad-heading"
         >
-          <div className="flex items-center justify-between mb-6">
-            <h2
-              id="launchpad-heading"
-              className="text-2xl font-heading font-bold bg-gradient-to-r from-violet via-magenta to-electric-pink bg-clip-text text-transparent text-glow-purple"
-            >
-              Launchpad
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="glass rounded-xl p-6 neon-border">
+            <div className="flex items-center justify-between mb-6">
+              <h2
+                id="launchpad-heading"
+                className="text-2xl font-heading font-bold text-violet text-glow-purple"
+              >
+                Launchpad
+              </h2>
+              <Link
+                to="/launchpad"
+                className="text-electric-pink hover:text-magenta transition-colors font-medium"
+              >
+                See all →
+              </Link>
+            </div>
             {launchpadItems.length === 0 ? (
-              <div className="glass rounded-xl p-6 neon-border flex flex-col justify-between">
+              <div className="flex flex-col justify-between">
                 <div className="flex items-center gap-3 mb-3">
-                  <Rocket
-                    size={24}
-                    className="text-electric-pink"
-                  />
+                  <Rocket size={24} className="text-electric-pink" />
                   <StudioBadge />
                 </div>
                 <div>
@@ -613,36 +617,34 @@ function HomePage() {
                 </div>
               </div>
             ) : (
-              launchpadItems.map(item => (
-                <a
-                  key={item.id}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="glass rounded-xl p-6 neon-border hover:shadow-[0_0_30px_rgba(255,0,128,0.4)] transition-all duration-300 group flex flex-col justify-between"
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <Rocket
-                      size={24}
-                      className="text-electric-pink group-hover:scale-110 transition-transform"
-                    />
-                    <StudioBadge />
-                    {item.status && (
-                      <span className="text-xs px-2 py-1 rounded-full bg-electric-pink/20 text-electric-pink border border-electric-pink/30">
-                        {item.status}
-                      </span>
-                    )}
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-heading font-semibold text-white mb-1">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-gray-400">
+              <div className="space-y-4">
+                {launchpadItems.slice(0, 3).map(item => (
+                  <a
+                    key={item.id}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block p-4 rounded-lg bg-black/30 border border-violet/30 hover:border-electric-pink transition-all duration-300 group"
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="font-heading font-semibold text-white group-hover:text-electric-pink transition-colors">
+                          {item.title}
+                        </h3>
+                        <StudioBadge />
+                        {item.status && (
+                          <span className="text-xs px-2 py-1 bg-electric-pink/20 text-electric-pink rounded">
+                            {item.status}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-gray-400 text-sm line-clamp-2">
                       {item.oneLiner}
                     </p>
-                  </div>
-                </a>
-              ))
+                  </a>
+                ))}
+              </div>
             )}
           </div>
         </motion.section>
@@ -911,6 +913,86 @@ function CasesPage() {
           onClose={() => setShowModal(false)}
           caseData={selectedCase}
         />
+      )}
+    </div>
+  )
+}
+
+function LaunchpadPage() {
+  const [items, setItems] = useState<LaunchpadItem[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(true)
+    fetchLaunchpad()
+      .then(setItems)
+      .catch(() => setItems([]))
+      .finally(() => setLoading(false))
+  }, [])
+
+  return (
+    <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="mb-8">
+        <h1 className="text-3xl font-heading font-bold bg-gradient-to-r from-violet via-magenta to-electric-pink bg-clip-text text-transparent text-glow-purple mb-2">
+          Launchpad
+        </h1>
+        <p className="text-gray-400 max-w-2xl">
+          Studio-built products and offerings from TinKern Labs. Each tile links out to the live experience or its current landing page.
+        </p>
+      </div>
+
+      {loading ? (
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="glass rounded-xl p-6 neon-border">
+              <div className="animate-pulse space-y-4">
+                <div className="h-6 bg-violet/20 rounded w-1/3" />
+                <div className="h-4 bg-violet/20 rounded w-2/3" />
+                <div className="h-4 bg-violet/20 rounded w-1/2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : items.length === 0 ? (
+        <div className="glass rounded-xl p-12 neon-border text-center">
+          <p className="text-gray-300 text-lg mb-2">Launchpad grid coming soon</p>
+          <p className="text-gray-500 text-sm">
+            Studio products and offerings will appear here as they roll out from TinKern Labs.
+          </p>
+        </div>
+      ) : (
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
+          {items.map(item => (
+            <a
+              key={item.id}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass rounded-xl p-6 neon-border hover:shadow-[0_0_30px_rgba(255,0,128,0.4)] transition-all duration-300 group flex flex-col justify-between"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <Rocket
+                  size={24}
+                  className="text-electric-pink group-hover:scale-110 transition-transform"
+                />
+                <StudioBadge />
+                {item.status && (
+                  <span className="text-xs px-2 py-1 rounded-full bg-electric-pink/20 text-electric-pink border border-electric-pink/30">
+                    {item.status}
+                  </span>
+                )}
+              </div>
+              <div>
+                <h2 className="text-xl font-heading font-bold text-white mb-2 group-hover:text-electric-pink transition-colors">
+                  {item.title}
+                </h2>
+                <p className="text-gray-400 text-sm">
+                  {item.oneLiner}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
       )}
     </div>
   )
@@ -1191,6 +1273,8 @@ export default function App() {
     const path = location.pathname
     if (path === '/projects' || path.startsWith('/projects/')) {
       setCurrent('projects')
+    } else if (path === '/launchpad') {
+      setCurrent('launchpad')
     } else if (path === '/blog' || path.startsWith('/blog/')) {
       setCurrent('blog')
     } else if (path === '/cases') {
@@ -1218,6 +1302,7 @@ export default function App() {
       projects: 'Projects · Keerthan Venkata',
       cases: 'Cases · Keerthan Venkata',
       experimental: 'Experimental · Keerthan Venkata',
+      launchpad: 'Launchpad · Keerthan Venkata',
       blog: 'Blog · Keerthan Venkata',
       resume: 'Resume · Keerthan Venkata',
       life: 'Life · Keerthan Venkata',
@@ -1253,7 +1338,16 @@ export default function App() {
   }, [])
 
   const title = {
-    home: 'Home', about: 'About Me', projects: 'Featured Projects', cases: 'Cases', experimental: 'Experimental & Hobby Projects', blog: 'Blog', resume: 'Resume', life: 'Life', contact: "Let's Connect"
+    home: 'Home',
+    about: 'About Me',
+    projects: 'Featured Projects',
+    cases: 'Cases',
+    experimental: 'Experimental & Hobby Projects',
+    launchpad: 'Launchpad',
+    blog: 'Blog',
+    resume: 'Resume',
+    life: 'Life',
+    contact: "Let's Connect",
   }[current] ?? 'Home'
 
   return (
@@ -1309,6 +1403,7 @@ export default function App() {
               <Route path="/cases" element={<CasesPage />} />
               <Route path="/experimental/:id" element={<ExperimentalDetail />} />
               <Route path="/experimental" element={<ProjectsPage kind="experimental" />} />
+              <Route path="/launchpad" element={<LaunchpadPage />} />
               <Route path="/blog/:id" element={<BlogDetail />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/resume" element={<ResumePage />} />
