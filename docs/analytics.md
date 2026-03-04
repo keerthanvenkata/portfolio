@@ -11,23 +11,30 @@ The frontend uses [PostHog](https://posthog.com) for product analytics: pageview
 
 ### 2. Local development
 
-In `frontend/`, create or edit `.env.local` (this file is gitignored):
+**Where to put env vars**
+
+- **Use `frontend/.env.local`** for your PostHog key (and any other secrets). This file is gitignored and overrides `.env`. It’s the right place for values you don’t want committed.
+- **Optional: `frontend/.env`** for non-secret defaults you might commit (e.g. `VITE_PUBLIC_POSTHOG_HOST`). Vite loads `.env` first, then `.env.local` (which overrides).
+- **Important:** Vite only loads env files from the **frontend** directory (where `vite.config` lives). A `.env` at the **repo root** is not read by the frontend build.
+
+In `frontend/`, create or edit `.env.local`:
 
 ```bash
 # frontend/.env.local
 VITE_PUBLIC_POSTHOG_TOKEN=phc_your_project_api_key_here
+# or VITE_PUBLIC_POSTHOG_KEY=phc_...
 VITE_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
 ```
 
 - Variable names **must** be prefixed with `VITE_` so Vite exposes them to the client.
-- If `VITE_PUBLIC_POSTHOG_TOKEN` is missing or empty, PostHog is not initialized and the app runs without analytics (no errors).
+- Either `VITE_PUBLIC_POSTHOG_TOKEN` or `VITE_PUBLIC_POSTHOG_KEY` is accepted. If both are missing or empty, PostHog is not initialized and the app runs without analytics (no errors).
 
 ### 3. Production (e.g. Vercel)
 
 Set the same variables in your hosting provider:
 
 - **Vercel**: Project → Settings → Environment Variables.
-- Add `VITE_PUBLIC_POSTHOG_TOKEN` and `VITE_PUBLIC_POSTHOG_HOST` for the Production (and optionally Preview) environment.
+- Add `VITE_PUBLIC_POSTHOG_TOKEN` (or `VITE_PUBLIC_POSTHOG_KEY`) and `VITE_PUBLIC_POSTHOG_HOST` for the Production (and optionally Preview) environment.
 
 Rebuild and deploy so the client bundle gets the correct values at build time.
 

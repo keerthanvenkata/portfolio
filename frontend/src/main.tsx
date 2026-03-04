@@ -6,7 +6,9 @@ import { PostHogProvider } from '@posthog/react'
 import App from './App'
 import './styles.css'
 
-const posthogKey = import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN
+const posthogKey =
+  import.meta.env.VITE_PUBLIC_POSTHOG_TOKEN ||
+  import.meta.env.VITE_PUBLIC_POSTHOG_KEY
 const posthogHost = import.meta.env.VITE_PUBLIC_POSTHOG_HOST
 
 if (posthogKey && typeof posthogKey === 'string' && posthogKey.length > 0) {
