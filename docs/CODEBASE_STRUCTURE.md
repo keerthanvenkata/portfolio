@@ -388,6 +388,24 @@ resume/
 
 ---
 
+### 9. Sitemap & Robots
+
+- **Sitemap**:
+  - Generated as `frontend/public/sitemap.xml` during `generate-content.mjs`.
+  - Built from freshly emitted static JSON under `frontend/public/api/`:
+    - Static routes: `/`, `/projects`, `/experimental`, `/blog`, `/cases`, `/resume`, `/about`, `/contact`, `/life`
+    - Blog posts: `/blog/{id}` from `posts.json`
+    - Projects: `/projects/{id}` where `kind: "project"` in `projects.json`
+    - Experimental: `/experimental/{id}` where `kind: "experimental"` in `projects.json`
+- **Robots**:
+  - Generated as `frontend/public/robots.txt`.
+  - Default contents:
+    - `User-agent: *`
+    - `Allow: /`
+    - `Sitemap: https://keerthan.tinkernlabs.com/sitemap.xml`
+
+---
+
 ## 🎨 Frontend Architecture
 
 ### Component Hierarchy
@@ -604,6 +622,7 @@ backend/app/content/media/
 - `docs/architecture-and-performance.md`: Performance optimizations
 - `docs/vercel-deploy.md`: Deployment guide
 - `docs/style-guide.md`: Design system and styling
+- `docs/seo.md`: Titles, meta tags, structured data, sitemap & robots configuration
 
 ---
 

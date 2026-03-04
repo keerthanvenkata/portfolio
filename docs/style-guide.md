@@ -750,7 +750,7 @@ Common opacity levels used:
 
 #### Body Text
 - **Large**: `text-2xl` to `text-4xl` / `1.5rem` to `2.25rem` / `24px` to `36px`
-  - Usage: Subtitle text (e.g., "SDE Applied AI & Entrepreneur")
+  - Usage: Subtitle text (e.g., "Software Engineer - Core AI | Builder, TinKern Labs.")
 
 - **Medium**: `text-xl` to `text-2xl` / `1.25rem` to `1.5rem` / `20px` to `24px`
   - Usage: Description text, taglines
@@ -1381,6 +1381,26 @@ backgroundImage: {
 - **Padding**: `px-3 py-1`
 - **Border Radius**: `rounded-full`
 - **Size**: `text-sm`
+
+#### Studio Badge (TinKern Labs)
+- **Component**: `StudioBadge` (`frontend/src/components/StudioBadge.tsx`)
+- **Usage**: Marks products and systems that are part of the **TinKern Labs** studio (e.g. Q-Rate, Event Flyer Extraction).
+- **Visuals**:
+  - Text: `"TinKern Labs"`
+  - Color: Cyan accent (`#00ffff`) with a neon-style border and subtle glow
+  - Shape: `inline-flex` pill (`rounded-full`, small uppercase text)
+- **Patterns**:
+  - Use alongside project titles in cards and tiles:
+    ```tsx
+    <div className="flex items-center gap-2">
+      <h3 className="text-2xl font-heading font-bold text-white">{title}</h3>
+      <StudioBadge />
+    </div>
+    ```
+  - Preferred locations:
+    - Featured/Projects cards (for studio-built systems)
+    - Launchpad tiles in the home `Launchpad` section
+  - Do **not** overuse; reserve for studio-owned products/services to keep the tag meaningful.
 
 ### Input Fields
 
