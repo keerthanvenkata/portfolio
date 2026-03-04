@@ -196,6 +196,71 @@ async function generateLaunchpad(contentDir, outDir) {
   await writeJson(path.join(outDir, 'launchpad.json'), Array.isArray(items) ? items : [])
 }
 
+async function generateSitemapAndRobots(publicApiDir, repoRoot) {
+  const siteBase = process.env.SITEMAP_BASE_URL || 'https://keerthan.tinkernlabs.com'
+
+  const urls = []
+
+  const addUrl = (pathSegment, lastmod) => {
+    const loc = `${siteBase}${pathSegment}`
+    let entry = `  <url>\n    <loc>${loc}</loc>\n`
+    if (lastmod) {
+      entry += `    <lastmod>${lastmod}</lastmod>\n`
+    }
+    entry += '  </url>'
+    urls.push(entry)
+  }
+
+  // Top-level static routes
+  const staticRoutes = ['/', '/projects', '/experimental', '/blog', '/cases', '/resume', '/about', '/contact', '/life']
+  staticRoutes.forEach(route => addUrl(route))
+
+  // Blog posts
+  const posts = await readJsonIfExists(path.join(publicApiDir, 'posts.json'))
+  if (Array.isArray(posts)) {
+    for (const post of posts) {
+      if (!post.id) continue
+      const lastmod = post.date || undefined
+      addUrl(`/blog/${encodeURIComponent(post.id)}`, lastmod)
+    }
+  }
+
+  // Projects and experimental
+  const projects = await readJsonIfExists(path.join(publicApiDir, 'projects.json'))
+  if (Array.isArray(projects)) {
+    for (const p of projects) {
+      if (!p.id || !p.kind) continue
+      if (p.kind === 'project') {
+        addUrl(`/projects/${encodeURIComponent(p.id)}`)
+      } else if (p.kind === 'experimental') {
+        addUrl(`/experimental/${encodeURIComponent(p.id)}`)
+      }
+    }
+  }
+
+  const sitemapXml = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...urls,
+    '</urlset>',
+    '',
+  ].join('\n')
+
+  const publicRoot = path.join(repoRoot, 'public')
+  await ensureDir(publicRoot)
+  await fs.writeFile(path.join(publicRoot, 'sitemap.xml'), sitemapXml, 'utf8')
+
+  const robotsTxt = [
+    'User-agent: *',
+    'Allow: /',
+    '',
+    `Sitemap: ${siteBase}/sitemap.xml`,
+    '',
+  ].join('\n')
+
+  await fs.writeFile(path.join(publicRoot, 'robots.txt'), robotsTxt, 'utf8')
+}
+
 async function generate() {
   const repoRoot = path.resolve(__dirname, '..')
   const contentDir = path.resolve(__dirname, '../../backend/app/content')
@@ -210,6 +275,9 @@ async function generate() {
   await generateSocial(contentDir, publicApiDir)
   await generateTechStack(contentDir, publicApiDir)
   await generateLaunchpad(contentDir, publicApiDir)
+
+  // Sitemap & robots.txt generated from freshly emitted static JSON
+  await generateSitemapAndRobots(publicApiDir, repoRoot)
 
   // Copy media directory
   const mediaSrc = path.join(contentDir, 'media')
